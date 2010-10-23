@@ -2,18 +2,61 @@ import math
 import ply.lex
 import ply.yacc
 
-tokens = ( 'IDENTIFIER', 'NUMBER', 'TAG', 'COMMENT', 'QUOTED_STRING', )
+# Parser based on RFC 5228, especially the grammar as defined in section 8. All
+# references are to sections in RFC 5228 unless stated otherwise.
+
+tokens = (
+    'IDENTIFIER', 'NUMBER', 'TAG', 'HASH_COMMENT', 'BRACKET_COMMENT',
+    'QUOTED_STRING', 'MULTILINE_STRING',
+    )
 literals = [ c for c in ';,()[]{}' ]
 
 def SieveLexer():
+    # section 2.2
     t_ignore = ' \t'
 
-    def t_COMMENT(t):
+    # section 2.3
+    def t_HASH_COMMENT(t):
         r'\#.*\r\n'
         t.lexer.lineno += 1
 
+    # section 2.3
+    def t_BRACKET_COMMENT(t):
+        r'/\*.*\*/'
+        # TODO: Bracketed comments begin with the token "/*" and end with "*/"
+        # outside of a string.  Bracketed comments may span multiple lines.
+        # Bracketed comments do not nest.
+        pass
+
+    # section 2.4.2
+    def t_MULTILINE_STRING(t):
+        r'"@@@@@@@@@@@@@@@"'
+        # TODO: For entering larger amounts of text, such as an email message,
+        # a multi-line form is allowed.  It starts with the keyword "text:",
+        # followed by a CRLF, and ends with the sequence of a CRLF, a single
+        # period, and another CRLF.  The CRLF before the final period is
+        # considered part of the value.  In order to allow the message to
+        # contain lines with a single dot, lines are dot-stuffed.  That is,
+        # when composing a message body, an extra '.' is added before each line
+        # that begins with a '.'.  When the server interprets the script, these
+        # extra dots are removed.  Note that a line that begins with a dot
+        # followed by a non-dot character is not interpreted as dot-stuffed;
+        # that is, ".foo" is interpreted as ".foo".  However, because this is
+        # potentially ambiguous, scripts SHOULD be properly dot-stuffed so such
+        # lines do not appear.
+        pass
+
+    # section 2.4.2
     def t_QUOTED_STRING(t):
         r'"([^"\\]|\\["\\])*"'
+        # TODO: Add support for:
+        # - An undefined escape sequence (such as "\a" in a context where "a"
+        # has no special meaning) is interpreted as if there were no backslash
+        # (in this case, "\a" is just "a"), though that may be changed by
+        # extensions.
+        # - Non-printing characters such as tabs, CRLF, and control characters
+        # are permitted in quoted strings.  Quoted strings MAY span multiple
+        # lines.  An unencoded NUL (US-ASCII 0) is not allowed in strings.
         t.value = t.value.strip('"').replace(r'\"', '"').replace(r'\\', '\\')
         return t
 
@@ -27,6 +70,7 @@ def SieveLexer():
         t.value = t.value.upper()
         return t
 
+    # section 2.4.1
     def t_NUMBER(t):
         r'[0-9]+[KkMmGg]?'
         exponents = {
