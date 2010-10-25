@@ -1,4 +1,4 @@
-import rules.base
+import extensions
 
 # commands
 import rules.if_cmd
@@ -14,4 +14,4 @@ import rules.not_test
 import rules.size
 import rules.true
 
-rules.base.register_sieve_extension("builtin")
+extensions.register('builtin')

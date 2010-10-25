@@ -1,11 +1,4 @@
 
-_EXTENSION_MAP = {}
-def register_sieve_extension(extension_name):
-    _EXTENSION_MAP[extension_name] = True
-def check_sieve_extension(extension_name):
-    return extension_name in _EXTENSION_MAP
-
-
 def indent_string(s, num_spaces):
     add_newline = False
     if s[-1] == "\n":
