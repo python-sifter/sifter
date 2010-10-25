@@ -1,3 +1,4 @@
+import actions
 
 def indent_string(s, num_spaces):
     add_newline = False
@@ -169,7 +170,7 @@ class SieveCommandList(object):
 
     def evaluate(self, message, state=None):
         if state is None:
-            state = { 'actions' : [ ('implicit_keep',), ], }
+            state = { 'actions' : SieveActions(implicit_keep=True), }
         for command in self.commands:
             command.evaluate(message, state)
             # don't bother processing more commands if we hit a STOP. this
