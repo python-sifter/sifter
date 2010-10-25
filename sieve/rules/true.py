@@ -12,5 +12,3 @@ class SieveTestTrue(base.SieveTest):
 
     def evaluate(self, message, state):
         return True
-
-base.register_sieve_test(SieveTestTrue)

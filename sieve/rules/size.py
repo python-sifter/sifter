@@ -20,5 +20,3 @@ class SieveTestSize(base.SieveTest):
             return message_size > self.arguments[1]
         elif self.arguments[1] == ":under":
             return message_size < self.arguments[1]
-
-base.register_sieve_test(SieveTestSize)

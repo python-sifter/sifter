@@ -128,7 +128,7 @@ def SieveParser():
         tests = p[2].get('tests')
         block = None
         if p[3] != ";": block = p[3]
-        handler = rules.base.get_sieve_command_handler(p[1])
+        handler = rules.base.SieveCommand.get_rule_handler(p[1])
         if handler is None:
             print("No handler registered for command '%s' on line %d" %
                 (p[1], p.lineno(1)))
@@ -188,7 +188,7 @@ def SieveParser():
         '''test : IDENTIFIER arguments'''
         #print("TEST:", p[1], p[2])
         tests = p[2].get('tests')
-        handler = rules.base.get_sieve_test_handler(p[1])
+        handler = rules.base.SieveTest.get_rule_handler(p[1])
         if handler is None:
             print("No handler registered for test '%s' on line %d" %
                     (p[1], p.lineno(1)))
@@ -245,6 +245,8 @@ def SieveParser():
 
 def parse_file(filehandle):
     import extensions.builtin
+    rules.base.SieveCommand.register_imported_rules()
+    rules.base.SieveTest.register_imported_rules()
 
     return SieveParser().parse(filehandle.read(), lexer=SieveLexer())
 

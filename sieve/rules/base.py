@@ -5,18 +5,6 @@ def register_sieve_extension(extension_name):
 def check_sieve_extension(extension_name):
     return extension_name in _EXTENSION_MAP
 
-_COMMAND_MAP = {}
-def register_sieve_command(command):
-    _COMMAND_MAP[command.RULE_IDENTIFIER] = command
-def get_sieve_command_handler(command_name):
-    return _COMMAND_MAP.get(command_name)
-
-_TEST_MAP = {}
-def register_sieve_test(test):
-    _TEST_MAP[test.RULE_IDENTIFIER] = test
-def get_sieve_test_handler(test_name):
-    return _TEST_MAP.get(test_name)
-
 
 def indent_string(s, num_spaces):
     add_newline = False
@@ -33,6 +21,33 @@ class SieveRuleSyntaxError(Exception):
 
 
 class SieveRule(object):
+
+    @classmethod
+    def register_imported_rules(cls):
+        try:
+            rule_map = cls._RULE_MAP
+        except AttributeError:
+            # this method shouldn't be called on the SieveRule class directly,
+            # only on subclasses
+            raise NotImplementedError
+
+        classes = [ cls, ]
+        while len(classes) > 0:
+            c = classes.pop()
+            try:
+                rule_name = c.RULE_IDENTIFIER
+                rule_map[rule_name] = c
+            except AttributeError:
+                classes.extend(c.__subclasses__())
+
+    @classmethod
+    def get_rule_handler(cls, rule_name):
+        try:
+            return cls._RULE_MAP.get(rule_name)
+        except AttributeError:
+            # this method shouldn't be called on the SieveRule class directly,
+            # only on subclasses
+            return NotImplementedError
 
     def __init__(self, arguments=None, tests=None):
         if arguments is None:
@@ -116,6 +131,8 @@ class SieveRule(object):
 
 class SieveCommand(SieveRule):
 
+    _RULE_MAP = {}
+
     def __init__(self, arguments=None, tests=None, block=None):
         SieveRule.__init__(self, arguments, tests)
         if block is None:
@@ -139,6 +156,8 @@ class SieveCommand(SieveRule):
 
 
 class SieveTest(SieveRule):
+
+    _RULE_MAP = {}
 
     def __init__(self, arguments=None, tests=None):
         SieveRule.__init__(self, arguments, tests)
@@ -187,14 +206,9 @@ class SieveTag(object):
 
 class SieveTestHeader(SieveTest):
     RULE_IDENTIFIER = "HEADER"
-register_sieve_test(SieveTestHeader)
 class SieveTestAddress(SieveTest):
     RULE_IDENTIFIER = "ADDRESS"
-register_sieve_test(SieveTestAddress)
 class SieveCommandKeep(SieveCommand):
     RULE_IDENTIFIER = "KEEP"
-register_sieve_command(SieveCommandKeep)
 class SieveCommandFileinto(SieveCommand):
     RULE_IDENTIFIER = "FILEINTO"
-register_sieve_command(SieveCommandFileinto)
-

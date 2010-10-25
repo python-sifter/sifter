@@ -16,5 +16,3 @@ class SieveTestExists(base.SieveTest):
             if header not in message:
                 return False
         return True
-
-base.register_sieve_test(SieveTestExists)

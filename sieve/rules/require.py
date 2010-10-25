@@ -19,5 +19,3 @@ class SieveCommandRequire(base.SieveCommand):
             if not base.check_sieve_extension(extension):
                 raise RuntimeError("Required extension '%s' not supported"
                         % extension)
-
-base.register_sieve_command(SieveCommandRequire)

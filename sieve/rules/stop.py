@@ -13,5 +13,3 @@ class SieveCommandStop(base.SieveCommand):
 
     def evaluate(self, message, state):
         state['actions'].append(('stop',))
-
-base.register_sieve_command(SieveCommandStop)

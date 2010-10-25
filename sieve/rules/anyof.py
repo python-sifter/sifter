@@ -18,5 +18,3 @@ class SieveTestAnyOf(base.SieveTest):
             if test.evaluate(message, state):
                 return True
         return False
-
-base.register_sieve_test(SieveTestAnyOf)

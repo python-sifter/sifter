@@ -48,9 +48,3 @@ class SieveCommandElse(base.SieveCommand):
             return None
         else:
             return self.block.evaluate(message, state)
-
-
-base.register_sieve_command(SieveCommandIf)
-base.register_sieve_command(SieveCommandElsIf)
-base.register_sieve_command(SieveCommandElse)
-
