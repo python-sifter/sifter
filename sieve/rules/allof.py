@@ -3,7 +3,7 @@ import base
 # section 5.2
 class SieveTestAllOf(base.SieveTest):
 
-    RULE_IDENTIFIER = "ALLOF"
+    RULE_IDENTIFIER = 'ALLOF'
 
     def __init__(self, arguments=None, tests=None):
         base.SieveTest.__init__(self, arguments, tests)

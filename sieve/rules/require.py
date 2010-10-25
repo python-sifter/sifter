@@ -1,9 +1,10 @@
 import base
+import extensions
 
 # section 3.2
 class SieveCommandRequire(base.SieveCommand):
 
-    RULE_IDENTIFIER = "REQUIRE"
+    RULE_IDENTIFIER = 'REQUIRE'
 
     def __init__(self, arguments=None, tests=None, block=None):
         base.SieveCommand.__init__(self, arguments, tests, block)

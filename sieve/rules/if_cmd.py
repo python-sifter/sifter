@@ -20,12 +20,12 @@ class SieveCommandIfBase(base.SieveCommand):
 
 class SieveCommandIf(SieveCommandIfBase):
 
-    RULE_IDENTIFIER = "IF"
+    RULE_IDENTIFIER = 'IF'
 
 
 class SieveCommandElsIf(SieveCommandIfBase):
 
-    RULE_IDENTIFIER = "ELSIF"
+    RULE_IDENTIFIER = 'ELSIF'
 
     def evaluate(self, message, state):
         if state['last_if']:
@@ -36,7 +36,7 @@ class SieveCommandElsIf(SieveCommandIfBase):
 
 class SieveCommandElse(base.SieveCommand):
 
-    RULE_IDENTIFIER = "ELSE"
+    RULE_IDENTIFIER = 'ELSE'
 
     def __init__(self, arguments=None, tests=None, block=None):
         base.SieveCommand.__init__(self, arguments, tests, block)

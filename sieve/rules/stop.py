@@ -3,7 +3,7 @@ import base
 # section 3.3
 class SieveCommandStop(base.SieveCommand):
 
-    RULE_IDENTIFIER = "STOP"
+    RULE_IDENTIFIER = 'STOP'
 
     def __init__(self, arguments=None, tests=None, block=None):
         base.SieveCommand.__init__(self, arguments, tests, block)

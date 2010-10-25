@@ -3,7 +3,7 @@ import base
 # section 5.8
 class SieveTestNot(base.SieveTest):
 
-    RULE_IDENTIFIER = "NOT"
+    RULE_IDENTIFIER = 'NOT'
 
     def __init__(self, arguments=None, tests=None):
         base.SieveTest.__init__(self, arguments, tests)

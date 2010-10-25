@@ -3,7 +3,7 @@ import base
 # section 5.9
 class SieveTestExists(base.SieveTest):
 
-    RULE_IDENTIFIER = "EXISTS"
+    RULE_IDENTIFIER = 'EXISTS'
 
     def __init__(self, arguments=None, tests=None):
         base.SieveTest.__init__(self, arguments, tests)

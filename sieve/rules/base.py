@@ -1,11 +1,11 @@
 
 def indent_string(s, num_spaces):
     add_newline = False
-    if s[-1] == "\n":
+    if s[-1] == '\n':
         add_newline = True
         s = s[:-1]
-    s = "\n".join(num_spaces * " " + line for line in s.split("\n"))
-    if add_newline: s += "\n"
+    s = '\n'.join(num_spaces * ' ' + line for line in s.split('\n'))
+    if add_newline: s += '\n'
     return s
 
 
@@ -108,7 +108,7 @@ class SieveRule(object):
             raise SieveRuleSyntaxError(
                     "%s requires argument %d to be one of these tags: %s"
                     % (self.RULE_IDENTIFIER, index,
-                        ", ".join([ ":"+tag for tag in allowed_tags]))
+                        ', '.join([ ':'+tag for tag in allowed_tags]))
                     )
 
     def validate_arg_is_number(self, index):
@@ -165,7 +165,7 @@ class SieveCommandList(object):
             self.commands = command_list
 
     def __str__(self):
-        return "".join(cmd.__str__() for cmd in self.commands)
+        return ''.join(cmd.__str__() for cmd in self.commands)
 
     def evaluate(self, message, state=None):
         if state is None:
@@ -198,10 +198,10 @@ class SieveTag(object):
         return "%s('%s')" % (self.__class__.__name__, self.tag)
 
 class SieveTestHeader(SieveTest):
-    RULE_IDENTIFIER = "HEADER"
+    RULE_IDENTIFIER = 'HEADER'
 class SieveTestAddress(SieveTest):
-    RULE_IDENTIFIER = "ADDRESS"
+    RULE_IDENTIFIER = 'ADDRESS'
 class SieveCommandKeep(SieveCommand):
-    RULE_IDENTIFIER = "KEEP"
+    RULE_IDENTIFIER = 'KEEP'
 class SieveCommandFileinto(SieveCommand):
-    RULE_IDENTIFIER = "FILEINTO"
+    RULE_IDENTIFIER = 'FILEINTO'

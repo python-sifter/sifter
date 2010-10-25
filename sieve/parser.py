@@ -77,9 +77,9 @@ def SieveLexer():
     def t_NUMBER(t):
         r'[0-9]+[KkMmGg]?'
         exponents = {
-                "G" : 30, "g" : 30,
-                "M" : 20, "m" : 20,
-                "K" : 10, "k" : 10,
+                'G' : 30, 'g' : 30,
+                'M' : 20, 'm' : 20,
+                'K' : 10, 'k' : 10,
                 }
         if t.value[-1] in exponents:
             t.value = math.ldexp(int(t.value[:-1]), exponents[t.value[-1]])
@@ -89,7 +89,7 @@ def SieveLexer():
 
     def t_newline(t):
         r'(\r\n)+'
-        t.lexer.lineno += t.value.count("\n")
+        t.lexer.lineno += t.value.count('\n')
 
     return ply.lex.lex()
 
@@ -97,20 +97,20 @@ def SieveLexer():
 def SieveParser():
 
     def p_commands_list(p):
-        '''commands : commands command'''
+        """commands : commands command"""
         p[0] = p[1]
 
         # section 3.2: REQUIRE command must come before any other commands
-        if p[2].RULE_IDENTIFIER == "REQUIRE":
-            if any(command.RULE_IDENTIFIER != "REQUIRE"
+        if p[2].RULE_IDENTIFIER == 'REQUIRE':
+            if any(command.RULE_IDENTIFIER != 'REQUIRE'
                    for command in p[0].commands):
                 print("REQUIRE command on line %d must come before any "
                       "other non-REQUIRE commands" % p.lineno(2))
                 raise SyntaxError
 
         # section 3.1: ELSIF and ELSE must follow IF or another ELSIF
-        elif p[2].RULE_IDENTIFIER in ("ELSIF", "ELSE"):
-            if p[0].commands[-1].RULE_IDENTIFIER not in ("IF", "ELSIF"):
+        elif p[2].RULE_IDENTIFIER in ('ELSIF', 'ELSE'):
+            if p[0].commands[-1].RULE_IDENTIFIER not in ('IF', 'ELSIF'):
                 print("ELSIF/ELSE command on line %d must follow an IF/ELSIF "
                       "command" % p.lineno(2))
                 raise SyntaxError
@@ -118,16 +118,16 @@ def SieveParser():
         p[0].commands.append(p[2])
 
     def p_commands_empty(p):
-        '''commands : '''
+        """commands : """
         p[0] = rules.base.SieveCommandList()
 
     def p_command(p):
-        '''command : IDENTIFIER arguments ';'
-                   | IDENTIFIER arguments block'''
+        """command : IDENTIFIER arguments ';'
+                   | IDENTIFIER arguments block"""
         #print("COMMAND:", p[1], p[2], p[3])
         tests = p[2].get('tests')
         block = None
-        if p[3] != ";": block = p[3]
+        if p[3] != ';': block = p[3]
         handler = rules.base.SieveCommand.get_rule_handler(p[1])
         if handler is None:
             print("No handler registered for command '%s' on line %d" %
@@ -136,17 +136,17 @@ def SieveParser():
         p[0] = handler(arguments=p[2]['args'], tests=tests, block=block)
 
     def p_command_error(p):
-        '''command : IDENTIFIER error ';'
-                   | IDENTIFIER error block'''
+        """command : IDENTIFIER error ';'
+                   | IDENTIFIER error block"""
         print("Syntax error in command definition after %s on line %d" %
             (p[1], p.lineno(1)))
         raise SyntaxError
 
     def p_block(p):
-        '''block : '{' commands '}' '''
+        """block : '{' commands '}' """
         # section 3.2: REQUIRE command must come before any other commands,
         # which means it can't be in the block of another command
-        if any(command.RULE_IDENTIFIER == "REQUIRE"
+        if any(command.RULE_IDENTIFIER == 'REQUIRE'
                for command in p[2].commands):
             print("REQUIRE command not allowed inside of a block (line %d)" %
                 (p.lineno(2)))
@@ -154,15 +154,15 @@ def SieveParser():
         p[0] = p[2]
 
     def p_block_error(p):
-        '''block : '{' error '}' '''
+        """block : '{' error '}'"""
         print("Syntax error in command block that starts on line %d" %
             (p.lineno(1),))
         raise SyntaxError
 
     def p_arguments(p):
-        '''arguments : argumentlist
+        """arguments : argumentlist
                      | argumentlist test
-                     | argumentlist '(' testlist ')' '''
+                     | argumentlist '(' testlist ')'"""
         p[0] = { 'args' : p[1], }
         if len(p) > 2:
             if p[2] == '(':
@@ -171,21 +171,21 @@ def SieveParser():
                 p[0]['tests'] = [ p[2] ]
 
     def p_testlist_error(p):
-        '''arguments : argumentlist '(' error ')' '''
+        """arguments : argumentlist '(' error ')'"""
         print("Syntax error in test list that starts on line %d" % p.lineno(2))
         raise SyntaxError
 
     def p_argumentlist_list(p):
-        '''argumentlist : argumentlist argument'''
+        """argumentlist : argumentlist argument"""
         p[0] = p[1]
         p[0].append(p[2])
 
     def p_argumentlist_empty(p):
-        '''argumentlist : '''
+        """argumentlist : """
         p[0] = []
 
     def p_test(p):
-        '''test : IDENTIFIER arguments'''
+        """test : IDENTIFIER arguments"""
         #print("TEST:", p[1], p[2])
         tests = p[2].get('tests')
         handler = rules.base.SieveTest.get_rule_handler(p[1])
@@ -196,48 +196,48 @@ def SieveParser():
         p[0] = handler(arguments=p[2]['args'], tests=tests)
 
     def p_testlist_list(p):
-        '''testlist : test ',' testlist'''
+        """testlist : test ',' testlist"""
         p[0] = p[3]
         p[0].insert(0, p[1])
 
     def p_testlist_single(p):
-        '''testlist : test'''
+        """testlist : test"""
         p[0] = [ p[1] ]
 
     def p_argument_stringlist(p):
-        '''argument : '[' stringlist ']' '''
+        """argument : '[' stringlist ']'"""
         p[0] = p[2]
 
     def p_argument_string(p):
-        '''argument : string'''
+        """argument : string"""
         # for simplicity, we treat all single strings as a string list
         p[0] = [ p[1] ]
 
     def p_argument_number(p):
-        '''argument : NUMBER'''
+        """argument : NUMBER"""
         p[0] = p[1]
 
     def p_argument_tag(p):
-        '''argument : TAG'''
+        """argument : TAG"""
         p[0] = rules.base.SieveTag(p[1])
 
     def p_stringlist_error(p):
-        '''argument : '[' error ']' '''
+        """argument : '[' error ']'"""
         print("Syntax error in string list that starts on line %d" %
                 p.lineno(1))
         raise SyntaxError
 
     def p_stringlist_list(p):
-        '''stringlist : string ',' stringlist'''
+        """stringlist : string ',' stringlist"""
         p[0] = p[3]
         p[0].insert(0, p[1])
 
     def p_stringlist_single(p):
-        '''stringlist : string'''
+        """stringlist : string"""
         p[0] = [ p[1] ]
 
     def p_string(p):
-        '''string : QUOTED_STRING'''
+        """string : QUOTED_STRING"""
         p[0] = p[1]
 
     return ply.yacc.yacc()
