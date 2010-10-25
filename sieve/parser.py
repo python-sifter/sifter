@@ -242,3 +242,9 @@ def SieveParser():
 
     return ply.yacc.yacc()
 
+
+def parse_file(filehandle):
+    import extensions.builtin
+
+    return SieveParser().parse(filehandle.read(), lexer=SieveLexer())
+
