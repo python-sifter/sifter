@@ -53,13 +53,13 @@ class SieveRule(object):
             self.tests = tests
 
     def __str__(self):
-        s = "%s" % self.RULE_IDENTIFIER
+        s = [ "%s" % self.RULE_IDENTIFIER, ]
         for arg in self.arguments:
-            s += " %s" % arg
-        s += "\n"
+            s.append(" %s" % arg)
+        s.append('\n')
         for test in self.tests:
-            s += "(\n%s)\n" % indent_string(str(test), 2)
-        return s
+            s.append("(\n%s)\n" % indent_string(str(test), 2))
+        return ''.join(s)
 
     def validate_arguments_size(self, min_args, max_args=None):
         if max_args is None:
@@ -134,13 +134,13 @@ class SieveCommand(SieveRule):
             self.block = block
 
     def __str__(self):
-        s = SieveRule.__str__(self)
+        s = [ SieveRule.__str__(self), ]
         if len(self.block.commands) > 0:
-            s += "{\n"
+            s.append("{\n")
             for command in self.block.commands:
-                s += indent_string(str(command), 2)
-            s += "}\n"
-        return s
+                s.append(indent_string(str(command), 2))
+            s.append("}\n")
+        return ''.join(s)
 
     def validate_block_size(self, max_commands):
         if len(self.block.commands) > max_commands:
