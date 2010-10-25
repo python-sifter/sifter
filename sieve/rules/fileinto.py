@@ -1,5 +1,5 @@
-import base
-import extensions
+from sieve.rules import base
+from sieve import extension
 
 # section 4.1
 class SieveCommandFileInto(base.SieveCommand):
@@ -14,7 +14,7 @@ class SieveCommandFileInto(base.SieveCommand):
         self.validate_arg_is_stringlist(0, 1)
 
     def evaluate(self, message, state):
-        if not extensions.has_been_required('fileinto'):
+        if not extension.has_been_required('fileinto'):
             raise RuntimeError("REQUIRE 'fileinto' must happen before "
                                "FILEINTO can be used.")
         state['actions'].append('fileinto', self.arguments[0][0])

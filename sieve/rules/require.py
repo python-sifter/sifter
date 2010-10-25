@@ -1,5 +1,5 @@
-import base
-import extensions
+from sieve.rules import base
+import sieve.extension
 
 # section 3.2
 class SieveCommandRequire(base.SieveCommand):
@@ -14,7 +14,7 @@ class SieveCommandRequire(base.SieveCommand):
         self.validate_arg_is_stringlist(0)
 
     def evaluate(self, message, state):
-        for extension in self.arguments[0]:
-            if not extensions.require(extension):
+        for ext_name in self.arguments[0]:
+            if not sieve.extension.require(ext_name):
                 raise RuntimeError("Required extension '%s' not supported"
-                        % extension)
+                        % ext_name)

@@ -1,6 +1,6 @@
 import email.utils
 
-import base
+from sieve.rules import base
 
 # section 4.2
 class SieveCommandRedirect(base.SieveCommand):

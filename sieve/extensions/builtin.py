@@ -1,21 +1,20 @@
-import extensions
-
 # commands
-import rules.discard
-import rules.fileinto
-import rules.if_cmd
-import rules.keep
-import rules.redirect
-import rules.require
-import rules.stop
+import sieve.rules.discard
+import sieve.rules.fileinto
+import sieve.rules.if_cmd
+import sieve.rules.keep
+import sieve.rules.redirect
+import sieve.rules.require
+import sieve.rules.stop
 
 # tests
-import rules.allof
-import rules.anyof
-import rules.exists
-import rules.false
-import rules.not_test
-import rules.size
-import rules.true
+import sieve.rules.allof
+import sieve.rules.anyof
+import sieve.rules.exists
+import sieve.rules.false
+import sieve.rules.not_test
+import sieve.rules.size
+import sieve.rules.true
 
-extensions.register('fileinto')
+import sieve.extension
+sieve.extension.register('fileinto')

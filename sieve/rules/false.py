@@ -1,4 +1,4 @@
-import base
+from sieve.rules import base
 
 # section 5.6
 class SieveTestFalse(base.SieveTest):

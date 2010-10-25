@@ -1,4 +1,4 @@
-import actions
+from sieve.rules import actions
 
 def indent_string(s, num_spaces):
     add_newline = False

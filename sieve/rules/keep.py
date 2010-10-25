@@ -1,4 +1,4 @@
-import base
+from sieve.rules import base
 
 # section 4.3
 class SieveCommandKeep(base.SieveCommand):

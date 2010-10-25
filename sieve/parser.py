@@ -2,7 +2,7 @@ import math
 import ply.lex
 import ply.yacc
 
-import rules.base
+from sieve import rules
 
 # Parser based on RFC 5228, especially the grammar as defined in section 8. All
 # references are to sections in RFC 5228 unless stated otherwise.
@@ -244,7 +244,7 @@ def SieveParser():
 
 
 def parse_file(filehandle):
-    import extensions.builtin
+    import sieve.extensions.builtin
     rules.base.SieveCommand.register_imported_rules()
     rules.base.SieveTest.register_imported_rules()
 

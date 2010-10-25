@@ -1,4 +1,4 @@
-import base
+from sieve.rules import base
 
 # section 5.9
 class SieveTestSize(base.SieveTest):
