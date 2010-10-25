@@ -1,7 +1,6 @@
-import actions
 import base
 
-# section 5.10
+# section 3.2
 class SieveCommandRequire(base.SieveCommand):
 
     RULE_IDENTIFIER = "REQUIRE"
@@ -18,6 +17,7 @@ class SieveCommandRequire(base.SieveCommand):
         # functionality of non-required extensions is disabled, per the RFC
         for extension in self.arguments[0]:
             if not base.check_sieve_extension(extension):
-                return actions.ERR_EXTENSION_NOT_FOUND
+                raise RuntimeError("Required extension '%s' not supported"
+                        % extension)
 
 base.register_sieve_command(SieveCommandRequire)
