@@ -202,7 +202,3 @@ class SieveTestHeader(SieveTest):
     RULE_IDENTIFIER = 'HEADER'
 class SieveTestAddress(SieveTest):
     RULE_IDENTIFIER = 'ADDRESS'
-class SieveCommandKeep(SieveCommand):
-    RULE_IDENTIFIER = 'KEEP'
-class SieveCommandFileinto(SieveCommand):
-    RULE_IDENTIFIER = 'FILEINTO'
