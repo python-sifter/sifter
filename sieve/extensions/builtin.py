@@ -1,7 +1,11 @@
 import extensions
 
 # commands
+import rules.discard
+import rules.fileinto
 import rules.if_cmd
+import rules.keep
+import rules.redirect
 import rules.require
 import rules.stop
 
@@ -14,4 +18,4 @@ import rules.not_test
 import rules.size
 import rules.true
 
-extensions.register('builtin')
+extensions.register('fileinto')
