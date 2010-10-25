@@ -157,9 +157,14 @@ class SieveCommandList(object):
 
     def evaluate(self, message, state=None):
         if state is None:
-            state = { 'actions' : [], }
-        return filter(lambda x: x is not None,
-                (cmd.evaluate(message, state) for cmd in self.commands))
+            state = { 'actions' : [ ('implicit_keep',), ], }
+        for command in self.commands:
+            command.evaluate(message, state)
+            # don't bother processing more commands if we hit a STOP. this
+            # isn't required by the standard, but we might as well.
+            if state['actions'][-1][0] == 'stop':
+                break
+        return state['actions']
 
 
 class SieveTag(object):

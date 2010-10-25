@@ -3,6 +3,7 @@ import rules.base
 # commands
 import rules.if_cmd
 import rules.require
+import rules.stop
 
 # tests
 import rules.allof
