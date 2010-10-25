@@ -178,7 +178,7 @@ class SieveTag(object):
         return ":%s" % self.tag
 
     def __repr__(self):
-        return "SieveTag('%s')" % self.tag
+        return "%s('%s')" % (self.__class__.__name__, self.tag)
 
 class SieveTestHeader(SieveTest):
     RULE_IDENTIFIER = "HEADER"
