@@ -186,9 +186,6 @@ register_sieve_test(SieveTestHeader)
 class SieveTestAddress(SieveTest):
     RULE_IDENTIFIER = "ADDRESS"
 register_sieve_test(SieveTestAddress)
-class SieveTestAnyOf(SieveTest):
-    RULE_IDENTIFIER = "ANYOF"
-register_sieve_test(SieveTestAnyOf)
 class SieveCommandKeep(SieveCommand):
     RULE_IDENTIFIER = "KEEP"
 register_sieve_command(SieveCommandKeep)
