@@ -20,7 +20,7 @@ def find_implementations(cls, impl_identifier_fn):
             impl_id = impl_identifier_fn(c)
             impl_map[impl_id] = c
         except AttributeError:
-            classes.extend(c.__subclassses__())
+            classes.extend(c.__subclasses__())
     return impl_map
 
 
@@ -107,7 +107,7 @@ class SieveRule(object):
                 self.RULE_IDENTIFIER, index, msg))
 
     def validate_arg_is_tag(self, index, allowed_tags=None):
-        if not isinstance(self.arguments[index], base.SieveTag):
+        if not isinstance(self.arguments[index], SieveTag):
             raise SieveRuleSyntaxError("%s requires argument %d to be a tag" %
                     (self.RULE_IDENTIFIER, index))
         if (allowed_tags is not None
