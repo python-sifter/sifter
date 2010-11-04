@@ -1,0 +1,35 @@
+REQUIRE ['fileinto']
+IF
+(
+  HEADER :IS ['Sender'] ['owner-ietf-mta-filters@imc.org']
+)
+{
+  FILEINTO ['filter']
+}
+ELSIF
+(
+  ADDRESS :DOMAIN :IS ['From', 'To'] ['example.com']
+)
+{
+  KEEP
+}
+ELSIF
+(
+  ANYOF
+  (
+    NOT
+    (
+      ADDRESS :ALL :CONTAINS ['To', 'Cc', 'Bcc'] ['me@example.com']
+    )
+  )
+  (
+    HEADER :MATCHES ['subject'] ['*make*money*fast*', '*university*dipl*mas*']
+  )
+)
+{
+  FILEINTO ['spam']
+}
+ELSE
+{
+  FILEINTO ['personal']
+}
