@@ -17,5 +17,5 @@ class SieveCommandFileInto(base.SieveCommand):
         if not extension.has_been_required('fileinto'):
             raise RuntimeError("REQUIRE 'fileinto' must happen before "
                                "FILEINTO can be used.")
-        state['actions'].append('fileinto', self.arguments[0][0])
-        state['actions'].cancel_implicit_keep()
+        state.actions.append('fileinto', self.arguments[0][0])
+        state.actions.cancel_implicit_keep()

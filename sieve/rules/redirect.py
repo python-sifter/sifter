@@ -25,5 +25,5 @@ class SieveCommandRedirect(base.SieveCommand):
                     )
 
     def evaluate(self, message, state):
-        state['actions'].append('redirect', self.arguments[0][0])
-        state['actions'].cancel_implicit_keep()
+        state.actions.append('redirect', self.arguments[0][0])
+        state.actions.cancel_implicit_keep()

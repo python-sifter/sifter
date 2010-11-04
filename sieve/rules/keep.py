@@ -12,4 +12,4 @@ class SieveCommandKeep(base.SieveCommand):
         self.validate_block_size(0)
 
     def evaluate(self, message, state):
-        state['actions'].append('keep').cancel_implicit_keep()
+        state.actions.append('keep').cancel_implicit_keep()

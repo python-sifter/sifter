@@ -1,4 +1,5 @@
 from sieve.rules import actions
+from sieve.state import SieveEvaluationState
 
 def indent_string(s, num_spaces):
     add_newline = False
@@ -170,14 +171,14 @@ class SieveCommandList(object):
 
     def evaluate(self, message, state=None):
         if state is None:
-            state = { 'actions' : SieveActions(implicit_keep=True), }
+            state = SieveEvaluationState()
         for command in self.commands:
             command.evaluate(message, state)
             # don't bother processing more commands if we hit a STOP. this
             # isn't required by the standard, but we might as well.
-            if state['actions'][-1][0] == 'stop':
+            if state.actions[-1][0] == 'stop':
                 break
-        return state['actions']
+        return state.actions
 
 
 class SieveTag(object):

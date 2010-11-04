@@ -11,10 +11,10 @@ class SieveCommandIfBase(base.SieveCommand):
     def evaluate(self, message, state):
         if self.tests[0].evaluate(message, state):
             result = self.block.evaluate(message, state)
-            state['last_if'] = True
+            state.last_if = True
             return result
         else:
-            state['last_if'] = False
+            state.last_if = False
             return None
 
 
@@ -28,7 +28,7 @@ class SieveCommandElsIf(SieveCommandIfBase):
     RULE_IDENTIFIER = 'ELSIF'
 
     def evaluate(self, message, state):
-        if state['last_if']:
+        if state.last_if:
             return None
         else:
             return SieveCommandIfBase.evaluate(self, message, state)
@@ -44,7 +44,7 @@ class SieveCommandElse(base.SieveCommand):
         self.validate_tests_size(0)
 
     def evaluate(self, message, state):
-        if state['last_if']:
+        if state.last_if]:
             return None
         else:
             return self.block.evaluate(message, state)

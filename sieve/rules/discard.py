@@ -12,4 +12,4 @@ class SieveCommandDiscard(base.SieveCommand):
         self.validate_block_size(0)
 
     def evaluate(self, message, state):
-        state['actions'].cancel_implicit_keep()
+        state.actions.cancel_implicit_keep()

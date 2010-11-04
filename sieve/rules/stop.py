@@ -12,4 +12,4 @@ class SieveCommandStop(base.SieveCommand):
         self.validate_block_size(0)
 
     def evaluate(self, message, state):
-        state['actions'].append('stop')
+        state.actions.append('stop')
