@@ -194,7 +194,7 @@ class SieveCommandList(object):
             command.evaluate(message, state)
             # don't bother processing more commands if we hit a STOP. this
             # isn't required by the standard, but we might as well.
-            if state.actions[-1][0] == 'stop':
+            if len(state.actions) > 0 and state.actions[-1][0] == 'stop':
                 break
         return state.actions
 
