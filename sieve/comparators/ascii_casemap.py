@@ -3,7 +3,7 @@ import string
 import sieve.comparators.octet
 import sieve.handler
 
-class SieveComparatorASCIICasemap(sieve.comparators.SieveComparatorOctet):
+class SieveComparatorASCIICasemap(sieve.comparators.octet.SieveComparatorOctet):
 
     @classmethod
     def sort_key(cls, s):
