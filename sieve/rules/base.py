@@ -11,6 +11,18 @@ def indent_string(s, num_spaces):
     if add_newline: s += '\n'
     return s
 
+def find_implementations(cls, impl_identifier_fn):
+    impl_map = {}
+    classes = [ cls, ]
+    while len(classes) > 0:
+        c = classes.pop()
+        try:
+            impl_id = impl_identifier_fn(c)
+            impl_map[impl_id] = c
+        except AttributeError:
+            classes.extend(c.__subclassses__())
+    return impl_map
+
 
 class SieveRuleSyntaxError(Exception):
     pass
@@ -21,20 +33,12 @@ class SieveRule(object):
     @classmethod
     def register_imported_rules(cls):
         try:
-            rule_map = cls._RULE_MAP
+            cls._RULE_MAP = find_implementations(cls,
+                    lambda impl: impl.RULE_IDENTIFIER)
         except AttributeError:
             # this method shouldn't be called on the SieveRule class directly,
             # only on subclasses
             raise NotImplementedError
-
-        classes = [ cls, ]
-        while len(classes) > 0:
-            c = classes.pop()
-            try:
-                rule_name = c.RULE_IDENTIFIER
-                rule_map[rule_name] = c
-            except AttributeError:
-                classes.extend(c.__subclasses__())
 
     @classmethod
     def get_rule_handler(cls, rule_name):
