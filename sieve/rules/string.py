@@ -22,12 +22,13 @@ def compare(str1, str2, state, comparator=None, match_type=None):
                            "the comparator can be used." % comparator)
 
     try:
-        return getattr(cmp_handler, match_type.lower())(str1, str2)
+        cmp_fn = getattr(cmp_handler, 'cmp_%s' % match_type.lower())
     except AttributeError:
         raise RuntimeError(
                 "':%s' matching not supported by comparator '%s'"
                 % (match_type, comparator)
                 )
+    return cmp_fn(str1, str2)
 
 def address_part(address, part=None):
     # section 2.7.4: default address part is ":all"

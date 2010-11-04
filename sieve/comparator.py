@@ -5,13 +5,13 @@ class SieveComparator(object):
         return s
 
     @classmethod
-    def is(cls, str1, str2):
+    def cmp_is(cls, str1, str2):
         raise NotImplementedError
 
     @classmethod
-    def contains(cls, s, substring):
+    def cmp_contains(cls, s, substring):
         raise NotImplementedError
 
     @classmethod
-    def matches(cls, s, pattern):
+    def cmp_matches(cls, s, pattern):
         raise NotImplementedError

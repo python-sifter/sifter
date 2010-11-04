@@ -6,15 +6,15 @@ import sieve.handler
 class SieveComparatorOctet(sieve.comparator.SieveComparator):
 
     @classmethod
-    def is(cls, str1, str2):
+    def cmp_is(cls, str1, str2):
         return cls.sort_key(str1) == cls.sort_key(str2)
 
     @classmethod
-    def contains(cls, s, substring):
+    def cmp_contains(cls, s, substring):
         return cls.sort_key(substring) in cls.sort_key(s)
 
     @classmethod
-    def matches(cls, s, pattern):
+    def cmp_matches(cls, s, pattern):
         pattern = cls.sort_key(pattern)
         i, n = 0, len(pattern)
         re_pattern = []
