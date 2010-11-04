@@ -16,5 +16,11 @@ import sieve.rules.not_test
 import sieve.rules.size
 import sieve.rules.true
 
+# comparators
+import sieve.comparators.ascii_casemap
+import sieve.comparators.octet
+
 import sieve.handler
 sieve.handler.register('extension', 'fileinto')
+sieve.handler.register('extension', 'comparator-i;ascii-casemap')
+sieve.handler.register('extension', 'comparator-i;octet')

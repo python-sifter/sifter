@@ -238,7 +238,7 @@ def SieveParser():
 
     def p_string(p):
         """string : QUOTED_STRING"""
-        p[0] = p[1]
+        p[0] = rules.string.SieveString(p[1])
 
     return ply.yacc.yacc()
 
