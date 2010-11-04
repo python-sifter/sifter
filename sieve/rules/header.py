@@ -19,7 +19,7 @@ class SieveTestHeader(base.SieveTest):
             self.match_type = self.arguments[0].tag
         elif len(self.arguments) == 4:
             self.validate_arg_is_tag(0, ('COMPARATOR',))
-            self.validate_arg_is_comparator(1))
+            self.validate_arg_is_comparator(1)
             self.comparator = self.arguments[1]
         elif len(self.arguments) == 5:
             # TODO: allow arguments to come in any order

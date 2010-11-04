@@ -44,7 +44,7 @@ class SieveCommandElse(base.SieveCommand):
         self.validate_tests_size(0)
 
     def evaluate(self, message, state):
-        if state.last_if]:
+        if state.last_if:
             return None
         else:
             return self.block.evaluate(message, state)
