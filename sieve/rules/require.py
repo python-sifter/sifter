@@ -1,5 +1,5 @@
 from sieve.rules import base
-import sieve.extension
+import sieve.handler
 
 # section 3.2
 class SieveCommandRequire(base.SieveCommand):
@@ -15,6 +15,7 @@ class SieveCommandRequire(base.SieveCommand):
 
     def evaluate(self, message, state):
         for ext_name in self.arguments[0]:
-            if not sieve.extension.require(ext_name):
+            if not sieve.handler.get('extension', ext_name):
                 raise RuntimeError("Required extension '%s' not supported"
                         % ext_name)
+            state.require_extension(ext_name)

@@ -16,5 +16,5 @@ import sieve.rules.not_test
 import sieve.rules.size
 import sieve.rules.true
 
-import sieve.extension
-sieve.extension.register('fileinto')
+import sieve.handler
+sieve.handler.register('extension', 'fileinto')
