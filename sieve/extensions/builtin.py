@@ -23,6 +23,6 @@ import sieve.comparators.ascii_casemap
 import sieve.comparators.octet
 
 import sieve.handler
-sieve.handler.register('extension', 'fileinto')
-sieve.handler.register('extension', 'comparator-i;ascii-casemap')
-sieve.handler.register('extension', 'comparator-i;octet')
+sieve.handler.register('extension', 'fileinto', True)
+sieve.handler.register('extension', 'comparator-i;ascii-casemap', True)
+sieve.handler.register('extension', 'comparator-i;octet', True)
