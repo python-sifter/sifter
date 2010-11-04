@@ -1,6 +1,8 @@
 # commands
+import sieve.rules.address
 import sieve.rules.discard
 import sieve.rules.fileinto
+import sieve.rules.header
 import sieve.rules.if_cmd
 import sieve.rules.keep
 import sieve.rules.redirect

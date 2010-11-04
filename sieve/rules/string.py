@@ -29,3 +29,19 @@ def compare(str1, str2, state, comparator=None, match_type=None):
                 % (match_type, comparator)
                 )
 
+def address_part(address, part=None):
+    # section 2.7.4: default address part is ":all"
+    if part is None: part = 'ALL'
+
+    if part == 'ALL': return address
+    try:
+        localpart, domain = address.rsplit('@', 1)
+    except ValueError:
+        # if there's no '@' in the address then treat the whole address as the
+        # local part
+        localpart = address
+        domain = ''
+    if part == 'LOCALPART': return localpart
+    elif part == 'DOMAIN': return domain
+    raise RuntimeError("Unknown address part specified: %s" % part)
+

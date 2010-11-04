@@ -1,3 +1,4 @@
+import sieve.handler
 from sieve.rules import actions
 from sieve.state import SieveEvaluationState
 
@@ -120,6 +121,19 @@ class SieveRule(object):
             raise SieveRuleSyntaxError("%s requires argument %d to be a number"
                     % (self.RULE_IDENTIFIER, index))
 
+    def validate_arg_is_comparator(self, index):
+        self.validate_arg_is_stringlist(index, 1)
+        if not sieve.handler.get('comparator', self.arguments[index][0]):
+            raise SieveRuleSyntaxError(
+                    "'%s' comparator is unknown/unsupported"
+                    % self.arguments[index][0])
+
+    def validate_arg_is_match_type(self, index):
+        self.validate_arg_is_tag(index, ('IS', 'CONTAINS', 'MATCHES'))
+
+    def validate_arg_is_address_part(self, index):
+        self.validate_arg_is_tag(index, ('LOCALPART', 'DOMAIN', 'ALL'))
+
     def evaluate(self, message, state):
         raise NotImplementedError
 
@@ -199,7 +213,3 @@ class SieveTag(object):
     def __repr__(self):
         return "%s('%s')" % (self.__class__.__name__, self.tag)
 
-class SieveTestHeader(SieveTest):
-    RULE_IDENTIFIER = 'HEADER'
-class SieveTestAddress(SieveTest):
-    RULE_IDENTIFIER = 'ADDRESS'
