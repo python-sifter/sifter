@@ -1,12 +1,10 @@
 import sieve.handler
 
-class SieveString(object):
+# TODO: this is here because it'll be needed when support for encoded
+# characters and variables is added. for now it's just a wrapper around str.
+class SieveString(str):
 
-    def __init__(self, s):
-        self._s = s
-
-    def __getattr__(self, name):
-        return getattr(self._s, name)
+    pass
 
 def compare(str1, str2, state, comparator=None, match_type=None):
     # section 2.7.3: default comparator is "i;ascii-casemap"
