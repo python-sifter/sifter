@@ -1,10 +1,10 @@
-from sieve.rules import base
+from sieve.grammar.command import SieveCommand
 
 # section 3.1
-class SieveCommandIfBase(base.SieveCommand):
+class SieveCommandIfBase(SieveCommand):
 
     def __init__(self, arguments=None, tests=None, block=None):
-        base.SieveCommand.__init__(self, arguments, tests, block)
+        super(SieveCommandIfBase, self).__init__(arguments, tests, block)
         self.validate_arguments_size(0)
         self.validate_tests_size(1)
 
@@ -22,6 +22,8 @@ class SieveCommandIf(SieveCommandIfBase):
 
     RULE_IDENTIFIER = 'IF'
 
+SieveCommandIf.register()
+
 
 class SieveCommandElsIf(SieveCommandIfBase):
 
@@ -31,15 +33,17 @@ class SieveCommandElsIf(SieveCommandIfBase):
         if state.last_if:
             return None
         else:
-            return SieveCommandIfBase.evaluate(self, message, state)
+            return super(SieveCommandElsIf, self).evaluate(message, state)
+
+SieveCommandElsIf.register()
 
 
-class SieveCommandElse(base.SieveCommand):
+class SieveCommandElse(SieveCommand):
 
     RULE_IDENTIFIER = 'ELSE'
 
     def __init__(self, arguments=None, tests=None, block=None):
-        base.SieveCommand.__init__(self, arguments, tests, block)
+        super(SieveCommandElse, self).__init__(arguments, tests, block)
         self.validate_arguments_size(0)
         self.validate_tests_size(0)
 
@@ -48,3 +52,5 @@ class SieveCommandElse(base.SieveCommand):
             return None
         else:
             return self.block.evaluate(message, state)
+
+SieveCommandElse.register()

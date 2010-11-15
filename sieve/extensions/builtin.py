@@ -1,24 +1,21 @@
-# commands
-import sieve.rules.address
-import sieve.rules.discard
-import sieve.rules.fileinto
-import sieve.rules.header
-import sieve.rules.if_cmd
-import sieve.rules.keep
-import sieve.rules.redirect
-import sieve.rules.require
-import sieve.rules.stop
+import sieve.commands.discard
+import sieve.commands.fileinto
+import sieve.commands.if_cmd
+import sieve.commands.keep
+import sieve.commands.redirect
+import sieve.commands.require
+import sieve.commands.stop
 
-# tests
-import sieve.rules.allof
-import sieve.rules.anyof
-import sieve.rules.exists
-import sieve.rules.false
-import sieve.rules.not_test
-import sieve.rules.size
-import sieve.rules.true
+import sieve.tests.address
+import sieve.tests.allof
+import sieve.tests.anyof
+import sieve.tests.exists
+import sieve.tests.header
+import sieve.tests.false
+import sieve.tests.not_test
+import sieve.tests.size
+import sieve.tests.true
 
-# comparators
 import sieve.comparators.ascii_casemap
 import sieve.comparators.octet
 

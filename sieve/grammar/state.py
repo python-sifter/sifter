@@ -1,4 +1,4 @@
-from sieve.rules.actions import SieveActions
+from sieve.grammar.actions import SieveActions
 
 class SieveEvaluationState(object):
 

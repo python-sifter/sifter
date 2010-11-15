@@ -1,13 +1,13 @@
-from sieve.rules import base
+from sieve.grammar.command import SieveCommand
 import sieve.handler
 
 # section 3.2
-class SieveCommandRequire(base.SieveCommand):
+class SieveCommandRequire(SieveCommand):
 
     RULE_IDENTIFIER = 'REQUIRE'
 
     def __init__(self, arguments=None, tests=None, block=None):
-        base.SieveCommand.__init__(self, arguments, tests, block)
+        super(SieveCommandRequire, self).__init__(arguments, tests, block)
         self.validate_arguments_size(1)
         self.validate_tests_size(0)
         self.validate_block_size(0)
@@ -19,3 +19,5 @@ class SieveCommandRequire(base.SieveCommand):
                 raise RuntimeError("Required extension '%s' not supported"
                         % ext_name)
             state.require_extension(ext_name)
+
+SieveCommandRequire.register()

@@ -1,15 +1,15 @@
 import email.utils
 
-from sieve.rules import base
-import sieve.rules.string
+import sieve.grammar.string
+from sieve.grammar.test import SieveTest
 
 # section 5.1
-class SieveTestAddress(base.SieveTest):
+class SieveTestAddress(SieveTest):
 
     RULE_IDENTIFIER = 'ADDRESS'
 
     def __init__(self, arguments=None, tests=None):
-        base.SieveTest.__init__(self, arguments, tests)
+        super(SieveTestAddress, self).__init__(arguments, tests)
         self.validate_arguments_size(2, 6)
         self.validate_tests_size(0)
         self.match_type = self.comparator = self.address_part = None
@@ -50,11 +50,13 @@ class SieveTestAddress(base.SieveTest):
         addresses = []
         for address in email.utils.getaddresses(header_values):
             if address[1] != '':
-                addresses.append(sieve.rules.string.address_part(address[1],
+                addresses.append(sieve.grammar.string.address_part(address[1],
                     self.address_part))
         for address in addresses:
             for key in self.keylist:
-                if sieve.rules.string.compare(address, key, state,
+                if sieve.grammar.string.compare(address, key, state,
                         self.comparator, self.match_type):
                     return True
         return False
+
+SieveTestAddress.register()

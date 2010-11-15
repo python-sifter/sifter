@@ -1,14 +1,15 @@
 import email.utils
 
-from sieve.rules import base
+from sieve.grammar.command import SieveCommand
+from sieve.grammar.rule import SieveRuleSyntaxError
 
 # section 4.2
-class SieveCommandRedirect(base.SieveCommand):
+class SieveCommandRedirect(SieveCommand):
 
     RULE_IDENTIFIER = 'REDIRECT'
 
     def __init__(self, arguments=None, tests=None, block=None):
-        base.SieveCommand.__init__(self, arguments, tests, block)
+        super(SieveCommandRedirect, self).__init__(arguments, tests, block)
         self.validate_arguments_size(1)
         self.validate_tests_size(0)
         self.validate_block_size(0)
@@ -27,3 +28,5 @@ class SieveCommandRedirect(base.SieveCommand):
     def evaluate(self, message, state):
         state.actions.append('redirect', self.arguments[0][0])
         state.actions.cancel_implicit_keep()
+
+SieveCommandRedirect.register()

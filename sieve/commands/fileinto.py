@@ -1,12 +1,12 @@
-from sieve.rules import base
+from sieve.grammar.command import SieveCommand
 
 # section 4.1
-class SieveCommandFileInto(base.SieveCommand):
+class SieveCommandFileInto(SieveCommand):
 
     RULE_IDENTIFIER = 'FILEINTO'
 
     def __init__(self, arguments=None, tests=None, block=None):
-        base.SieveCommand.__init__(self, arguments, tests, block)
+        super(SieveCommandFileInto, self).__init__(arguments, tests, block)
         self.validate_arguments_size(1)
         self.validate_tests_size(0)
         self.validate_block_size(0)
@@ -18,3 +18,5 @@ class SieveCommandFileInto(base.SieveCommand):
                                "FILEINTO can be used.")
         state.actions.append('fileinto', self.arguments[0][0])
         state.actions.cancel_implicit_keep()
+
+SieveCommandFileInto.register()

@@ -1,13 +1,13 @@
-from sieve.rules import base
-import sieve.rules.string
+import sieve.grammar.string
+from sieve.grammar.test import SieveTest
 
 # section 5.7
-class SieveTestHeader(base.SieveTest):
+class SieveTestHeader(SieveTest):
 
     RULE_IDENTIFIER = 'HEADER'
 
     def __init__(self, arguments=None, tests=None):
-        base.SieveTest.__init__(self, arguments, tests)
+        super(SieveTestHeader, self).__init__(arguments, tests)
         self.validate_arguments_size(2, 5)
         self.validate_tests_size(0)
         self.match_type = self.comparator = None
@@ -38,7 +38,9 @@ class SieveTestHeader(base.SieveTest):
         for header in self.headers:
             for value in message.get_all(header, []):
                 for key in self.keylist:
-                    if sieve.rules.string.compare(value, key, state,
+                    if sieve.grammar.string.compare(value, key, state,
                             self.comparator, self.match_type):
                         return True
         return False
+
+SieveTestHeader.register()

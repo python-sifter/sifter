@@ -1,12 +1,12 @@
-from sieve.rules import base
+from sieve.grammar.test import SieveTest
 
 # section 5.9
-class SieveTestSize(base.SieveTest):
+class SieveTestSize(SieveTest):
 
     RULE_IDENTIFIER = 'SIZE'
 
     def __init__(self, arguments=None, tests=None):
-        base.SieveTest.__init__(self, arguments, tests)
+        super(SieveTestSize, self).__init__(arguments, tests)
         self.validate_arguments_size(2)
         self.validate_tests_size(0)
         self.validate_arg_is_tag(0, ('OVER', 'UNDER'))
@@ -20,3 +20,5 @@ class SieveTestSize(base.SieveTest):
             return message_size > self.arguments[1]
         elif self.arguments[0].tag == 'UNDER':
             return message_size < self.arguments[1]
+
+SieveTestSize.register()

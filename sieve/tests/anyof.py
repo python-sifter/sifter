@@ -1,12 +1,12 @@
-from sieve.rules import base
+from sieve.grammar.test import SieveTest
 
 # section 5.3
-class SieveTestAnyOf(base.SieveTest):
+class SieveTestAnyOf(SieveTest):
 
     RULE_IDENTIFIER = 'ANYOF'
 
     def __init__(self, arguments=None, tests=None):
-        base.SieveTest.__init__(self, arguments, tests)
+        super(SieveTestAnyOf, self).__init__(arguments, tests)
         self.validate_arguments_size(0)
 
     def evaluate(self, message, state):
@@ -18,3 +18,5 @@ class SieveTestAnyOf(base.SieveTest):
             if test.evaluate(message, state):
                 return True
         return False
+
+SieveTestAnyOf.register()
