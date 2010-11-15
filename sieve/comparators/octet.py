@@ -1,9 +1,10 @@
 import re
 
 import sieve.comparator
-import sieve.handler
 
 class SieveComparatorOctet(sieve.comparator.SieveComparator):
+
+    COMPARATOR_ID = 'i;octet'
 
     @classmethod
     def cmp_is(cls, str1, str2):
@@ -37,4 +38,4 @@ class SieveComparatorOctet(sieve.comparator.SieveComparator):
         return re.match(''.join(re_pattern), cls.sort_key(s),
                 re.MULTILINE | re.DOTALL)
 
-sieve.handler.register('comparator', 'i;octet', SieveComparatorOctet)
+SieveComparatorOctet.register()

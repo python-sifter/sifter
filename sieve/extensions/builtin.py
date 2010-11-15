@@ -19,7 +19,9 @@ import sieve.tests.true
 import sieve.comparators.ascii_casemap
 import sieve.comparators.octet
 
-import sieve.handler
-sieve.handler.register('extension', 'fileinto', True)
-sieve.handler.register('extension', 'comparator-i;ascii-casemap', True)
-sieve.handler.register('extension', 'comparator-i;octet', True)
+import sieve.extension
+map(sieve.extension.register,
+    ('fileinto',
+     'comparator-i;ascii-casemap',
+     'comparator-i;octet',
+     ))
