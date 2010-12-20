@@ -9,12 +9,13 @@ class SieveTestExists(sieve.grammar.Test):
 
     def __init__(self, arguments=None, tests=None):
         super(SieveTestExists, self).__init__(arguments, tests)
-        self.validate_arguments_size(1)
+        tagged_args, positional_args = self.validate_arguments(
+                {}, [ validator.StringList(), ])
         self.validate_tests_size(0)
-        self.validate_arg_is_stringlist(0)
+        self.headers = positional_args[0]
 
     def evaluate(self, message, state):
-        for header in self.arguments[0]:
+        for header in self.headers:
             if header not in message:
                 return False
         return True
