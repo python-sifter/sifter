@@ -1,18 +1,8 @@
-class SieveTag(object):
-
-    TAG_CACHE = {}
-
-    def __new__(cls, tag):
-        instance = SieveTag.TAG_CACHE.get(tag)
-        if instance is None:
-            instance = object.__new__(cls)
-            instance.tag = tag
-            SieveTag.TAG_CACHE[tag] = instance
-        return instance
+class SieveTag(str):
 
     def __str__(self):
-        return ":%s" % self.tag
+        return ":%s" % super(SieveTag, self).__str__()
 
     def __repr__(self):
-        return "%s('%s')" % (self.__class__.__name__, self.tag)
+        return "%s('%s')" % ('SieveTag', super(SieveTag, self).__repr__())
 
