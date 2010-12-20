@@ -39,6 +39,47 @@ class Rule(object):
             s.append("(\n%s)\n" % sieve.utils.indent_string(str(test), 2))
         return ''.join(s)
 
+    def validate_arguments(self, tagged_args=None, positional_args=None):
+        if tagged_args is None:
+            tagged_args = {}
+        if positional_args is None:
+            positional_args = []
+
+        seen_args = {}
+        i, n = 0, len(self.arguments)
+        while i < n:
+            if not isinstance(self.arguments[i], SieveTag):
+                break
+            num_valid_args = 0
+            for arg_name, arg_validator in tagged_args.iteritems():
+                num_valid_args = arg_validator.validate(self.arguments, i)
+                if num_valid_args > 0:
+                    if arg_name in seen_args:
+                        raise SieveRuleSyntaxError(
+                                "%s argument to %s was already seen earlier: %s"
+                                % (arg_name, self.RULE_IDENTIFIER,
+                                   self.arguments[i])
+                                )
+                    seen_args[arg_name] = self.arguments[i:i+num_valid_args]
+                    i += num_valid_args
+                    break
+        # TODO: make sure all non-optional tagged arguments were seen
+
+        if len(positional_args) != (n - i):
+            raise SieveRuleSyntaxError(
+                    "%s requires %d positional arguments but %d were "
+                    "supplied"
+                    % (self.RULE_IDENTIFIER, len(positional_args), n - i))
+
+        for arg_position, arg_validator in enumerate(positional_args):
+            if arg_validator.validate(self.arguments, i + arg_position) == 0:
+                raise SieveRuleSyntaxError(
+                        "positional argument #%d to %s was not in the "
+                        "expected format"
+                        % (arg_position + 1, self.RULE_IDENTIFIER))
+
+        return (seen_args, self.arguments[i:])
+
     def validate_arguments_size(self, min_args, max_args=None):
         if max_args is None:
             max_args = min_args
