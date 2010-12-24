@@ -48,14 +48,14 @@ class Rule(object):
         seen_args = {}
         i, n = 0, len(self.arguments)
         while i < n:
-            if not isinstance(self.arguments[i], SieveTag):
+            if not isinstance(self.arguments[i], sieve.grammar.Tag):
                 break
             num_valid_args = 0
             for arg_name, arg_validator in tagged_args.iteritems():
                 num_valid_args = arg_validator.validate(self.arguments, i)
                 if num_valid_args > 0:
                     if arg_name in seen_args:
-                        raise SieveRuleSyntaxError(
+                        raise RuleSyntaxError(
                                 "%s argument to %s was already seen earlier: %s"
                                 % (arg_name, self.RULE_IDENTIFIER,
                                    self.arguments[i])
@@ -66,14 +66,14 @@ class Rule(object):
         # TODO: make sure all non-optional tagged arguments were seen
 
         if len(positional_args) != (n - i):
-            raise SieveRuleSyntaxError(
+            raise RuleSyntaxError(
                     "%s requires %d positional arguments but %d were "
                     "supplied"
                     % (self.RULE_IDENTIFIER, len(positional_args), n - i))
 
         for arg_position, arg_validator in enumerate(positional_args):
             if arg_validator.validate(self.arguments, i + arg_position) == 0:
-                raise SieveRuleSyntaxError(
+                raise RuleSyntaxError(
                         "positional argument #%d to %s was not in the "
                         "expected format"
                         % (arg_position + 1, self.RULE_IDENTIFIER))
