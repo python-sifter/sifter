@@ -18,9 +18,9 @@ class SieveTestSize(sieve.grammar.Test):
         # FIXME: size is defined as number of octets, whereas this gives us
         # number of characters
         message_size = len(message.as_string())
-        if self.arguments[0].tag == 'OVER':
+        if self.arguments[0] == 'OVER':
             return message_size > self.arguments[1]
-        elif self.arguments[0].tag == 'UNDER':
+        elif self.arguments[0] == 'UNDER':
             return message_size < self.arguments[1]
 
 SieveTestSize.register()

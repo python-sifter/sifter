@@ -18,7 +18,7 @@ class SieveTestHeader(sieve.grammar.Test):
         keylist_idx = len(self.arguments) - 1
         if len(self.arguments) == 3:
             self.validate_arg_is_match_type(0)
-            self.match_type = self.arguments[0].tag
+            self.match_type = self.arguments[0]
         elif len(self.arguments) == 4:
             self.validate_arg_is_tag(0, ('COMPARATOR',))
             self.validate_arg_is_comparator(1)
@@ -29,7 +29,7 @@ class SieveTestHeader(sieve.grammar.Test):
             self.validate_arg_is_comparator(1)
             self.comparator = self.arguments[1]
             self.validate_arg_is_match_type(2)
-            self.match_type = self.arguments[2].tag
+            self.match_type = self.arguments[2]
 
         self.validate_arg_is_stringlist(headers_idx)
         self.validate_arg_is_stringlist(keylist_idx)

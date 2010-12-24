@@ -33,9 +33,9 @@ class SieveTestAddress(sieve.grammar.Test):
             self.validate_arg_is_comparator(1)
             self.comparator = self.arguments[1]
             self.validate_arg_is_address_part(2)
-            self.address_part = self.arguments[2].tag
+            self.address_part = self.arguments[2]
             self.validate_arg_is_match_type(3)
-            self.match_type = self.arguments[3].tag
+            self.match_type = self.arguments[3]
 
         self.validate_arg_is_stringlist(headers_idx)
         self.validate_arg_is_stringlist(keylist_idx)

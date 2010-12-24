@@ -82,7 +82,7 @@ class Rule(object):
             raise RuleSyntaxError("%s requires argument %d to be a tag" %
                     (self.RULE_IDENTIFIER, index))
         if (allowed_tags is not None
-                and self.arguments[index].tag not in allowed_tags):
+                and self.arguments[index] not in allowed_tags):
             raise SieveRuleSyntaxError(
                     "%s requires argument %d to be one of these tags: %s"
                     % (self.RULE_IDENTIFIER, index,
