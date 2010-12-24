@@ -4,6 +4,8 @@
 import math
 import ply.lex
 
+__all__ = ('lexer', 'tokens',)
+
 
 def lexer(**kwargs):
     return ply.lex.lex(**kwargs)

@@ -1,13 +1,15 @@
-from sieve.grammar.tag import SieveTag
+import sieve.grammar
 import sieve.handler
 import sieve.utils
 
+__all__ = ('Rule', 'RuleSyntaxError',)
 
-class SieveRuleSyntaxError(Exception):
+
+class RuleSyntaxError(Exception):
     pass
 
 
-class SieveRule(object):
+class Rule(object):
 
     @classmethod
     def register(cls):
@@ -45,7 +47,7 @@ class SieveRule(object):
                 msg = "%d" % min_args
             else:
                 msg = "between %d and %d" % (min_args, max_args)
-            raise SieveRuleSyntaxError("%s takes %s arguments" % (
+            raise RuleSyntaxError("%s takes %s arguments" % (
                 self.RULE_IDENTIFIER, msg))
 
     def validate_tests_size(self, min_tests, max_tests=None):
@@ -56,14 +58,14 @@ class SieveRule(object):
                 msg = "%d" % min_tests
             else:
                 msg = "between %d and %d" % (min_tests, max_tests)
-            raise SieveRuleSyntaxError("%s takes %s tests" % (
+            raise RuleSyntaxError("%s takes %s tests" % (
                 self.RULE_IDENTIFIER, msg))
 
     def validate_arg_is_stringlist(self, index, length=None):
         if not (isinstance(self.arguments[index], list)
                 and all(isinstance(arg, basestring)
                         for arg in self.arguments[index])):
-            raise SieveRuleSyntaxError(
+            raise RuleSyntaxError(
                     "%s requires argument %d to be a string or list of strings"
                     % (self.RULE_IDENTIFIER, index)
                     )
@@ -72,12 +74,12 @@ class SieveRule(object):
                 msg = "a single string or list of one string"
             else:
                 msg = "a list of %d strings" % length
-            raise SieveRuleSyntaxError("%s requires argument %d to be %s" % (
+            raise RuleSyntaxError("%s requires argument %d to be %s" % (
                 self.RULE_IDENTIFIER, index, msg))
 
     def validate_arg_is_tag(self, index, allowed_tags=None):
-        if not isinstance(self.arguments[index], SieveTag):
-            raise SieveRuleSyntaxError("%s requires argument %d to be a tag" %
+        if not isinstance(self.arguments[index], sieve.grammar.Tag):
+            raise RuleSyntaxError("%s requires argument %d to be a tag" %
                     (self.RULE_IDENTIFIER, index))
         if (allowed_tags is not None
                 and self.arguments[index].tag not in allowed_tags):
@@ -91,13 +93,13 @@ class SieveRule(object):
         try:
             long(self.arguments[index])
         except TypeError:
-            raise SieveRuleSyntaxError("%s requires argument %d to be a number"
+            raise RuleSyntaxError("%s requires argument %d to be a number"
                     % (self.RULE_IDENTIFIER, index))
 
     def validate_arg_is_comparator(self, index):
         self.validate_arg_is_stringlist(index, 1)
         if not sieve.handler.get('comparator', self.arguments[index][0]):
-            raise SieveRuleSyntaxError(
+            raise RuleSyntaxError(
                     "'%s' comparator is unknown/unsupported"
                     % self.arguments[index][0])
 

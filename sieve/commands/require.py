@@ -1,8 +1,10 @@
-from sieve.grammar.command import SieveCommand
+import sieve.grammar
 import sieve.handler
 
+__all__ = ('SieveCommandRequire',)
+
 # section 3.2
-class SieveCommandRequire(SieveCommand):
+class SieveCommandRequire(sieve.grammar.Command):
 
     RULE_IDENTIFIER = 'REQUIRE'
 

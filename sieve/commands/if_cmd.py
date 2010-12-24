@@ -1,7 +1,9 @@
-from sieve.grammar.command import SieveCommand
+import sieve.grammar
+
+__all__ = ('SieveCommandIf', 'SieveCommandElsIf', 'SieveCommandElse',)
 
 # section 3.1
-class SieveCommandIfBase(SieveCommand):
+class SieveCommandIfBase(sieve.grammar.Command):
 
     def __init__(self, arguments=None, tests=None, block=None):
         super(SieveCommandIfBase, self).__init__(arguments, tests, block)
@@ -38,7 +40,7 @@ class SieveCommandElsIf(SieveCommandIfBase):
 SieveCommandElsIf.register()
 
 
-class SieveCommandElse(SieveCommand):
+class SieveCommandElse(sieve.grammar.Command):
 
     RULE_IDENTIFIER = 'ELSE'
 

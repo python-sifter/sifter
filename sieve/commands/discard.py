@@ -1,7 +1,9 @@
-from sieve.grammar.command import SieveCommand
+import sieve.grammar
+
+__all__ = ('SieveCommandDiscard',)
 
 # section 4.4
-class SieveCommandDiscard(SieveCommand):
+class SieveCommandDiscard(sieve.grammar.Command):
 
     RULE_IDENTIFIER = 'DISCARD'
 

@@ -1,7 +1,9 @@
-from sieve.grammar.test import SieveTest
+import sieve.grammar
+
+__all__ = ('SieveTestExists',)
 
 # section 5.9
-class SieveTestExists(SieveTest):
+class SieveTestExists(sieve.grammar.Test):
 
     RULE_IDENTIFIER = 'EXISTS'
 

@@ -1,7 +1,9 @@
-from sieve.grammar.command import SieveCommand
+import sieve.grammar
+
+__all__ = ('SieveCommandStop',)
 
 # section 3.3
-class SieveCommandStop(SieveCommand):
+class SieveCommandStop(sieve.grammar.Command):
 
     RULE_IDENTIFIER = 'STOP'
 

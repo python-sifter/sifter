@@ -1,8 +1,11 @@
 import sieve.handler
 
+__all__ = ('String', 'compare', 'address_part',)
+
+
 # TODO: this is here because it'll be needed when support for encoded
 # characters and variables is added. for now it's just a wrapper around str.
-class SieveString(str):
+class String(str):
 
     pass
 

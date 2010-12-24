@@ -1,10 +1,12 @@
-from sieve.grammar.rule import SieveRule
+import rule
+
+__all__ = ('Test',)
 
 
-class SieveTest(SieveRule):
+class Test(rule.Rule):
 
     RULE_TYPE = 'test'
 
     def __init__(self, arguments=None, tests=None):
-        super(SieveTest, self).__init__(arguments, tests)
+        super(Test, self).__init__(arguments, tests)
 

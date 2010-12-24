@@ -1,7 +1,9 @@
-from sieve.grammar.test import SieveTest
+import sieve.grammar
+
+__all__ = ('SieveTestFalse',)
 
 # section 5.6
-class SieveTestFalse(SieveTest):
+class SieveTestFalse(sieve.grammar.Test):
 
     RULE_IDENTIFIER = 'FALSE'
 

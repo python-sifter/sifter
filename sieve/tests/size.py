@@ -1,7 +1,9 @@
-from sieve.grammar.test import SieveTest
+import sieve.grammar
+
+__all__ = ('SieveTestSize',)
 
 # section 5.9
-class SieveTestSize(SieveTest):
+class SieveTestSize(sieve.grammar.Test):
 
     RULE_IDENTIFIER = 'SIZE'
 

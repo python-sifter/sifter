@@ -1,7 +1,9 @@
-from sieve.grammar.test import SieveTest
+import sieve.grammar
+
+__all__ = ('SieveTestAnyOf',)
 
 # section 5.3
-class SieveTestAnyOf(SieveTest):
+class SieveTestAnyOf(sieve.grammar.Test):
 
     RULE_IDENTIFIER = 'ANYOF'
 

@@ -1,14 +1,13 @@
 # Parser based on RFC 5228, especially the grammar as defined in section 8. All
 # references are to sections in RFC 5228 unless stated otherwise.
 
-
 import ply.yacc
 
-import sieve.grammar.command_list
+import sieve.grammar
 from sieve.grammar.lexer import tokens
-import sieve.grammar.string
-import sieve.grammar.tag
 import sieve.handler
+
+__all__ = ('parser',)
 
 
 def parser(**kwargs):
@@ -38,7 +37,7 @@ def p_commands_list(p):
 
 def p_commands_empty(p):
     """commands : """
-    p[0] = sieve.grammar.command_list.SieveCommandList()
+    p[0] = sieve.grammar.CommandList()
 
 def p_command(p):
     """command : IDENTIFIER arguments ';'
@@ -138,7 +137,7 @@ def p_argument_number(p):
 
 def p_argument_tag(p):
     """argument : TAG"""
-    p[0] = sieve.grammar.tag.SieveTag(p[1])
+    p[0] = sieve.grammar.Tag(p[1])
 
 def p_stringlist_error(p):
     """argument : '[' error ']'"""
@@ -157,5 +156,5 @@ def p_stringlist_single(p):
 
 def p_string(p):
     """string : QUOTED_STRING"""
-    p[0] = sieve.grammar.string.SieveString(p[1])
+    p[0] = sieve.grammar.String(p[1])
 

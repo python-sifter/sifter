@@ -1,10 +1,11 @@
 import email.utils
 
-from sieve.grammar.command import SieveCommand
-from sieve.grammar.rule import SieveRuleSyntaxError
+import sieve.grammar
+
+__all__ = ('SieveCommandRedirect',)
 
 # section 4.2
-class SieveCommandRedirect(SieveCommand):
+class SieveCommandRedirect(sieve.grammar.Command):
 
     RULE_IDENTIFIER = 'REDIRECT'
 
@@ -20,7 +21,7 @@ class SieveCommandRedirect(SieveCommand):
         # parsing.
         realname, emailaddr = email.utils.parseaddr(self.arguments[0][0])
         if emailaddr == "":
-            raise SieveRuleSyntaxError(
+            raise sieve.grammar.RuleSyntaxError(
                     "REDIRECT destination not a valid email address: %s"
                     % self.arguments[0][0]
                     )

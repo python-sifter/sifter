@@ -1,8 +1,10 @@
 import string
 
-import sieve.comparators.octet
+from sieve.comparators.octet import SieveComparatorOctet
 
-class SieveComparatorASCIICasemap(sieve.comparators.octet.SieveComparatorOctet):
+__all__ = ('SieveComparatorASCIICasemap',)
+
+class SieveComparatorASCIICasemap(SieveComparatorOctet):
 
     COMPARATOR_ID = 'i;ascii-casemap'
 

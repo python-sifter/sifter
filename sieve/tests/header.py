@@ -1,8 +1,10 @@
+import sieve.grammar
 import sieve.grammar.string
-from sieve.grammar.test import SieveTest
+
+__all__ = ('SieveTestHeader',)
 
 # section 5.7
-class SieveTestHeader(SieveTest):
+class SieveTestHeader(sieve.grammar.Test):
 
     RULE_IDENTIFIER = 'HEADER'
 

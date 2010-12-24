@@ -1,7 +1,9 @@
-from sieve.grammar.command import SieveCommand
+import sieve.grammar
+
+__all__ = ('SieveCommandKeep',)
 
 # section 4.3
-class SieveCommandKeep(SieveCommand):
+class SieveCommandKeep(sieve.grammar.Command):
 
     RULE_IDENTIFIER = 'KEEP'
 

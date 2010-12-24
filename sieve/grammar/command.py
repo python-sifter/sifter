@@ -1,21 +1,22 @@
-from sieve.grammar.command_list import SieveCommandList
-from sieve.grammar.rule import SieveRule, SieveRuleSyntaxError
+import sieve.grammar
+import rule
 import sieve.utils
 
+__all__ = ('Command',)
 
-class SieveCommand(SieveRule):
+class Command(rule.Rule):
 
     RULE_TYPE = 'command'
 
     def __init__(self, arguments=None, tests=None, block=None):
-        super(SieveCommand, self).__init__(arguments, tests)
+        super(Command, self).__init__(arguments, tests)
         if block is None:
-            self.block = SieveCommandList()
+            self.block = sieve.grammar.CommandList()
         else:
             self.block = block
 
     def __str__(self):
-        s = [ super(SieveCommand, self).__str__(), ]
+        s = [ super(Command, self).__str__(), ]
         if len(self.block.commands) > 0:
             s.append("{\n")
             for command in self.block.commands:
@@ -25,6 +26,6 @@ class SieveCommand(SieveRule):
 
     def validate_block_size(self, max_commands):
         if len(self.block.commands) > max_commands:
-            raise SieveRuleSyntaxError("%s takes no more than %d commands" % (
+            raise sieve.grammar.RuleSyntaxError("%s takes no more than %d commands" % (
                 self.RULE_IDENTIFIER, max_commands))
 

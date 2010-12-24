@@ -1,4 +1,8 @@
-class SieveComparator(object):
+import sieve.handler
+
+__all__ = ('Comparator',)
+
+class Comparator(object):
 
     @classmethod
     def register(cls):

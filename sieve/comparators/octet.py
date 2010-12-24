@@ -1,8 +1,10 @@
 import re
 
-import sieve.comparator
+import sieve.grammar
 
-class SieveComparatorOctet(sieve.comparator.SieveComparator):
+__all__ = ('SieveComparatorOctet',)
+
+class SieveComparatorOctet(sieve.grammar.Comparator):
 
     COMPARATOR_ID = 'i;octet'
 

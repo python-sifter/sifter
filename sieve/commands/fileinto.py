@@ -1,7 +1,9 @@
-from sieve.grammar.command import SieveCommand
+import sieve.grammar
+
+__all__ = ('SieveCommandFileInto',)
 
 # section 4.1
-class SieveCommandFileInto(SieveCommand):
+class SieveCommandFileInto(sieve.grammar.Command):
 
     RULE_IDENTIFIER = 'FILEINTO'
 

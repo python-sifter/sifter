@@ -1,10 +1,12 @@
 import email.utils
 
+import sieve.grammar
 import sieve.grammar.string
-from sieve.grammar.test import SieveTest
+
+__all__ = ('SieveTestAddress',)
 
 # section 5.1
-class SieveTestAddress(SieveTest):
+class SieveTestAddress(sieve.grammar.Test):
 
     RULE_IDENTIFIER = 'ADDRESS'
 

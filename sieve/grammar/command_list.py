@@ -1,6 +1,8 @@
-from sieve.grammar.state import SieveEvaluationState
+import sieve.grammar
 
-class SieveCommandList(object):
+__all__ = ('CommandList',)
+
+class CommandList(object):
 
     def __init__(self, command_list=None):
         if command_list is None:
@@ -13,7 +15,7 @@ class SieveCommandList(object):
 
     def evaluate(self, message, state=None):
         if state is None:
-            state = SieveEvaluationState()
+            state = sieve.grammar.EvaluationState()
         for command in self.commands:
             command.evaluate(message, state)
             # don't bother processing more commands if we hit a STOP. this
