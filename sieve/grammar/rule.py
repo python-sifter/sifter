@@ -102,54 +102,6 @@ class Rule(object):
             raise RuleSyntaxError("%s takes %s tests" % (
                 self.RULE_IDENTIFIER, msg))
 
-    def validate_arg_is_stringlist(self, index, length=None):
-        if not (isinstance(self.arguments[index], list)
-                and all(isinstance(arg, basestring)
-                        for arg in self.arguments[index])):
-            raise RuleSyntaxError(
-                    "%s requires argument %d to be a string or list of strings"
-                    % (self.RULE_IDENTIFIER, index)
-                    )
-        if length is not None and len(self.arguments[index]) != length:
-            if length == 1:
-                msg = "a single string or list of one string"
-            else:
-                msg = "a list of %d strings" % length
-            raise RuleSyntaxError("%s requires argument %d to be %s" % (
-                self.RULE_IDENTIFIER, index, msg))
-
-    def validate_arg_is_tag(self, index, allowed_tags=None):
-        if not isinstance(self.arguments[index], sieve.grammar.Tag):
-            raise RuleSyntaxError("%s requires argument %d to be a tag" %
-                    (self.RULE_IDENTIFIER, index))
-        if (allowed_tags is not None
-                and self.arguments[index] not in allowed_tags):
-            raise SieveRuleSyntaxError(
-                    "%s requires argument %d to be one of these tags: %s"
-                    % (self.RULE_IDENTIFIER, index,
-                        ', '.join([ ':'+tag for tag in allowed_tags]))
-                    )
-
-    def validate_arg_is_number(self, index):
-        try:
-            long(self.arguments[index])
-        except TypeError:
-            raise RuleSyntaxError("%s requires argument %d to be a number"
-                    % (self.RULE_IDENTIFIER, index))
-
-    def validate_arg_is_comparator(self, index):
-        self.validate_arg_is_stringlist(index, 1)
-        if not sieve.handler.get('comparator', self.arguments[index][0]):
-            raise RuleSyntaxError(
-                    "'%s' comparator is unknown/unsupported"
-                    % self.arguments[index][0])
-
-    def validate_arg_is_match_type(self, index):
-        self.validate_arg_is_tag(index, ('IS', 'CONTAINS', 'MATCHES'))
-
-    def validate_arg_is_address_part(self, index):
-        self.validate_arg_is_tag(index, ('LOCALPART', 'DOMAIN', 'ALL'))
-
     def evaluate(self, message, state):
         raise NotImplementedError
 

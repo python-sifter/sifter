@@ -3,6 +3,7 @@ from sieve.grammar.actions import *
 from sieve.grammar.comparator import *
 from sieve.grammar.string import String
 from sieve.grammar.tag import *
+from sieve.grammar.validator import *
 
 # modules that only depend on a module above
 from sieve.grammar.rule import *
