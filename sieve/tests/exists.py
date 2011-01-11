@@ -1,4 +1,5 @@
 import sieve.grammar
+import sieve.validators
 
 __all__ = ('SieveTestExists',)
 
@@ -10,7 +11,7 @@ class SieveTestExists(sieve.grammar.Test):
     def __init__(self, arguments=None, tests=None):
         super(SieveTestExists, self).__init__(arguments, tests)
         tagged_args, positional_args = self.validate_arguments(
-                {}, [ validator.StringList(), ])
+                {}, [ sieve.validators.StringList(), ])
         self.validate_tests_size(0)
         self.headers = positional_args[0]
 
