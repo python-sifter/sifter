@@ -9,7 +9,7 @@ class SieveTestNot(sieve.grammar.Test):
 
     def __init__(self, arguments=None, tests=None):
         super(SieveTestNot, self).__init__(arguments, tests)
-        self.validate_arguments_size(0)
+        self.validate_arguments()
         self.validate_tests_size(1)
 
     def evaluate(self, message, state):

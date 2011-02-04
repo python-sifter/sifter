@@ -9,7 +9,7 @@ class SieveTestAllOf(sieve.grammar.Test):
 
     def __init__(self, arguments=None, tests=None):
         super(SieveTestAllOf, self).__init__(arguments, tests)
-        self.validate_arguments_size(0)
+        self.validate_arguments()
 
     def evaluate(self, message, state):
         # short-circuit evaluation if a test is false. the base standard does

@@ -1,4 +1,5 @@
 import sieve.grammar
+import sieve.validators
 
 __all__ = ('SieveCommandFileInto',)
 
@@ -9,16 +10,19 @@ class SieveCommandFileInto(sieve.grammar.Command):
 
     def __init__(self, arguments=None, tests=None, block=None):
         super(SieveCommandFileInto, self).__init__(arguments, tests, block)
-        self.validate_arguments_size(1)
+        _, positional_args = self.validate_arguments(
+                {},
+                [ sieve.validators.StringList(length=1), ],
+            )
         self.validate_tests_size(0)
         self.validate_block_size(0)
-        self.validate_arg_is_stringlist(0, 1)
+        self.file_dest = positional_args[0]
 
     def evaluate(self, message, state):
         if 'fileinto' not in state.required_extensions:
             raise RuntimeError("REQUIRE 'fileinto' must happen before "
                                "FILEINTO can be used.")
-        state.actions.append('fileinto', self.arguments[0][0])
+        state.actions.append('fileinto', self.file_dest)
         state.actions.cancel_implicit_keep()
 
 SieveCommandFileInto.register()

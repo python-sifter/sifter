@@ -80,17 +80,6 @@ class Rule(object):
 
         return (seen_args, self.arguments[i:])
 
-    def validate_arguments_size(self, min_args, max_args=None):
-        if max_args is None:
-            max_args = min_args
-        if len(self.arguments) < min_args or len(self.arguments) > max_args:
-            if max_args == min_args:
-                msg = "%d" % min_args
-            else:
-                msg = "between %d and %d" % (min_args, max_args)
-            raise RuleSyntaxError("%s takes %s arguments" % (
-                self.RULE_IDENTIFIER, msg))
-
     def validate_tests_size(self, min_tests, max_tests=None):
         if max_tests is None:
             max_tests = min_tests

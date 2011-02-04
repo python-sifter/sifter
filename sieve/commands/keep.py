@@ -9,7 +9,7 @@ class SieveCommandKeep(sieve.grammar.Command):
 
     def __init__(self, arguments=None, tests=None, block=None):
         super(SieveCommandKeep, self).__init__(arguments, tests, block)
-        self.validate_arguments_size(0)
+        self.validate_arguments()
         self.validate_tests_size(0)
         self.validate_block_size(0)
 

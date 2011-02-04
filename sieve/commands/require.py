@@ -1,5 +1,6 @@
 import sieve.grammar
 import sieve.handler
+import sieve.validators
 
 __all__ = ('SieveCommandRequire',)
 
@@ -10,13 +11,16 @@ class SieveCommandRequire(sieve.grammar.Command):
 
     def __init__(self, arguments=None, tests=None, block=None):
         super(SieveCommandRequire, self).__init__(arguments, tests, block)
-        self.validate_arguments_size(1)
+        _, positional_args = self.validate_arguments(
+                {},
+                [ sieve.validators.StringList(), ],
+            )
         self.validate_tests_size(0)
         self.validate_block_size(0)
-        self.validate_arg_is_stringlist(0)
+        self.ext_names = positional_args[0]
 
     def evaluate(self, message, state):
-        for ext_name in self.arguments[0]:
+        for ext_name in self.ext_names:
             if not sieve.handler.get('extension', ext_name):
                 raise RuntimeError("Required extension '%s' not supported"
                         % ext_name)

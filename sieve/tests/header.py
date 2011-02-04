@@ -1,5 +1,6 @@
 import sieve.grammar
 import sieve.grammar.string
+import sieve.validators
 
 __all__ = ('SieveTestHeader',)
 
@@ -10,31 +11,25 @@ class SieveTestHeader(sieve.grammar.Test):
 
     def __init__(self, arguments=None, tests=None):
         super(SieveTestHeader, self).__init__(arguments, tests)
-        self.validate_arguments_size(2, 5)
+        tagged_args, positional_args = self.validate_arguments(
+                {
+                    'comparator' : sieve.validators.Comparator(),
+                    'match_type' : sieve.validators.MatchType(),
+                },
+                [
+                    sieve.validators.StringList(),
+                    sieve.validators.StringList(),
+                ]
+            )
         self.validate_tests_size(0)
+
+        self.headers = positional_args[0]
+        self.keylist = positional_args[1]
         self.match_type = self.comparator = None
-
-        headers_idx = len(self.arguments) - 2
-        keylist_idx = len(self.arguments) - 1
-        if len(self.arguments) == 3:
-            self.validate_arg_is_match_type(0)
-            self.match_type = self.arguments[0]
-        elif len(self.arguments) == 4:
-            self.validate_arg_is_tag(0, ('COMPARATOR',))
-            self.validate_arg_is_comparator(1)
-            self.comparator = self.arguments[1]
-        elif len(self.arguments) == 5:
-            # TODO: allow arguments to come in any order
-            self.validate_arg_is_tag(0, ('COMPARATOR',))
-            self.validate_arg_is_comparator(1)
-            self.comparator = self.arguments[1]
-            self.validate_arg_is_match_type(2)
-            self.match_type = self.arguments[2]
-
-        self.validate_arg_is_stringlist(headers_idx)
-        self.validate_arg_is_stringlist(keylist_idx)
-        self.headers = self.arguments[headers_idx]
-        self.keylist = self.arguments[keylist_idx]
+        if 'comparator' in tagged_args:
+            self.comparator = tagged_args['comparator'][1][0]
+        if 'match_type' in tagged_args:
+            self.match_type = tagged_args['match_type'][0]
 
     def evaluate(self, message, state):
         for header in self.headers:
