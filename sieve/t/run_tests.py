@@ -9,5 +9,5 @@ if __name__ == '__main__':
                 'sieve.t.test_validators',
             ),
         )
-    unittest.TextTestRunner().run(suite)
+    unittest.TextTestRunner(verbosity=2).run(suite)
 
