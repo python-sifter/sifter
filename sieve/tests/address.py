@@ -30,7 +30,7 @@ class SieveTestAddress(sieve.grammar.Test):
         self.headers, self.keylist = positional_args
         self.match_type = self.comparator = self.address_part = None
         if 'comparator' in tagged_args:
-            self.comparator = tagged_args['comparator'][1]
+            self.comparator = tagged_args['comparator'][1][0]
         if 'match_type' in tagged_args:
             self.match_type = tagged_args['match_type'][0]
         if 'address_part' in tagged_args:
