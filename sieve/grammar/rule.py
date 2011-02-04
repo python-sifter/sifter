@@ -63,6 +63,11 @@ class Rule(object):
                     seen_args[arg_name] = self.arguments[i:i+num_valid_args]
                     i += num_valid_args
                     break
+            else:
+                raise RuleSyntaxError(
+                        "Unexpected tag argument '%s' to %s encountered"
+                        % (self.arguments[i], self.RULE_IDENTIFIER)
+                        )
         # TODO: make sure all non-optional tagged arguments were seen
 
         if len(positional_args) != (n - i):
