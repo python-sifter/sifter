@@ -9,15 +9,15 @@ class SieveComparatorOctet(sieve.grammar.Comparator):
     COMPARATOR_ID = 'i;octet'
 
     @classmethod
-    def cmp_is(cls, str1, str2):
+    def cmp_is(cls, str1, str2, state):
         return cls.sort_key(str1) == cls.sort_key(str2)
 
     @classmethod
-    def cmp_contains(cls, s, substring):
+    def cmp_contains(cls, s, substring, state):
         return cls.sort_key(substring) in cls.sort_key(s)
 
     @classmethod
-    def cmp_matches(cls, s, pattern):
+    def cmp_matches(cls, s, pattern, state):
         pattern = cls.sort_key(pattern)
         i, n = 0, len(pattern)
         re_pattern = []

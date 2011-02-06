@@ -14,7 +14,7 @@ def compare(str1, str2, state, comparator=None, match_type=None):
     if ('comparator-%s' % comparator) not in state.required_extensions:
         raise RuntimeError("REQUIRE 'comparator-%s' must happen before "
                            "the comparator can be used." % comparator)
-    return cmp_fn(str1, str2)
+    return cmp_fn(str1, str2, state)
 
 def address_part(address, part=None):
     # section 2.7.4: default address part is ":all"
