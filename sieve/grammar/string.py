@@ -1,4 +1,4 @@
-import sieve.handler
+import sieve.comparator
 
 __all__ = ('String', 'compare', 'address_part',)
 
@@ -10,25 +10,10 @@ class String(str):
     pass
 
 def compare(str1, str2, state, comparator=None, match_type=None):
-    # section 2.7.3: default comparator is "i;ascii-casemap"
-    if comparator is None: comparator = 'i;ascii-casemap'
-    # section 2.7.1: default match type is ":is"
-    if match_type is None: match_type = 'IS'
-
-    cmp_handler = sieve.handler.get('comparator', comparator)
-    if not cmp_handler:
-        raise RuntimeError("Comparator not supported: %s" % comparator)
+    cmp_fn = sieve.comparator.get_match_fn(comparator, match_type)
     if ('comparator-%s' % comparator) not in state.required_extensions:
         raise RuntimeError("REQUIRE 'comparator-%s' must happen before "
                            "the comparator can be used." % comparator)
-
-    try:
-        cmp_fn = getattr(cmp_handler, 'cmp_%s' % match_type.lower())
-    except AttributeError:
-        raise RuntimeError(
-                "':%s' matching not supported by comparator '%s'"
-                % (match_type, comparator)
-                )
     return cmp_fn(str1, str2)
 
 def address_part(address, part=None):
