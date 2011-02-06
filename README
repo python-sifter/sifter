@@ -1,5 +1,8 @@
 Python implementation of the Sieve email filtering language (RFC 5228).
 
+https://github.com/garyp/pysieve
+
+
 EXAMPLE
 =======
 
