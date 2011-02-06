@@ -10,7 +10,8 @@ class String(str):
     pass
 
 def compare(str1, str2, state, comparator=None, match_type=None):
-    cmp_fn = sieve.comparator.get_match_fn(comparator, match_type)
+    cmp_fn, comparator, match_type = sieve.comparator.get_match_fn(
+            comparator, match_type)
     if ('comparator-%s' % comparator) not in state.required_extensions:
         raise RuntimeError("REQUIRE 'comparator-%s' must happen before "
                            "the comparator can be used." % comparator)

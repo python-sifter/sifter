@@ -28,5 +28,5 @@ def get_match_fn(comparator, match_type):
                 % (match_type, comparator)
                 )
 
-    return cmp_fn
+    return (cmp_fn, comparator, match_type)
 
