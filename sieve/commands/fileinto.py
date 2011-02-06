@@ -19,9 +19,7 @@ class SieveCommandFileInto(sieve.grammar.Command):
         self.file_dest = positional_args[0]
 
     def evaluate(self, message, state):
-        if 'fileinto' not in state.required_extensions:
-            raise RuntimeError("REQUIRE 'fileinto' must happen before "
-                               "FILEINTO can be used.")
+        state.check_required_extension('fileinto', 'FILEINTO')
         state.actions.append('fileinto', self.file_dest)
         state.actions.cancel_implicit_keep()
 

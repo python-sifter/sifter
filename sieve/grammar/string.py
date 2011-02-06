@@ -12,9 +12,8 @@ class String(str):
 def compare(str1, str2, state, comparator=None, match_type=None):
     cmp_fn, comparator, match_type = sieve.comparator.get_match_fn(
             comparator, match_type)
-    if ('comparator-%s' % comparator) not in state.required_extensions:
-        raise RuntimeError("REQUIRE 'comparator-%s' must happen before "
-                           "the comparator can be used." % comparator)
+    state.check_required_extension('comparator-%s' % comparator,
+            'the comparator')
     return cmp_fn(str1, str2, state)
 
 def address_part(address, part=None):

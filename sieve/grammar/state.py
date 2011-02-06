@@ -15,3 +15,10 @@ class EvaluationState(object):
 
     def require_extension(self, extension):
         self.required_extensions[extension] = True
+
+    def check_required_extension(self, extension, feature_string):
+        if extension not in self.required_extensions:
+            raise RuntimeError(
+                    "REQUIRE '%s' must happen before %s can be used."
+                    % (extension, feature_string)
+                    )

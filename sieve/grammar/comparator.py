@@ -25,9 +25,7 @@ class Comparator(object):
     @classmethod
     def cmp_regex(cls, s, pattern, state):
         # section 4: must be used as an extension named 'regex'
-        if 'regex' not in state.required_extensions:
-            raise RuntimeError("REQUIRE 'regex' must happen before :regex can "
-                               "be used.")
+        state.check_required_extension('regex', ':regex')
         # TODO: cache compiled pattern for more efficient execution across
         # multiple strings and messages
         # TODO: make sure the specified pattern is allowed by the standard
