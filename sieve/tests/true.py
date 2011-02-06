@@ -1,6 +1,6 @@
 import sieve.grammar
 
-__all__ = ('SieveTestRule',)
+__all__ = ('SieveTestTrue',)
 
 # section 5.10
 class SieveTestTrue(sieve.grammar.Test):
