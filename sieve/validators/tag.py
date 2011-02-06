@@ -2,6 +2,8 @@ import sieve.grammar
 import sieve.handler
 import sieve.validators
 
+__all__ = ('Tag', 'MatchType', 'Comparator',)
+
 class Tag(sieve.grammar.Validator):
 
     def __init__(self, allowed_tags=None, tag_arg_validators=None):

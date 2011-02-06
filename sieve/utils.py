@@ -1,3 +1,5 @@
+__all__ = ('indent_string',)
+
 def indent_string(s, num_spaces):
     add_newline = False
     if s[-1] == '\n':

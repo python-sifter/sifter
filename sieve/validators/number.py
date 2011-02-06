@@ -1,5 +1,7 @@
 import sieve.grammar
 
+__all__ = ('Number',)
+
 class Number(sieve.grammar.Validator):
 
     def validate(self, arg_list, starting_index):

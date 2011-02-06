@@ -1,5 +1,7 @@
 import sieve.grammar
 
+__all__ = ('StringList',)
+
 class StringList(sieve.grammar.Validator):
 
     def __init__(self, length=None):
