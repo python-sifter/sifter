@@ -1,4 +1,5 @@
 import sieve.extensions.builtin
+import sieve.extensions.regex
 from sieve.grammar import grammar
 from sieve.grammar import lexer
 

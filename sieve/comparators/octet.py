@@ -37,6 +37,8 @@ class SieveComparatorOctet(sieve.grammar.Comparator):
             else:
                 re_pattern.append(re.escape(c))
         re_pattern.append("\Z")
+        # TODO: compile and cache pattern for more efficient execution across
+        # multiple strings and messages
         return re.match(''.join(re_pattern), cls.sort_key(s),
                 re.MULTILINE | re.DOTALL)
 

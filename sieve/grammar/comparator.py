@@ -18,3 +18,23 @@ class Comparator(object):
     def sort_key(cls, s):
         return s
 
+    # draft-ietf-sieve-regex-01: according to section 5, the :regex match type
+    # is available to all comparators. furthermore, string normalization (aka
+    # sort_key() above) is only applied to the string to be matched against,
+    # not to the regular expression string.
+    @classmethod
+    def cmp_regex(cls, s, pattern, state):
+        # section 4: must be used as an extension named 'regex'
+        if 'regex' not in state.required_extensions:
+            raise RuntimeError("REQUIRE 'regex' must happen before :regex can "
+                               "be used.")
+        # TODO: cache compiled pattern for more efficient execution across
+        # multiple strings and messages
+        # TODO: make sure the specified pattern is allowed by the standard
+        # (which allows only extended regular expressions from IEEE Standard
+        # 1003.2, 1992): 1) disallow python-specific features, along with word
+        # boundaries and backreferences, 2) double-check that python supports
+        # all ERE features.
+        compiled_re = re.compile(pattern)
+        return compiled_re.search(cls.sort_key(s))
+

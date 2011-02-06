@@ -3,6 +3,15 @@ Python implementation of the Sieve email filtering language (RFC 5228).
 https://github.com/garyp/pysieve
 
 
+FEATURES
+========
+
+- Supports all of the base Sieve spec from RFC 5228, except for features still
+  listed under TODO below
+- Extensions supported:
+    - regex (draft-ietf-sieve-regex-01)
+
+
 EXAMPLE
 =======
 
@@ -50,8 +59,9 @@ In rough order of importance:
   described in section 2.4.2
 - Check that python's `email.message` implements header comparisons the same
   way as the sieve spec
+- Make sure regular expressions are actually handled according to the extension
+  spec
 - Add support for various extensions:
-    - regex (draft-ietf-sieve-regex)
     - variables (RFC 5229)
     - externally stored lists (draft-melnikov-sieve-external-lists)
     - body (RFC 5173)
