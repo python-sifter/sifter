@@ -22,3 +22,4 @@ class EvaluationState(object):
                     "REQUIRE '%s' must happen before %s can be used."
                     % (extension, feature_string)
                     )
+        return True
