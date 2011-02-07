@@ -6,6 +6,7 @@ if __name__ == '__main__':
             (
                 'sieve.t.test_comparators',
                 'sieve.t.test_evaluation',
+                'sieve.t.test_grammar',
                 'sieve.t.test_parser',
                 'sieve.t.test_validators',
             ),
