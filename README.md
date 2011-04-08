@@ -1,6 +1,6 @@
 Python implementation of the Sieve email filtering language (RFC 5228).
 
-https://github.com/garyp/pysieve
+https://github.com/garyp/sifter
 
 
 FEATURES
@@ -16,8 +16,8 @@ EXAMPLE
 =======
 
     import email
-    import sieve.parser
-    rules = sieve.parser.parse_file(open('my_rules.sieve'))
+    import sifter.parser
+    rules = sifter.parser.parse_file(open('my_rules.sieve'))
     msg = email.message_from_file(open('an_email_to_me.eml'))
     msg_actions = rules.evaluate(msg)
 
