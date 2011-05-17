@@ -11,7 +11,7 @@ class MockRule(sifter.grammar.Rule):
     def __init__(self, arguments=None, tests=None):
         super(MockRule, self).__init__(arguments, tests)
 
-class TestArgValidator(unittest.TestCase):
+class TestValidationFn(unittest.TestCase):
 
     def test_too_many_args(self):
         mock_rule = MockRule([ sifter.grammar.Tag('IS'), 13, ])
@@ -31,34 +31,34 @@ class TestArgValidator(unittest.TestCase):
                 ],
             )
 
+class TestTagValidator(unittest.TestCase):
+
     def test_allowed_tag(self):
-        mock_rule = MockRule([ sifter.grammar.Tag('IS'), ])
-        tag_args, pos_args = mock_rule.validate_arguments(
-                { 'mock_tag' : sifter.validators.Tag(['MOCK', 'IS',]), },
-            )
-        self.assertTrue('mock_tag' in tag_args)
-        self.assertEqual(len(pos_args), 0)
+        mock_validator = sifter.validators.Tag(['MOCK', 'IS',])
+        self.assertEqual(
+                mock_validator.validate([sifter.grammar.Tag('IS')], 0),
+                1)
+
+    def test_allowed_single_tag(self):
         # test the case for a non-list single tag name
-        tag_args, pos_args = mock_rule.validate_arguments(
-                { 'mock_tag' : sifter.validators.Tag('IS'), },
-            )
-        self.assertTrue('mock_tag' in tag_args)
-        self.assertEqual(len(pos_args), 0)
+        mock_validator = sifter.validators.Tag('IS')
+        self.assertEqual(
+                mock_validator.validate([sifter.grammar.Tag('IS')], 0),
+                1)
 
     def test_not_allowed_tag(self):
-        mock_rule = MockRule([ sifter.grammar.Tag('IS'), ])
-        self.assertRaises(
-                sifter.grammar.RuleSyntaxError,
-                mock_rule.validate_arguments,
-                { 'mock_tag' : sifter.validators.Tag(['MOCK', 'FOO',]), },
-            )
+        mock_validator = sifter.validators.Tag(['MOCK', 'FOO',])
+        self.assertEqual(
+                mock_validator.validate([sifter.grammar.Tag('IS')], 0),
+                0)
+
+    def test_not_allowed_single_tag(self):
         # test the case for a non-list single tag name. test when the tag is a
         # substring of the allowed tag.
-        self.assertRaises(
-                sifter.grammar.RuleSyntaxError,
-                mock_rule.validate_arguments,
-                { 'mock_tag' : sifter.validators.Tag('ISFOO'), },
-            )
+        mock_validator = sifter.validators.Tag('ISFOO')
+        self.assertEqual(
+                mock_validator.validate([sifter.grammar.Tag('IS')], 0),
+                0)
 
 
 if __name__ == '__main__':
