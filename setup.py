@@ -11,6 +11,7 @@ setup(
         author = "Gary Peck",
         author_email = "gary@realify.com",
         url = "https://github.com/garyp/sifter",
+        license = "BSD",
         description = "Parser/evaluator for the Sieve filtering language (RFC 5228)",
         long_description = long_description,
         classifiers = [
