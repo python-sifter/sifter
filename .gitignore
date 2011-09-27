@@ -1,3 +1,5 @@
+/dist/
+/MANIFEST
 parser.out
 parsetab.py
 *.pyc
