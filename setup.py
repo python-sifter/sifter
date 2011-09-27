@@ -2,6 +2,9 @@
 
 from distutils.core import setup
 
+with open('README.rst') as file:
+    long_description = file.read()
+
 setup(
         name = "sifter",
         version = "0.1",
@@ -9,6 +12,7 @@ setup(
         author_email = "gary@realify.com",
         url = "https://github.com/garyp/sifter",
         description = "Parser/evaluator for the Sieve filtering language (RFC 5228)",
+        long_description = long_description,
         classifiers = [
             "Programming Language :: Python",
             "Programming Language :: Python :: 2",
