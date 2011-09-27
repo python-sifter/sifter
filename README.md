@@ -43,7 +43,6 @@ TODO
 In rough order of importance:
 
 - An example adaptor that provides Unix LDA behavior using sieve for filtering
-- Decide on which LICENSE to use
 - Base spec features not yet implemented:
     - encoded characters (section 2.4.2.4)
     - multi-line strings (section 2.4.2)
