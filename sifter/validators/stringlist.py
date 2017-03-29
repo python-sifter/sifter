@@ -14,7 +14,7 @@ class StringList(sifter.grammar.Validator):
         arg = arg_list[starting_index]
 
         if not (isinstance(arg, list)
-                and all(isinstance(list_member, basestring)
+                and all(isinstance(list_member, (str, bytes))
                         for list_member in arg)):
             return 0
         if self.length is not None and len(arg) != self.length:

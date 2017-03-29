@@ -1,6 +1,7 @@
 import email
 import os.path
 import unittest
+import codecs
 
 import sifter.parser
 
@@ -21,12 +22,12 @@ class TestEvaluateRules(unittest.TestCase):
         self.messages = {}
         self.rules = {}
         for result in self.EVAL_RESULTS:
-            msg_fh = open(os.path.join(os.path.dirname(__file__), result[0]))
-            self.messages.setdefault(result[0], email.message_from_file(msg_fh))
-            msg_fh.close()
-            rule_fh = open(os.path.join(os.path.dirname(__file__), result[1]))
-            self.rules.setdefault(result[1], sifter.parser.parse_file(rule_fh))
-            rule_fh.close()
+            with codecs.open(os.path.join(os.path.dirname(__file__), result[0]),
+                             encoding='utf-8') as msg_fh:
+                self.messages.setdefault(result[0], email.message_from_file(msg_fh))
+            with codecs.open(os.path.join(os.path.dirname(__file__), result[1]),
+                             encoding='utf-8') as rule_fh:
+                self.rules.setdefault(result[1], sifter.parser.parse_file(rule_fh))
 
     def test_msg_rule_cross_product(self):
         for result in self.EVAL_RESULTS:

@@ -20,8 +20,8 @@ import sifter.comparators.ascii_casemap
 import sifter.comparators.octet
 
 import sifter.extension
-map(sifter.extension.register,
+list(map(sifter.extension.register,
     ('fileinto',
      'comparator-i;ascii-casemap',
      'comparator-i;octet',
-     ))
+     )))

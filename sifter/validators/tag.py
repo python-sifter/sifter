@@ -8,7 +8,7 @@ class Tag(sifter.grammar.Validator):
 
     def __init__(self, allowed_tags=None, tag_arg_validators=None):
         super(Tag, self).__init__()
-        if isinstance(allowed_tags, basestring):
+        if isinstance(allowed_tags, (str, bytes)):
             self.allowed_tags = [ allowed_tags ]
         else:
             self.allowed_tags = allowed_tags
