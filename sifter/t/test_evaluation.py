@@ -16,6 +16,12 @@ class TestEvaluateRules(unittest.TestCase):
              [('redirect', 'postmaster@example.com')]),
             ("evaluation_2.msg", "evaluation_2.rules",
              []),
+            ("evaluation_3.msg", "evaluation_1.rules",
+             [('redirect', 'field@example.com')]),
+            ("evaluation_3.msg", "evaluation_2.rules",
+             [('fileinto', ['INBOX'])]),
+            ("evaluation_3.msg", "evaluation_3.rules",
+             [('keep', None)]),
     )
 
     def setUp(self):
