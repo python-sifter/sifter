@@ -14,6 +14,9 @@ setup(
         license = "BSD",
         description = "Parser/evaluator for the Sieve filtering language (RFC 5228)",
         long_description = long_description,
+        install_requires=[
+            "ply",
+            ],
         classifiers = [
             "Programming Language :: Python",
             "Programming Language :: Python :: 2",
