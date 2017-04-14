@@ -93,6 +93,9 @@ def t_newline(t):
     r'(\r\n)+'
     t.lexer.lineno += t.value.count('\n')
 
+def t_error(t):
+    t.lexer.skip(1)
+
 
 if __name__ == '__main__':
     # PLY has a simple debugging mode that'll print out tokens for input coming
