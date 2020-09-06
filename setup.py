@@ -39,5 +39,8 @@ setup(
         package_data = {
             "sifter.t" : ["*.in", "*.out", "*.msg", "*.rules"],
             },
+        install_requires=[
+            "ply"
+            ],
         )
 
