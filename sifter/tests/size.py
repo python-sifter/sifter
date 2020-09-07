@@ -26,7 +26,7 @@ class TestSize(sifter.grammar.Test):
                 }
             )
         self.validate_tests_size(0)
-        self.comparison_fn = COMPARISON_FNS[tagged_args['size'][0]]
+        self.comparison_fn = self.COMPARISON_FNS[tagged_args['size'][0]]
         self.comparison_size = tagged_args['size'][1]
 
     def evaluate(self, message, state):
