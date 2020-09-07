@@ -1,3 +1,5 @@
+import re
+
 import sifter.comparator
 
 __all__ = ('Comparator',)
