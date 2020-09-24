@@ -15,10 +15,11 @@ class TestEvaluationState(unittest.TestCase):
         self.state.require_extension('ext1')
         self.assertTrue(self.state.check_required_extension('ext1', 'ext1'))
         self.assertRaises(
-                RuntimeError,
-                self.state.check_required_extension,
-                'ext2', 'ext2',
-            )
+            RuntimeError,
+            self.state.check_required_extension,
+            'ext2',
+            'ext2',
+        )
 
 
 if __name__ == '__main__':

@@ -2,6 +2,7 @@ import sifter.grammar
 
 __all__ = ('TestFalse',)
 
+
 # section 5.6
 class TestFalse(sifter.grammar.Test):
 
@@ -14,5 +15,6 @@ class TestFalse(sifter.grammar.Test):
 
     def evaluate(self, message, state):
         return False
+
 
 TestFalse.register()

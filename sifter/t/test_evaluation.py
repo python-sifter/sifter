@@ -5,23 +5,17 @@ import codecs
 
 import sifter.parser
 
+
 class TestEvaluateRules(unittest.TestCase):
 
     EVAL_RESULTS = (
-            ("evaluation_1.msg", "evaluation_1.rules",
-             [('redirect', 'acm@example.com')]),
-            ("evaluation_1.msg", "evaluation_2.rules",
-             []),
-            ("evaluation_2.msg", "evaluation_1.rules",
-             [('redirect', 'postmaster@example.com')]),
-            ("evaluation_2.msg", "evaluation_2.rules",
-             []),
-            ("evaluation_3.msg", "evaluation_1.rules",
-             [('redirect', 'field@example.com')]),
-            ("evaluation_3.msg", "evaluation_2.rules",
-             [('fileinto', ['INBOX'])]),
-            ("evaluation_3.msg", "evaluation_3.rules",
-             [('keep', None)]),
+        ("evaluation_1.msg", "evaluation_1.rules", [('redirect', 'acm@example.com')]),
+        ("evaluation_1.msg", "evaluation_2.rules", []),
+        ("evaluation_2.msg", "evaluation_1.rules", [('redirect', 'postmaster@example.com')]),
+        ("evaluation_2.msg", "evaluation_2.rules", []),
+        ("evaluation_3.msg", "evaluation_1.rules", [('redirect', 'field@example.com')]),
+        ("evaluation_3.msg", "evaluation_2.rules", [('fileinto', ['INBOX'])]),
+        ("evaluation_3.msg", "evaluation_3.rules", [('keep', None)]),
     )
 
     def setUp(self):
@@ -40,7 +34,8 @@ class TestEvaluateRules(unittest.TestCase):
             self.assertEqual(
                 self.rules[result[1]].evaluate(self.messages[result[0]]),
                 result[2]
-                )
+            )
+
 
 if __name__ == '__main__':
     unittest.main()
