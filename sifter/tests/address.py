@@ -1,4 +1,7 @@
 import email.utils
+from typing import (
+    Text
+)
 
 import sifter.grammar
 import sifter.grammar.string
@@ -10,9 +13,9 @@ __all__ = ('TestAddress',)
 # section 5.1
 class TestAddress(sifter.grammar.Test):
 
-    RULE_IDENTIFIER = 'ADDRESS'
+    RULE_IDENTIFIER: Text = 'ADDRESS'
 
-    def __init__(self, arguments=None, tests=None):
+    def __init__(self, arguments=None, tests=None) -> None:
         super(TestAddress, self).__init__(arguments, tests)
         tagged_args, positional_args = self.validate_arguments(
             {
@@ -36,7 +39,7 @@ class TestAddress(sifter.grammar.Test):
         if 'address_part' in tagged_args:
             self.address_part = tagged_args['address_part'][0]
 
-    def evaluate(self, message, state):
+    def evaluate(self, message, state) -> bool:
         header_values = []
         for header in self.headers:
             # TODO: section 5.1: we should restrict the allowed headers to

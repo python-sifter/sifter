@@ -6,12 +6,12 @@ import sifter.grammar
 
 class TestEvaluationState(unittest.TestCase):
 
-    def setUp(self):
+    def setUp(self) -> None:
         sifter.extension.register('ext1')
         sifter.extension.register('ext2')
         self.state = sifter.grammar.EvaluationState()
 
-    def test_require_extension(self):
+    def test_require_extension(self) -> None:
         self.state.require_extension('ext1')
         self.assertTrue(self.state.check_required_extension('ext1', 'ext1'))
         self.assertRaises(

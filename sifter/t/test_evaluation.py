@@ -18,7 +18,7 @@ class TestEvaluateRules(unittest.TestCase):
         ("evaluation_3.msg", "evaluation_3.rules", [('keep', None)]),
     )
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.messages = {}
         self.rules = {}
         for result in self.EVAL_RESULTS:
@@ -29,7 +29,7 @@ class TestEvaluateRules(unittest.TestCase):
                              encoding='utf-8') as rule_fh:
                 self.rules.setdefault(result[1], sifter.parser.parse_file(rule_fh))
 
-    def test_msg_rule_cross_product(self):
+    def test_msg_rule_cross_product(self) -> None:
         for result in self.EVAL_RESULTS:
             self.assertEqual(
                 self.rules[result[1]].evaluate(self.messages[result[0]]),

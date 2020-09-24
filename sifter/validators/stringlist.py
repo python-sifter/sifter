@@ -1,3 +1,9 @@
+from typing import (
+    List,
+    Optional,
+    Text
+)
+
 import sifter.grammar
 
 __all__ = ('StringList',)
@@ -5,18 +11,19 @@ __all__ = ('StringList',)
 
 class StringList(sifter.grammar.Validator):
 
-    def __init__(self, length=None):
+    def __init__(self, length: Optional[int] = None) -> None:
         super(StringList, self).__init__()
         self.length = length
 
-    def validate(self, arg_list, starting_index):
+    def validate(self, arg_list: List[Text], starting_index: int) -> int:
         if starting_index >= len(arg_list):
             return 0
         arg = arg_list[starting_index]
 
-        if not (isinstance(arg, list)
-                and all(isinstance(list_member, (str, bytes))
-                        for list_member in arg)):
+        if not (
+            isinstance(arg, list) and
+            all(isinstance(list_member, (str, bytes)) for list_member in arg)
+        ):
             return 0
         if self.length is not None and len(arg) != self.length:
             return 0

@@ -5,7 +5,7 @@ __all__ = ('EvaluationState',)
 
 class EvaluationState(object):
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.actions = sifter.grammar.Actions(implicit_keep=True)
         self.required_extensions = {}
         # section 6.1: the built-in comparators have defined capability

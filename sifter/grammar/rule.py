@@ -12,7 +12,7 @@ class RuleSyntaxError(Exception):
 class Rule(object):
 
     @classmethod
-    def register(cls):
+    def register(cls) -> None:
         try:
             sifter.handler.register(cls.RULE_TYPE, cls.RULE_IDENTIFIER, cls)
         except AttributeError:

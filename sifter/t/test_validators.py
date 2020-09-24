@@ -15,14 +15,14 @@ class MockRule(sifter.grammar.Rule):
 
 class TestValidationFn(unittest.TestCase):
 
-    def test_too_many_args(self):
+    def test_too_many_args(self) -> None:
         mock_rule = MockRule([sifter.grammar.Tag('IS'), 13, ])
         self.assertRaises(
             sifter.grammar.RuleSyntaxError,
             mock_rule.validate_arguments,
         )
 
-    def test_not_enough_args(self):
+    def test_not_enough_args(self) -> None:
         mock_rule = MockRule([13, ])
         self.assertRaises(
             sifter.grammar.RuleSyntaxError,
@@ -36,14 +36,14 @@ class TestValidationFn(unittest.TestCase):
 
 class TestTagValidator(unittest.TestCase):
 
-    def test_allowed_tag(self):
+    def test_allowed_tag(self) -> None:
         mock_validator = sifter.validators.Tag(['MOCK', 'IS', ])
         self.assertEqual(
             mock_validator.validate([sifter.grammar.Tag('IS')], 0),
             1
         )
 
-    def test_allowed_single_tag(self):
+    def test_allowed_single_tag(self) -> None:
         # test the case for a non-list single tag name
         mock_validator = sifter.validators.Tag('IS')
         self.assertEqual(
@@ -51,14 +51,14 @@ class TestTagValidator(unittest.TestCase):
             1
         )
 
-    def test_not_allowed_tag(self):
+    def test_not_allowed_tag(self) -> None:
         mock_validator = sifter.validators.Tag(['MOCK', 'FOO', ])
         self.assertEqual(
             mock_validator.validate([sifter.grammar.Tag('IS')], 0),
             0
         )
 
-    def test_not_allowed_single_tag(self):
+    def test_not_allowed_single_tag(self) -> None:
         # test the case for a non-list single tag name. test when the tag is a
         # substring of the allowed tag.
         mock_validator = sifter.validators.Tag('ISFOO')

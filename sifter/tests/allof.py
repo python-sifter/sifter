@@ -1,3 +1,7 @@
+from typing import (
+    Text
+)
+
 import sifter.grammar
 
 __all__ = ('TestAllOf',)
@@ -6,13 +10,13 @@ __all__ = ('TestAllOf',)
 # section 5.2
 class TestAllOf(sifter.grammar.Test):
 
-    RULE_IDENTIFIER = 'ALLOF'
+    RULE_IDENTIFIER: Text = 'ALLOF'
 
-    def __init__(self, arguments=None, tests=None):
+    def __init__(self, arguments=None, tests=None) -> None:
         super(TestAllOf, self).__init__(arguments, tests)
         self.validate_arguments()
 
-    def evaluate(self, message, state):
+    def evaluate(self, message, state) -> bool:
         # short-circuit evaluation if a test is false. the base standard does
         # not specify if all tests must be evaluated or in what order, but the
         # "ihave" extension requires short-circuit left-to-right evaluation

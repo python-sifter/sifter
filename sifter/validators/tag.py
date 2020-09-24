@@ -1,3 +1,10 @@
+from typing import (
+    Tuple,
+    Union,
+    Optional,
+    Text
+)
+
 import sifter.grammar
 import sifter.handler
 import sifter.validators
@@ -7,10 +14,11 @@ __all__ = ('Tag', 'MatchType', 'Comparator',)
 
 class Tag(sifter.grammar.Validator):
 
-    def __init__(self, allowed_tags=None, tag_arg_validators=None):
+    def __init__(self, allowed_tags: Optional[Union[Text, bytes, Tuple[Union[Text, bytes], ...]]] = None, tag_arg_validators=None) -> None:
         super(Tag, self).__init__()
+        self.allowed_tags: Optional[Union[Text, bytes, Tuple[Union[Text, bytes], ...]]] = None
         if isinstance(allowed_tags, (str, bytes)):
-            self.allowed_tags = [allowed_tags]
+            self.allowed_tags = (allowed_tags, )
         else:
             self.allowed_tags = allowed_tags
         if tag_arg_validators is None:
@@ -18,7 +26,7 @@ class Tag(sifter.grammar.Validator):
         else:
             self.tag_arg_validators = tag_arg_validators
 
-    def validate(self, arg_list, starting_index):
+    def validate(self, arg_list: sifter.grammar.Tag, starting_index) -> int:
         if starting_index >= len(arg_list):
             return 0
         if not isinstance(arg_list[starting_index], sifter.grammar.Tag):
@@ -44,13 +52,13 @@ class Tag(sifter.grammar.Validator):
 
 class MatchType(Tag):
 
-    def __init__(self):
+    def __init__(self) -> None:
         super(MatchType, self).__init__(('IS', 'CONTAINS', 'MATCHES'))
 
 
 class Comparator(Tag):
 
-    def __init__(self):
+    def __init__(self) -> None:
         super(Comparator, self).__init__(
             ('COMPARATOR',),
             (sifter.validators.StringList(1),),

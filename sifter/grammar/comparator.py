@@ -8,7 +8,7 @@ __all__ = ('Comparator',)
 class Comparator(object):
 
     @classmethod
-    def register(cls):
+    def register(cls) -> None:
         try:
             sifter.comparator.register(cls.COMPARATOR_ID, cls)
         except AttributeError:

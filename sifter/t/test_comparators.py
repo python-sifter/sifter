@@ -11,10 +11,10 @@ class MockComparator(sifter.grammar.Comparator):
 
 class TestMatchTypes(unittest.TestCase):
 
-    def setUp(self):
+    def setUp(self) -> None:
         MockComparator.register()
 
-    def test_unimplemented_match_type(self):
+    def test_unimplemented_match_type(self) -> None:
         self.assertRaises(
             RuntimeError,
             sifter.comparator.get_match_fn,
