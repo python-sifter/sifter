@@ -31,6 +31,6 @@ def address_part(address, part=None):
         domain = ''
     if part == 'LOCALPART':
         return localpart
-    elif part == 'DOMAIN':
+    if part == 'DOMAIN':
         return domain
     raise RuntimeError("Unknown address part specified: %s" % part)

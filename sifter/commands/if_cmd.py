@@ -16,9 +16,8 @@ class CommandIfBase(sifter.grammar.Command):
             result = self.block.evaluate(message, state)
             state.last_if = True
             return result
-        else:
-            state.last_if = False
-            return None
+        state.last_if = False
+        return None
 
 
 class CommandIf(CommandIfBase):
@@ -36,8 +35,7 @@ class CommandElsIf(CommandIfBase):
     def evaluate(self, message, state):
         if state.last_if:
             return None
-        else:
-            return super(CommandElsIf, self).evaluate(message, state)
+        return super(CommandElsIf, self).evaluate(message, state)
 
 
 CommandElsIf.register()
@@ -55,8 +53,7 @@ class CommandElse(sifter.grammar.Command):
     def evaluate(self, message, state):
         if state.last_if:
             return None
-        else:
-            return self.block.evaluate(message, state)
+        return self.block.evaluate(message, state)
 
 
 CommandElse.register()
