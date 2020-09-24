@@ -4,6 +4,7 @@ import sifter.grammar
 
 __all__ = ('ComparatorOctet',)
 
+
 class ComparatorOctet(sifter.grammar.Comparator):
 
     COMPARATOR_ID = 'i;octet'
@@ -29,8 +30,8 @@ class ComparatorOctet(sifter.grammar.Comparator):
             elif c == "?":
                 re_pattern.append(".")
             elif c == "\\":
-                if pattern[i:i+1] in ("\\*", "\\?"):
-                    re_pattern.append(re.escape(pattern[i+1]))
+                if pattern[i:i + 1] in ("\\*", "\\?"):
+                    re_pattern.append(re.escape(pattern[i + 1]))
                     i += 2
                 else:
                     re_pattern.append(re.escape(c))
@@ -39,7 +40,11 @@ class ComparatorOctet(sifter.grammar.Comparator):
         re_pattern.append("\Z")
         # TODO: compile and cache pattern for more efficient execution across
         # multiple strings and messages
-        return re.match(''.join(re_pattern), cls.sort_key(s),
-                re.MULTILINE | re.DOTALL)
+        return re.match(
+            ''.join(re_pattern),
+            cls.sort_key(s),
+            re.MULTILINE | re.DOTALL
+        )
+
 
 ComparatorOctet.register()

@@ -2,6 +2,7 @@ import sifter.grammar
 
 __all__ = ('CommandStop',)
 
+
 # section 3.3
 class CommandStop(sifter.grammar.Command):
 
@@ -15,5 +16,6 @@ class CommandStop(sifter.grammar.Command):
 
     def evaluate(self, message, state):
         state.actions.append('stop')
+
 
 CommandStop.register()

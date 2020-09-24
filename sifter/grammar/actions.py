@@ -1,5 +1,6 @@
 __all__ = ('Actions',)
 
+
 class Actions(list):
 
     def __init__(self, implicit_keep=False):

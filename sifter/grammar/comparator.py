@@ -1,6 +1,8 @@
+import re
 import sifter.comparator
 
 __all__ = ('Comparator',)
+
 
 # The official definition of comparators is in RFC 4790
 class Comparator(object):
@@ -35,4 +37,3 @@ class Comparator(object):
         # all ERE features.
         compiled_re = re.compile(pattern)
         return compiled_re.search(cls.sort_key(s))
-

@@ -2,6 +2,7 @@ import sifter.grammar
 
 __all__ = ('CommandList',)
 
+
 class CommandList(object):
 
     def __init__(self, command_list=None):
@@ -25,4 +26,3 @@ class CommandList(object):
         if state.actions.implicit_keep:
             state.actions.append('keep')
         return state.actions
-

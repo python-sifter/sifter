@@ -2,6 +2,7 @@ import sifter.grammar
 
 __all__ = ('CommandDiscard',)
 
+
 # section 4.4
 class CommandDiscard(sifter.grammar.Command):
 
@@ -15,5 +16,6 @@ class CommandDiscard(sifter.grammar.Command):
 
     def evaluate(self, message, state):
         state.actions.cancel_implicit_keep()
+
 
 CommandDiscard.register()

@@ -2,6 +2,7 @@ import sifter.grammar
 
 __all__ = ('CommandKeep',)
 
+
 # section 4.3
 class CommandKeep(sifter.grammar.Command):
 
@@ -15,5 +16,6 @@ class CommandKeep(sifter.grammar.Command):
 
     def evaluate(self, message, state):
         state.actions.append('keep').cancel_implicit_keep()
+
 
 CommandKeep.register()

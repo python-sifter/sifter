@@ -31,7 +31,7 @@ class Rule(object):
             self.tests = tests
 
     def __str__(self):
-        s = [ "%s" % self.RULE_IDENTIFIER, ]
+        s = ["%s" % self.RULE_IDENTIFIER, ]
         for arg in self.arguments:
             s.append(" %s" % arg)
         s.append('\n')
@@ -56,32 +56,29 @@ class Rule(object):
                 if num_valid_args is not None and num_valid_args > 0:
                     if arg_name in seen_args:
                         raise RuleSyntaxError(
-                                "%s argument to %s was already seen earlier: %s"
-                                % (arg_name, self.RULE_IDENTIFIER,
-                                   self.arguments[i])
-                                )
-                    seen_args[arg_name] = self.arguments[i:i+num_valid_args]
+                            "%s argument to %s was already seen earlier: %s" % (arg_name, self.RULE_IDENTIFIER, self.arguments[i])
+                        )
+                    seen_args[arg_name] = self.arguments[i:i + num_valid_args]
                     i += num_valid_args
                     break
             else:
                 raise RuleSyntaxError(
-                        "Unexpected tag argument '%s' to %s encountered"
-                        % (self.arguments[i], self.RULE_IDENTIFIER)
-                        )
+                    "Unexpected tag argument '%s' to %s encountered" % (self.arguments[i], self.RULE_IDENTIFIER)
+                )
         # TODO: make sure all non-optional tagged arguments were seen
 
         if len(positional_args) != (n - i):
             raise RuleSyntaxError(
-                    "%s requires %d positional arguments but %d were "
-                    "supplied"
-                    % (self.RULE_IDENTIFIER, len(positional_args), n - i))
+                "%s requires %d positional arguments but %d were supplied"
+                % (self.RULE_IDENTIFIER, len(positional_args), n - i)
+            )
 
         for arg_position, arg_validator in enumerate(positional_args):
             if arg_validator.validate(self.arguments, i + arg_position) == 0:
                 raise RuleSyntaxError(
-                        "positional argument #%d to %s was not in the "
-                        "expected format"
-                        % (arg_position + 1, self.RULE_IDENTIFIER))
+                    "positional argument #%d to %s was not in the expected format"
+                    % (arg_position + 1, self.RULE_IDENTIFIER)
+                )
 
         return (seen_args, self.arguments[i:])
 
@@ -98,4 +95,3 @@ class Rule(object):
 
     def evaluate(self, message, state):
         raise NotImplementedError
-

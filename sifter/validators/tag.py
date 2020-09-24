@@ -4,12 +4,13 @@ import sifter.validators
 
 __all__ = ('Tag', 'MatchType', 'Comparator',)
 
+
 class Tag(sifter.grammar.Validator):
 
     def __init__(self, allowed_tags=None, tag_arg_validators=None):
         super(Tag, self).__init__()
         if isinstance(allowed_tags, (str, bytes)):
-            self.allowed_tags = [ allowed_tags ]
+            self.allowed_tags = [allowed_tags]
         else:
             self.allowed_tags = allowed_tags
         if tag_arg_validators is None:
@@ -30,9 +31,9 @@ class Tag(sifter.grammar.Validator):
 
         for arg_validator in self.tag_arg_validators:
             num_valid_args = arg_validator.validate(
-                                 arg_list,
-                                 starting_index + validated_args
-                             )
+                arg_list,
+                starting_index + validated_args
+            )
             if num_valid_args > 0:
                 validated_args += num_valid_args
             else:
@@ -51,21 +52,21 @@ class Comparator(Tag):
 
     def __init__(self):
         super(Comparator, self).__init__(
-                ('COMPARATOR',),
-                (sifter.validators.StringList(1),),
-                )
+            ('COMPARATOR',),
+            (sifter.validators.StringList(1),),
+        )
 
     def validate(self, arg_list, starting_index):
         validated_args = super(Comparator, self).validate(
-                arg_list,
-                starting_index
-                )
+            arg_list,
+            starting_index
+        )
         if validated_args > 0:
             if not sifter.handler.get(
-                    'comparator',
-                    arg_list[starting_index+1][0],
-                    ):
+                'comparator',
+                arg_list[starting_index + 1][0],
+            ):
                 raise sifter.grammar.RuleSyntaxError(
-                        "'%s' comparator is unknown/unsupported"
-                        % arg_list[starting_index+1][0])
-
+                    "'%s' comparator is unknown/unsupported"
+                    % arg_list[starting_index + 1][0]
+                )
