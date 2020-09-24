@@ -1,4 +1,10 @@
 import string
+try:
+    # Python 3
+    maketrans = str.maketrans
+except AttributeError:
+    # Python 2
+    maketrans = string.maketrans
 
 from sifter.comparators.octet import ComparatorOctet
 
@@ -10,7 +16,6 @@ class ComparatorASCIICasemap(ComparatorOctet):
 
     @classmethod
     def sort_key(cls, s):
-        return s.translate(string.maketrans(string.ascii_lowercase,
-            string.ascii_uppercase))
+        return s.upper()
 
 ComparatorASCIICasemap.register()

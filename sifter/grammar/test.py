@@ -1,4 +1,4 @@
-import rule
+from . import rule
 
 __all__ = ('Test',)
 
