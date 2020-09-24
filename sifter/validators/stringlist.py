@@ -2,6 +2,7 @@ import sifter.grammar
 
 __all__ = ('StringList',)
 
+
 class StringList(sifter.grammar.Validator):
 
     def __init__(self, length=None):
@@ -21,4 +22,3 @@ class StringList(sifter.grammar.Validator):
             return 0
 
         return 1
-

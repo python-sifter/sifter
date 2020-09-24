@@ -9,4 +9,3 @@ class Test(rule.Rule):
 
     def __init__(self, arguments=None, tests=None):
         super(Test, self).__init__(arguments, tests)
-

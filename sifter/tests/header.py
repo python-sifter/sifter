@@ -4,6 +4,7 @@ import sifter.validators
 
 __all__ = ('TestHeader',)
 
+
 # section 5.7
 class TestHeader(sifter.grammar.Test):
 
@@ -12,15 +13,15 @@ class TestHeader(sifter.grammar.Test):
     def __init__(self, arguments=None, tests=None):
         super(TestHeader, self).__init__(arguments, tests)
         tagged_args, positional_args = self.validate_arguments(
-                {
-                    'comparator' : sifter.validators.Comparator(),
-                    'match_type' : sifter.validators.MatchType(),
-                },
-                [
-                    sifter.validators.StringList(),
-                    sifter.validators.StringList(),
-                ]
-            )
+            {
+                'comparator': sifter.validators.Comparator(),
+                'match_type': sifter.validators.MatchType(),
+            },
+            [
+                sifter.validators.StringList(),
+                sifter.validators.StringList(),
+            ]
+        )
         self.validate_tests_size(0)
 
         self.headers = positional_args[0]
@@ -35,9 +36,15 @@ class TestHeader(sifter.grammar.Test):
         for header in self.headers:
             for value in message.get_all(header, []):
                 for key in self.keylist:
-                    if sifter.grammar.string.compare(value, key, state,
-                            self.comparator, self.match_type):
+                    if sifter.grammar.string.compare(
+                        value,
+                        key,
+                        state,
+                        self.comparator,
+                        self.match_type
+                    ):
                         return True
         return False
+
 
 TestHeader.register()

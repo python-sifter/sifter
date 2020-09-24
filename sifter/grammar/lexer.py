@@ -14,16 +14,18 @@ def lexer(**kwargs):
 tokens = (
     'IDENTIFIER', 'NUMBER', 'TAG', 'HASH_COMMENT', 'BRACKET_COMMENT',
     'QUOTED_STRING', 'MULTILINE_STRING',
-    )
-literals = [ c for c in ';,()[]{}' ]
+)
+literals = [c for c in ';,()[]{}']
 
 # section 2.2
 t_ignore = ' \t'
+
 
 # section 2.3
 def t_HASH_COMMENT(t):
     r'\#.*\r\n'
     t.lexer.lineno += 1
+
 
 # section 2.3
 def t_BRACKET_COMMENT(t):
@@ -32,6 +34,7 @@ def t_BRACKET_COMMENT(t):
     # outside of a string.  Bracketed comments may span multiple lines.
     # Bracketed comments do not nest.
     pass
+
 
 # section 2.4.2
 def t_MULTILINE_STRING(t):
@@ -51,6 +54,7 @@ def t_MULTILINE_STRING(t):
     # lines do not appear.
     pass
 
+
 # section 2.4.2
 def t_QUOTED_STRING(t):
     r'"([^"\\]|\\["\\])*"'
@@ -65,33 +69,38 @@ def t_QUOTED_STRING(t):
     t.value = t.value.strip('"').replace(r'\"', '"').replace(r'\\', '\\')
     return t
 
+
 def t_TAG(t):
     r':[a-zA-Z_][a-zA-Z0-9_]*'
     t.value = t.value[1:].upper()
     return t
+
 
 def t_IDENTIFIER(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
     t.value = t.value.upper()
     return t
 
+
 # section 2.4.1
 def t_NUMBER(t):
     r'[0-9]+[KkMmGg]?'
     exponents = {
-            'G' : 30, 'g' : 30,
-            'M' : 20, 'm' : 20,
-            'K' : 10, 'k' : 10,
-            }
+        'G': 30, 'g': 30,
+        'M': 20, 'm': 20,
+        'K': 10, 'k': 10,
+    }
     if t.value[-1] in exponents:
         t.value = math.ldexp(int(t.value[:-1]), exponents[t.value[-1]])
     else:
         t.value = int(t.value)
     return t
 
+
 def t_newline(t):
     r'(\r\n)+'
     t.lexer.lineno += t.value.count('\n')
+
 
 def t_error(t):
     t.lexer.skip(1)
@@ -101,4 +110,3 @@ if __name__ == '__main__':
     # PLY has a simple debugging mode that'll print out tokens for input coming
     # from stdin or a file on the command-line
     ply.lex.runmain(lexer=lexer())
-

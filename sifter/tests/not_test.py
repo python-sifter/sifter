@@ -2,6 +2,7 @@ import sifter.grammar
 
 __all__ = ('TestNot',)
 
+
 # section 5.8
 class TestNot(sifter.grammar.Test):
 
@@ -14,5 +15,6 @@ class TestNot(sifter.grammar.Test):
 
     def evaluate(self, message, state):
         return not self.tests[0].evaluate(message, state)
+
 
 TestNot.register()

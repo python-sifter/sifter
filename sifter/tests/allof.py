@@ -2,6 +2,7 @@ import sifter.grammar
 
 __all__ = ('TestAllOf',)
 
+
 # section 5.2
 class TestAllOf(sifter.grammar.Test):
 
@@ -20,5 +21,6 @@ class TestAllOf(sifter.grammar.Test):
             if not test.evaluate(message, state):
                 return False
         return True
+
 
 TestAllOf.register()

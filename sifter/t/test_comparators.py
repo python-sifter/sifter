@@ -16,10 +16,10 @@ class TestMatchTypes(unittest.TestCase):
 
     def test_unimplemented_match_type(self):
         self.assertRaises(
-                RuntimeError,
-                sifter.comparator.get_match_fn,
-                'i;vnd-mock', 'IS',
-            )
+            RuntimeError,
+            sifter.comparator.get_match_fn,
+            'i;vnd-mock', 'IS',
+        )
 
 
 if __name__ == '__main__':

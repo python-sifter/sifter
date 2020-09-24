@@ -4,6 +4,7 @@ import sifter.utils
 
 __all__ = ('Command',)
 
+
 class Command(rule.Rule):
 
     RULE_TYPE = 'command'
@@ -16,7 +17,7 @@ class Command(rule.Rule):
             self.block = block
 
     def __str__(self):
-        s = [ super(Command, self).__str__(), ]
+        s = [super(Command, self).__str__(), ]
         if len(self.block.commands) > 0:
             s.append("{\n")
             for command in self.block.commands:
@@ -26,6 +27,6 @@ class Command(rule.Rule):
 
     def validate_block_size(self, max_commands):
         if len(self.block.commands) > max_commands:
-            raise sifter.grammar.RuleSyntaxError("%s takes no more than %d commands" % (
-                self.RULE_IDENTIFIER, max_commands))
-
+            raise sifter.grammar.RuleSyntaxError(
+                "%s takes no more than %d commands" % (self.RULE_IDENTIFIER, max_commands)
+            )

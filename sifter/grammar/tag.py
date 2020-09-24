@@ -1,5 +1,6 @@
 __all__ = ('Tag',)
 
+
 class Tag(str):
 
     def __str__(self):
@@ -7,4 +8,3 @@ class Tag(str):
 
     def __repr__(self):
         return "%s('%s')" % ('Tag', super(Tag, self).__repr__())
-

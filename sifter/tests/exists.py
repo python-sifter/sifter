@@ -3,6 +3,7 @@ import sifter.validators
 
 __all__ = ('TestExists',)
 
+
 # section 5.9
 class TestExists(sifter.grammar.Test):
 
@@ -11,7 +12,9 @@ class TestExists(sifter.grammar.Test):
     def __init__(self, arguments=None, tests=None):
         super(TestExists, self).__init__(arguments, tests)
         tagged_args, positional_args = self.validate_arguments(
-                {}, [ sifter.validators.StringList(), ])
+            {},
+            [sifter.validators.StringList(), ]
+        )
         self.validate_tests_size(0)
         self.headers = positional_args[0]
 
@@ -20,5 +23,6 @@ class TestExists(sifter.grammar.Test):
             if header not in message:
                 return False
         return True
+
 
 TestExists.register()

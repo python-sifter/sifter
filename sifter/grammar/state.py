@@ -2,6 +2,7 @@ import sifter.grammar
 
 __all__ = ('EvaluationState',)
 
+
 class EvaluationState(object):
 
     def __init__(self):
@@ -19,7 +20,7 @@ class EvaluationState(object):
     def check_required_extension(self, extension, feature_string):
         if extension not in self.required_extensions:
             raise RuntimeError(
-                    "REQUIRE '%s' must happen before %s can be used."
-                    % (extension, feature_string)
-                    )
+                "REQUIRE '%s' must happen before %s can be used."
+                % (extension, feature_string)
+            )
         return True

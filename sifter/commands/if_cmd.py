@@ -2,6 +2,7 @@ import sifter.grammar
 
 __all__ = ('CommandIf', 'CommandElsIf', 'CommandElse',)
 
+
 # section 3.1
 class CommandIfBase(sifter.grammar.Command):
 
@@ -24,6 +25,7 @@ class CommandIf(CommandIfBase):
 
     RULE_IDENTIFIER = 'IF'
 
+
 CommandIf.register()
 
 
@@ -36,6 +38,7 @@ class CommandElsIf(CommandIfBase):
             return None
         else:
             return super(CommandElsIf, self).evaluate(message, state)
+
 
 CommandElsIf.register()
 
@@ -54,5 +57,6 @@ class CommandElse(sifter.grammar.Command):
             return None
         else:
             return self.block.evaluate(message, state)
+
 
 CommandElse.register()
