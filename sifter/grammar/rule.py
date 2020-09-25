@@ -1,3 +1,16 @@
+from email.message import Message
+from typing import (
+    Any,
+    Dict,
+    Text,
+    Optional,
+    List,
+    Tuple
+)
+
+from sifter.grammar.tag import Tag
+from sifter.grammar.state import EvaluationState
+from sifter.grammar.validator import Validator
 import sifter.grammar
 import sifter.handler
 import sifter.utils
@@ -11,6 +24,9 @@ class RuleSyntaxError(Exception):
 
 class Rule(object):
 
+    RULE_TYPE: Optional[Text] = None
+    RULE_IDENTIFIER: Optional[Text] = None
+
     @classmethod
     def register(cls) -> None:
         try:
@@ -20,7 +36,7 @@ class Rule(object):
             # only on subclasses that implement specific rules
             raise NotImplementedError
 
-    def __init__(self, arguments=None, tests=None):
+    def __init__(self, arguments: Optional[List[Any]] = None, tests: Optional[List[Any]] = None) -> None:
         if arguments is None:
             self.arguments = []
         else:
@@ -30,7 +46,7 @@ class Rule(object):
         else:
             self.tests = tests
 
-    def __str__(self):
+    def __str__(self) -> Text:
         s = ["%s" % self.RULE_IDENTIFIER, ]
         for arg in self.arguments:
             s.append(" %s" % arg)
@@ -39,7 +55,11 @@ class Rule(object):
             s.append("(\n%s)\n" % sifter.utils.indent_string(str(test), 2))
         return ''.join(s)
 
-    def validate_arguments(self, tagged_args=None, positional_args=None):
+    def validate_arguments(
+        self,
+        tagged_args: Optional[Dict[Any, Any]] = None,
+        positional_args: Optional[List[Validator]] = None
+    ) -> Tuple[Dict[Any, Any], List[Any]]:
         if tagged_args is None:
             tagged_args = {}
         if positional_args is None:
@@ -48,7 +68,7 @@ class Rule(object):
         seen_args = {}
         i, n = 0, len(self.arguments)
         while i < n:
-            if not isinstance(self.arguments[i], sifter.grammar.Tag):
+            if not isinstance(self.arguments[i], Tag):
                 break
             num_valid_args = 0
             for arg_name, arg_validator in tagged_args.items():
@@ -82,7 +102,7 @@ class Rule(object):
 
         return (seen_args, self.arguments[i:])
 
-    def validate_tests_size(self, min_tests, max_tests=None):
+    def validate_tests_size(self, min_tests: int, max_tests: Optional[int] = None) -> None:
         if max_tests is None:
             max_tests = min_tests
         if len(self.tests) < min_tests or len(self.tests) > max_tests:
@@ -93,5 +113,5 @@ class Rule(object):
             raise RuleSyntaxError("%s takes %s tests" % (
                 self.RULE_IDENTIFIER, msg))
 
-    def evaluate(self, message, state):
+    def evaluate(self, message: Message, state: EvaluationState) -> None:
         raise NotImplementedError

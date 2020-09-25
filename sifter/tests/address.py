@@ -3,6 +3,7 @@ from typing import (
     Text
 )
 
+from sifter.validators.tag import Tag
 import sifter.grammar
 import sifter.grammar.string
 import sifter.validators
@@ -21,7 +22,7 @@ class TestAddress(sifter.grammar.Test):
             {
                 'comparator': sifter.validators.Comparator(),
                 'match_type': sifter.validators.MatchType(),
-                'address_part': sifter.validators.Tag(('LOCALPART', 'DOMAIN', 'ALL')),
+                'address_part': Tag(('LOCALPART', 'DOMAIN', 'ALL')),
             },
             [
                 sifter.validators.StringList(),

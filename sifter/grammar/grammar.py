@@ -4,6 +4,7 @@
 import ply.yacc
 
 import sifter.grammar
+from sifter.grammar.tag import Tag
 from sifter.grammar.lexer import tokens
 import sifter.handler
 
@@ -149,7 +150,7 @@ def p_argument_number(p):
 
 def p_argument_tag(p):
     """argument : TAG"""
-    p[0] = sifter.grammar.Tag(p[1])
+    p[0] = Tag(p[1])
 
 
 def p_stringlist_error(p):

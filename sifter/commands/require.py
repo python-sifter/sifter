@@ -1,3 +1,8 @@
+from typing import (
+    Text
+)
+
+from sifter.grammar.command import Command
 import sifter.grammar
 import sifter.handler
 import sifter.validators
@@ -6,11 +11,11 @@ __all__ = ('CommandRequire',)
 
 
 # section 3.2
-class CommandRequire(sifter.grammar.Command):
+class CommandRequire(Command):
 
-    RULE_IDENTIFIER = 'REQUIRE'
+    RULE_IDENTIFIER: Text = 'REQUIRE'
 
-    def __init__(self, arguments=None, tests=None, block=None):
+    def __init__(self, arguments=None, tests=None, block=None) -> None:
         super(CommandRequire, self).__init__(arguments, tests, block)
         _, positional_args = self.validate_arguments(
             {},

@@ -1,7 +1,8 @@
 import operator
 
 import sifter.grammar
-import sifter.validators
+from sifter.validators.tag import Tag
+from sifter.validators.number import Number
 
 __all__ = ('TestSize',)
 
@@ -20,9 +21,9 @@ class TestSize(sifter.grammar.Test):
         super(TestSize, self).__init__(arguments, tests)
         tagged_args, positional_args = self.validate_arguments(
             {
-                'size': sifter.validators.Tag(
+                'size': Tag(
                     ('OVER', 'UNDER'),
-                    (sifter.validators.Number(),)
+                    (Number(),)
                 ),
             }
         )
