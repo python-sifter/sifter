@@ -1,13 +1,26 @@
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Callable,
+    Text,
+    Optional,
+    Tuple,
+    Type
+)
+
 import sifter.handler
+
+if TYPE_CHECKING:
+    from sifter.grammar.comparator import Comparator
 
 __all__ = ('register', 'get_match_fn',)
 
 
-def register(comparator_name, comparator_cls):
+def register(comparator_name: Text, comparator_cls: Type['Comparator']) -> None:
     sifter.handler.register('comparator', comparator_name, comparator_cls)
 
 
-def get_match_fn(comparator, match_type):
+def get_match_fn(comparator: Optional[Text], match_type: Optional[Text]) -> Tuple[Callable[[Text, Text, Any], bool], Text, Text]:  # TODO: Change Any from Callable
     # section 2.7.3: default comparator is 'i;ascii-casemap'
     if comparator is None:
         comparator = 'i;ascii-casemap'
