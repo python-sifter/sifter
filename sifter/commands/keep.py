@@ -1,10 +1,10 @@
-import sifter.grammar
+from sifter.grammar.command import Command
 
 __all__ = ('CommandKeep',)
 
 
 # section 4.3
-class CommandKeep(sifter.grammar.Command):
+class CommandKeep(Command):
 
     RULE_IDENTIFIER = 'KEEP'
 

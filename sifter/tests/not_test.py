@@ -1,10 +1,10 @@
-import sifter.grammar
+from sifter.grammar.test import Test
 
 __all__ = ('TestNot',)
 
 
 # section 5.8
-class TestNot(sifter.grammar.Test):
+class TestNot(Test):
 
     RULE_IDENTIFIER = 'NOT'
 

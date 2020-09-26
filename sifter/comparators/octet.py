@@ -1,11 +1,11 @@
 import re
 
-import sifter.grammar
+from sifter.grammar.comparator import Comparator
 
 __all__ = ('ComparatorOctet',)
 
 
-class ComparatorOctet(sifter.grammar.Comparator):
+class ComparatorOctet(Comparator):
 
     COMPARATOR_ID = 'i;octet'
 

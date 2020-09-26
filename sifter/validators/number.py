@@ -1,11 +1,11 @@
 from typing import List
 
-import sifter.grammar
+from sifter.grammar.validator import Validator
 
 __all__ = ('Number',)
 
 
-class Number(sifter.grammar.Validator):
+class Number(Validator):
 
     def validate(self, arg_list: List[int], starting_index: int) -> int:
         if starting_index >= len(arg_list):

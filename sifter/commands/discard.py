@@ -1,10 +1,10 @@
-import sifter.grammar
+from sifter.grammar.command import Command
 
 __all__ = ('CommandDiscard',)
 
 
 # section 4.4
-class CommandDiscard(sifter.grammar.Command):
+class CommandDiscard(Command):
 
     RULE_IDENTIFIER = 'DISCARD'
 

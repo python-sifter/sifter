@@ -1,10 +1,10 @@
 import unittest
 
-import sifter.grammar
+from sifter.grammar.rule import Rule
 import sifter.validators
 
 
-class MockRule(sifter.grammar.Rule):
+class MockRule(Rule):
 
     RULE_TYPE = 'mock'
     RULE_IDENTIFIER = 'MOCKRULE'

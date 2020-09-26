@@ -2,13 +2,13 @@ from typing import (
     Text
 )
 
-import sifter.grammar
+from sifter.grammar.test import Test
 
 __all__ = ('TestAllOf',)
 
 
 # section 5.2
-class TestAllOf(sifter.grammar.Test):
+class TestAllOf(Test):
 
     RULE_IDENTIFIER: Text = 'ALLOF'
 

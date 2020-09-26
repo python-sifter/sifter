@@ -1,11 +1,11 @@
-import sifter.grammar
+from sifter.grammar.test import Test
 from sifter.validators.stringlist import StringList
 
 __all__ = ('TestExists',)
 
 
 # section 5.9
-class TestExists(sifter.grammar.Test):
+class TestExists(Test):
 
     RULE_IDENTIFIER = 'EXISTS'
 

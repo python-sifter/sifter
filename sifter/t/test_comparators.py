@@ -1,10 +1,10 @@
 import unittest
 
 import sifter.comparator
-import sifter.grammar
+from sifter.grammar.comparator import Comparator
 
 
-class MockComparator(sifter.grammar.Comparator):
+class MockComparator(Comparator):
 
     COMPARATOR_ID = 'i;vnd-mock'
 

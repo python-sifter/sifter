@@ -4,12 +4,12 @@ from typing import (
     Text
 )
 
-import sifter.grammar
+from sifter.grammar.validator import Validator
 
 __all__ = ('StringList',)
 
 
-class StringList(sifter.grammar.Validator):
+class StringList(Validator):
 
     def __init__(self, length: Optional[int] = None) -> None:
         super(StringList, self).__init__()

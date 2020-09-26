@@ -1,10 +1,10 @@
-import sifter.grammar
+from sifter.grammar.test import Test
 
 __all__ = ('TestAnyOf',)
 
 
 # section 5.3
-class TestAnyOf(sifter.grammar.Test):
+class TestAnyOf(Test):
 
     RULE_IDENTIFIER = 'ANYOF'
 

@@ -1,6 +1,6 @@
 import email.utils
 
-import sifter.grammar
+from sifter.grammar.command import Command
 import sifter.validators
 from sifter.grammar.rule import RuleSyntaxError
 from sifter.validators.stringlist import StringList
@@ -9,7 +9,7 @@ __all__ = ('CommandRedirect',)
 
 
 # section 4.2
-class CommandRedirect(sifter.grammar.Command):
+class CommandRedirect(Command):
 
     RULE_IDENTIFIER = 'REDIRECT'
 

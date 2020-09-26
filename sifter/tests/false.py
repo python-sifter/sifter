@@ -1,10 +1,10 @@
-import sifter.grammar
+from sifter.grammar.test import Test
 
 __all__ = ('TestFalse',)
 
 
 # section 5.6
-class TestFalse(sifter.grammar.Test):
+class TestFalse(Test):
 
     RULE_IDENTIFIER = 'FALSE'
 

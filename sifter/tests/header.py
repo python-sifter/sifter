@@ -1,4 +1,4 @@
-import sifter.grammar
+from sifter.grammar.test import Test
 import sifter.grammar.string
 from sifter.validators.stringlist import StringList
 from sifter.validators.tag import Comparator, MatchType
@@ -7,7 +7,7 @@ __all__ = ('TestHeader',)
 
 
 # section 5.7
-class TestHeader(sifter.grammar.Test):
+class TestHeader(Test):
 
     RULE_IDENTIFIER = 'HEADER'
 
