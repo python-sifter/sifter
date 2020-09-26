@@ -1,3 +1,5 @@
+# type: ignore
+
 import email
 import os.path
 import unittest

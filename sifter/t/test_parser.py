@@ -1,3 +1,5 @@
+# type: ignore
+
 import os.path
 import unittest
 import codecs

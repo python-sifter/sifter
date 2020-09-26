@@ -1,3 +1,8 @@
+from typing import (
+    Optional,
+    Text
+)
+
 import re
 import sifter.comparator
 
@@ -6,6 +11,8 @@ __all__ = ('Comparator',)
 
 # The official definition of comparators is in RFC 4790
 class Comparator(object):
+
+    COMPARATOR_ID: Optional[Text] = None
 
     @classmethod
     def register(cls) -> None:

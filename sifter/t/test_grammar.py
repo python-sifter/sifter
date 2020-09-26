@@ -1,7 +1,9 @@
+# type: ignore
+
 import unittest
 
 import sifter.extension
-import sifter.grammar
+from sifter.grammar.state import EvaluationState
 
 
 class TestEvaluationState(unittest.TestCase):
@@ -9,7 +11,7 @@ class TestEvaluationState(unittest.TestCase):
     def setUp(self) -> None:
         sifter.extension.register('ext1')
         sifter.extension.register('ext2')
-        self.state = sifter.grammar.EvaluationState()
+        self.state = EvaluationState()
 
     def test_require_extension(self) -> None:
         self.state.require_extension('ext1')

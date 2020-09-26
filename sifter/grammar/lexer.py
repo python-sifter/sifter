@@ -2,7 +2,7 @@
 # references are to sections in RFC 5228 unless stated otherwise.
 
 import math
-import ply.lex
+import ply.lex  # type: ignore
 
 __all__ = ('lexer', 'tokens',)
 
