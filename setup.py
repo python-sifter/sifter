@@ -41,6 +41,7 @@ setup(
         "sifter.validators",
     ],
     package_data={
+        "sifter": ['py.typed'],
         "sifter.t": ["*.in", "*.out", "*.msg", "*.rules"],
     },
 )
