@@ -2,6 +2,8 @@ import email.utils
 
 import sifter.grammar
 import sifter.validators
+from sifter.grammar.rule import RuleSyntaxError
+from sifter.validators.stringlist import StringList
 
 __all__ = ('CommandRedirect',)
 
@@ -15,7 +17,7 @@ class CommandRedirect(sifter.grammar.Command):
         super(CommandRedirect, self).__init__(arguments, tests, block)
         _, positional_args = self.validate_arguments(
             {},
-            [sifter.validators.StringList(length=1), ],
+            [StringList(length=1), ],
         )
         self.validate_tests_size(0)
         self.validate_block_size(0)
@@ -26,7 +28,7 @@ class CommandRedirect(sifter.grammar.Command):
         # parsing.
         realname, emailaddr = email.utils.parseaddr(self.email_address)
         if emailaddr == "":
-            raise sifter.grammar.RuleSyntaxError(
+            raise RuleSyntaxError(
                 "REDIRECT destination not a valid email address: %s"
                 % self.email_address
             )

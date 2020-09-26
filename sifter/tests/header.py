@@ -1,6 +1,7 @@
 import sifter.grammar
 import sifter.grammar.string
-import sifter.validators
+from sifter.validators.stringlist import StringList
+from sifter.validators.tag import Comparator, MatchType
 
 __all__ = ('TestHeader',)
 
@@ -14,12 +15,12 @@ class TestHeader(sifter.grammar.Test):
         super(TestHeader, self).__init__(arguments, tests)
         tagged_args, positional_args = self.validate_arguments(
             {
-                'comparator': sifter.validators.Comparator(),
-                'match_type': sifter.validators.MatchType(),
+                'comparator': Comparator(),
+                'match_type': MatchType(),
             },
             [
-                sifter.validators.StringList(),
-                sifter.validators.StringList(),
+                StringList(),
+                StringList(),
             ]
         )
         self.validate_tests_size(0)

@@ -1,4 +1,4 @@
-import sifter.grammar
+from sifter.grammar.state import EvaluationState
 
 __all__ = ('CommandList',)
 
@@ -16,7 +16,7 @@ class CommandList(object):
 
     def evaluate(self, message, state=None):
         if state is None:
-            state = sifter.grammar.EvaluationState()
+            state = EvaluationState()
         for command in self.commands:
             command.evaluate(message, state)
             # don't bother processing more commands if we hit a STOP. this

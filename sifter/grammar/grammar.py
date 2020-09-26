@@ -6,6 +6,8 @@ import ply.yacc
 import sifter.grammar
 from sifter.grammar.tag import Tag
 from sifter.grammar.lexer import tokens
+from sifter.grammar.command_list import CommandList
+from sifter.grammar.string import String
 import sifter.handler
 
 __all__ = ('parser',)
@@ -39,7 +41,7 @@ def p_commands_list(p):
 
 def p_commands_empty(p):
     """commands : """
-    p[0] = sifter.grammar.CommandList()
+    p[0] = CommandList()
 
 
 def p_command(p):
@@ -172,4 +174,4 @@ def p_stringlist_single(p):
 
 def p_string(p):
     """string : QUOTED_STRING"""
-    p[0] = sifter.grammar.String(p[1])
+    p[0] = String(p[1])

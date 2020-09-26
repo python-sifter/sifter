@@ -3,6 +3,8 @@ from typing import (
 )
 
 import sifter.grammar
+from sifter.grammar.command_list import CommandList
+from sifter.grammar.rule import RuleSyntaxError
 from . import rule
 import sifter.utils
 
@@ -16,7 +18,7 @@ class Command(rule.Rule):
     def __init__(self, arguments=None, tests=None, block=None) -> None:
         super(Command, self).__init__(arguments, tests)
         if block is None:
-            self.block = sifter.grammar.CommandList()
+            self.block = CommandList()
         else:
             self.block = block
 
@@ -31,6 +33,6 @@ class Command(rule.Rule):
 
     def validate_block_size(self, max_commands: int) -> None:
         if len(self.block.commands) > max_commands:
-            raise sifter.grammar.RuleSyntaxError(
+            raise RuleSyntaxError(
                 "%s takes no more than %d commands" % (self.RULE_IDENTIFIER, max_commands)
             )

@@ -1,5 +1,5 @@
 import sifter.grammar
-import sifter.validators
+from sifter.validators.stringlist import StringList
 
 __all__ = ('TestExists',)
 
@@ -13,7 +13,7 @@ class TestExists(sifter.grammar.Test):
         super(TestExists, self).__init__(arguments, tests)
         tagged_args, positional_args = self.validate_arguments(
             {},
-            [sifter.validators.StringList(), ]
+            [StringList(), ]
         )
         self.validate_tests_size(0)
         self.headers = positional_args[0]

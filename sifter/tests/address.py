@@ -3,16 +3,17 @@ from typing import (
     Text
 )
 
-from sifter.validators.tag import Tag
+from sifter.validators.tag import Tag, Comparator, MatchType
 import sifter.grammar
+from sifter.grammar.test import Test
 import sifter.grammar.string
-import sifter.validators
+from sifter.validators.stringlist import StringList
 
 __all__ = ('TestAddress',)
 
 
 # section 5.1
-class TestAddress(sifter.grammar.Test):
+class TestAddress(Test):
 
     RULE_IDENTIFIER: Text = 'ADDRESS'
 
@@ -20,13 +21,13 @@ class TestAddress(sifter.grammar.Test):
         super(TestAddress, self).__init__(arguments, tests)
         tagged_args, positional_args = self.validate_arguments(
             {
-                'comparator': sifter.validators.Comparator(),
-                'match_type': sifter.validators.MatchType(),
+                'comparator': Comparator(),
+                'match_type': MatchType(),
                 'address_part': Tag(('LOCALPART', 'DOMAIN', 'ALL')),
             },
             [
-                sifter.validators.StringList(),
-                sifter.validators.StringList(),
+                StringList(),
+                StringList(),
             ]
         )
         self.validate_tests_size(0)

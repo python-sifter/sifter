@@ -1,9 +1,9 @@
-from . import rule
+from sifter.grammar.rule import Rule
 
 __all__ = ('Test',)
 
 
-class Test(rule.Rule):
+class Test(Rule):
 
     RULE_TYPE = 'test'
 

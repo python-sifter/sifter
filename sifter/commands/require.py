@@ -5,7 +5,7 @@ from typing import (
 from sifter.grammar.command import Command
 import sifter.grammar
 import sifter.handler
-import sifter.validators
+from sifter.validators.stringlist import StringList
 
 __all__ = ('CommandRequire',)
 
@@ -19,7 +19,7 @@ class CommandRequire(Command):
         super(CommandRequire, self).__init__(arguments, tests, block)
         _, positional_args = self.validate_arguments(
             {},
-            [sifter.validators.StringList(), ],
+            [StringList(), ],
         )
         self.validate_tests_size(0)
         self.validate_block_size(0)

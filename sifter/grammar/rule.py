@@ -113,5 +113,5 @@ class Rule(object):
             raise RuleSyntaxError("%s takes %s tests" % (
                 self.RULE_IDENTIFIER, msg))
 
-    def evaluate(self, message: Message, state: EvaluationState) -> None:
+    def evaluate(self, message: Message, state: EvaluationState) -> Optional[bool]:
         raise NotImplementedError
