@@ -1,20 +1,26 @@
+from email.message import Message
+from typing import (
+    Text
+)
+
 from sifter.grammar.state import EvaluationState
+from sifter.grammar.actions import Actions
 
 __all__ = ('CommandList',)
 
 
 class CommandList(object):
 
-    def __init__(self, command_list=None):
+    def __init__(self, command_list=None) -> None:
         if command_list is None:
             self.commands = []
         else:
             self.commands = command_list
 
-    def __str__(self):
+    def __str__(self) -> Text:
         return ''.join(cmd.__str__() for cmd in self.commands)
 
-    def evaluate(self, message, state=None):
+    def evaluate(self, message: Message, state: EvaluationState = None) -> Actions:
         if state is None:
             state = EvaluationState()
         for command in self.commands:

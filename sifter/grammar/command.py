@@ -1,21 +1,26 @@
 from typing import (
-    Text
+    TYPE_CHECKING,
+    Text,
+    Optional,
+    List
 )
 
 import sifter.grammar
 from sifter.grammar.command_list import CommandList
-from sifter.grammar.rule import RuleSyntaxError
-from . import rule
+from sifter.grammar.rule import Rule, RuleSyntaxError
 import sifter.utils
+
+if TYPE_CHECKING:
+    from sifter.grammar.tag import Tag
 
 __all__ = ('Command',)
 
 
-class Command(rule.Rule):
+class Command(Rule):
 
     RULE_TYPE: Text = 'command'
 
-    def __init__(self, arguments=None, tests=None, block=None) -> None:
+    def __init__(self, arguments: Optional[List['Tag']] = None, tests=None, block=None) -> None:
         super(Command, self).__init__(arguments, tests)
         if block is None:
             self.block = CommandList()

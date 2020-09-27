@@ -9,6 +9,7 @@ from typing import (
 )
 
 from sifter.grammar.tag import Tag
+from sifter.grammar.string import String
 from sifter.grammar.state import EvaluationState
 from sifter.grammar.validator import Validator
 import sifter.grammar
@@ -36,7 +37,10 @@ class Rule(object):
             # only on subclasses that implement specific rules
             raise NotImplementedError
 
-    def __init__(self, arguments: Optional[List[Any]] = None, tests: Optional[List[Any]] = None) -> None:
+    def __init__(self, arguments: Optional[List[Tag]] = None, tests: Optional[List[Any]] = None) -> None:
+        if arguments:
+            print(arguments)
+            print([type(x) for x in arguments])
         if arguments is None:
             self.arguments = []
         else:

@@ -1,5 +1,11 @@
 import operator
 from email.message import Message
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    Text
+)
 
 from sifter.grammar.test import Test
 from sifter.validators.tag import Tag
@@ -14,7 +20,7 @@ class TestSize(Test):
 
     RULE_IDENTIFIER = 'SIZE'
 
-    COMPARISON_FNS = {
+    COMPARISON_FNS: Dict[Text, Callable[[Any, Any], bool]] = {
         'OVER': operator.gt,
         'UNDER': operator.lt,
     }
