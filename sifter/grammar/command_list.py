@@ -22,5 +22,7 @@ class CommandList(object):
             # isn't required by the standard, but we might as well.
             if len(state.actions) > 0 and state.actions[-1][0] == 'stop':
                 break
+        if state.actions.implicit_keep:
+            state.actions.append('keep')
         return state.actions
 

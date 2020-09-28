@@ -1,5 +1,5 @@
 import sifter.grammar
-import rule
+from . import rule
 import sifter.utils
 
 __all__ = ('Command',)
