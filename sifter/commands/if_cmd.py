@@ -24,7 +24,12 @@ __all__ = ('CommandIf', 'CommandElsIf', 'CommandElse',)
 # section 3.1
 class CommandIfBase(Command):
 
-    def __init__(self, arguments: Optional[List[Union['TagGrammar', SupportsInt, List[Union[Text, 'String']]]]] = None, tests: Optional[List['Test']] = None, block: Optional[CommandList] = None) -> None:
+    def __init__(
+        self,
+        arguments: Optional[List[Union['TagGrammar', SupportsInt, List[Union[Text, 'String']]]]] = None,
+        tests: Optional[List['Test']] = None,
+        block: Optional[CommandList] = None
+    ) -> None:
         super(CommandIfBase, self).__init__(arguments, tests, block)
         self.validate_arguments()
         self.validate_tests_size(1)
@@ -63,7 +68,12 @@ class CommandElse(Command):
 
     RULE_IDENTIFIER = 'ELSE'
 
-    def __init__(self, arguments: Optional[List[Union['TagGrammar', SupportsInt, List[Union[Text, 'String']]]]] = None, tests: Optional[List['Test']] = None, block: Optional[CommandList] = None) -> None:
+    def __init__(
+        self,
+        arguments: Optional[List[Union['TagGrammar', SupportsInt, List[Union[Text, 'String']]]]] = None,
+        tests: Optional[List['Test']] = None,
+        block: Optional[CommandList] = None
+    ) -> None:
         super(CommandElse, self).__init__(arguments, tests, block)
         self.validate_arguments()
         self.validate_tests_size(0)

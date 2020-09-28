@@ -27,7 +27,11 @@ class TestHeader(Test):
 
     RULE_IDENTIFIER = 'HEADER'
 
-    def __init__(self, arguments: Optional[List[Union['TagGrammar', SupportsInt, List[Union[Text, 'String']]]]] = None, tests: Optional[List['Test']] = None) -> None:
+    def __init__(
+        self,
+        arguments: Optional[List[Union['TagGrammar', SupportsInt, List[Union[Text, 'String']]]]] = None,
+        tests: Optional[List['Test']] = None
+    ) -> None:
         super(TestHeader, self).__init__(arguments, tests)
         tagged_args, positional_args = self.validate_arguments(
             {

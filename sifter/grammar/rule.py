@@ -40,7 +40,11 @@ class Rule(object):
             # only on subclasses that implement specific rules
             raise NotImplementedError
 
-    def __init__(self, arguments: Optional[List[Union['Tag', SupportsInt, List[Union[Text, 'String']]]]] = None, tests: Optional[List['Test']] = None) -> None:
+    def __init__(
+        self,
+        arguments: Optional[List[Union['Tag', SupportsInt, List[Union[Text, 'String']]]]] = None,
+        tests: Optional[List['Test']] = None
+    ) -> None:
         if arguments is None:
             self.arguments = []
         else:
@@ -63,7 +67,10 @@ class Rule(object):
         self,
         tagged_args: Optional[Union[List[Validator], Dict[Text, Validator]]] = None,
         positional_args: Optional[List[Validator]] = None
-    ) -> Tuple[Dict[Text, List[Union[Tag, SupportsInt, List[Union[Text, 'String']]]]], List[Union[Tag, SupportsInt, List[Union[Text, 'String']]]]]:
+    ) -> Tuple[
+        Dict[Text, List[Union[Tag, SupportsInt, List[Union[Text, 'String']]]]],
+        List[Union[Tag, SupportsInt, List[Union[Text, 'String']]]]
+    ]:
         if tagged_args is None:
             tagged_args = {}
         if positional_args is None:
@@ -80,7 +87,8 @@ class Rule(object):
                 if num_valid_args is not None and num_valid_args > 0:
                     if arg_name in seen_args:
                         raise RuleSyntaxError(
-                            "%s argument to %s was already seen earlier: %s" % (arg_name, self.RULE_IDENTIFIER, self.arguments[i])
+                            "%s argument to %s was already seen earlier: %s" %
+                            (arg_name, self.RULE_IDENTIFIER, self.arguments[i])
                         )
                     seen_args[arg_name] = self.arguments[i:i + num_valid_args]
                     i += num_valid_args

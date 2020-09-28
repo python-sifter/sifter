@@ -16,5 +16,9 @@ __all__ = ('Validator',)
 
 class Validator(object):
 
-    def validate(self, arg_list: List[Union['TagGrammar', SupportsInt, List[Union[Text, 'String']]]], starting_index: int) -> Optional[int]:
+    def validate(
+        self,
+        arg_list: List[Union['TagGrammar', SupportsInt, List[Union[Text, 'String']]]],
+        starting_index: int
+    ) -> Optional[int]:
         raise NotImplementedError

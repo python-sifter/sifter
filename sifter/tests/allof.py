@@ -23,7 +23,11 @@ class TestAllOf(Test):
 
     RULE_IDENTIFIER: Text = 'ALLOF'
 
-    def __init__(self, arguments: Optional[List[Union['TagGrammar', SupportsInt, List[Union[Text, 'String']]]]] = None, tests: Optional[List['Test']] = None) -> None:
+    def __init__(
+        self,
+        arguments: Optional[List[Union['TagGrammar', SupportsInt, List[Union[Text, 'String']]]]] = None,
+        tests: Optional[List['Test']] = None
+    ) -> None:
         super(TestAllOf, self).__init__(arguments, tests)
         self.validate_arguments()
 

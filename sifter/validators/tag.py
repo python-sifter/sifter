@@ -25,7 +25,11 @@ __all__ = ('Tag', 'MatchType', 'Comparator',)
 
 class Tag(Validator):
 
-    def __init__(self, allowed_tags: Optional[Union[Text, Tuple[Text, ...]]] = None, tag_arg_validators: Optional[Tuple[Validator, ...]] = None) -> None:
+    def __init__(
+        self,
+        allowed_tags: Optional[Union[Text, Tuple[Text, ...]]] = None,
+        tag_arg_validators: Optional[Tuple[Validator, ...]] = None
+    ) -> None:
         self.tag_arg_validators: Tuple[Validator, ...]
         super(Tag, self).__init__()
         self.allowed_tags: Optional[Tuple[Text, ...]] = None
@@ -38,7 +42,11 @@ class Tag(Validator):
         else:
             self.tag_arg_validators = tag_arg_validators
 
-    def validate(self, arg_list: List[Union['TagGrammar', SupportsInt, List[Union[Text, 'String']]]], starting_index: int) -> Optional[int]:
+    def validate(
+        self,
+        arg_list: List[Union['TagGrammar', SupportsInt, List[Union[Text, 'String']]]],
+        starting_index: int
+    ) -> Optional[int]:
         if starting_index >= len(arg_list):
             return 0
         if not isinstance(arg_list[starting_index], tag.Tag):
@@ -76,7 +84,11 @@ class Comparator(Tag):
             (StringList(1),),
         )
 
-    def validate(self, arg_list: List[Union['TagGrammar', SupportsInt, List[Union[Text, 'String']]]], starting_index: int) -> Optional[int]:
+    def validate(
+        self,
+        arg_list: List[Union['TagGrammar', SupportsInt, List[Union[Text, 'String']]]],
+        starting_index: int
+    ) -> Optional[int]:
         validated_args = super(Comparator, self).validate(
             arg_list,
             starting_index

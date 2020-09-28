@@ -22,7 +22,10 @@ def register(comparator_name: Optional[Text], comparator_cls: Type['Comparator']
     sifter.handler.register('comparator', comparator_name, comparator_cls)
 
 
-def get_match_fn(comparator: Optional[Union[Text, 'Tag']], match_type: Optional[Union[Text, 'Tag']]) -> Tuple[Callable[[Text, Text, 'EvaluationState'], bool], Union[Text, 'Tag'], Union[Text, 'Tag']]:
+def get_match_fn(
+    comparator: Optional[Union[Text, 'Tag']],
+    match_type: Optional[Union[Text, 'Tag']]
+) -> Tuple[Callable[[Text, Text, 'EvaluationState'], bool], Union[Text, 'Tag'], Union[Text, 'Tag']]:
     # section 2.7.3: default comparator is 'i;ascii-casemap'
     if comparator is None:
         comparator = 'i;ascii-casemap'

@@ -18,7 +18,11 @@ __all__ = ('Number',)
 
 class Number(Validator):
 
-    def validate(self, arg_list: List[Union['TagGrammar', SupportsInt, List[Union[Text, 'String']]]], starting_index: int) -> Optional[int]:
+    def validate(
+        self,
+        arg_list: List[Union['TagGrammar', SupportsInt, List[Union[Text, 'String']]]],
+        starting_index: int
+    ) -> Optional[int]:
         if starting_index >= len(arg_list):
             return 0
         value_to_check = arg_list[starting_index]

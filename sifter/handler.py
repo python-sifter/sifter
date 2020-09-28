@@ -15,7 +15,11 @@ if TYPE_CHECKING:
 _HANDLERS_MAP: Dict[Text, Dict[Text, Union[bool, Type['Comparator'], Type['Rule']]]] = {}
 
 
-def register(handler_type: Optional[Text], handler_id: Optional[Text], value: Union[bool, Type['Comparator'], Type['Rule']]) -> None:
+def register(
+    handler_type: Optional[Text],
+    handler_id: Optional[Text],
+    value: Union[bool, Type['Comparator'], Type['Rule']]
+) -> None:
     if not handler_type or not handler_id:
         raise ValueError("handler_type and handler_id must not be None!")
     _HANDLERS_MAP.setdefault(handler_type, {})[handler_id] = value

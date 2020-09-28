@@ -22,7 +22,11 @@ class StringList(Validator):
         super(StringList, self).__init__()
         self.length = length
 
-    def validate(self, arg_list: List[Union['TagGrammar', SupportsInt, List[Union[Text, 'String']]]], starting_index: int) -> Optional[int]:
+    def validate(
+        self,
+        arg_list: List[Union['TagGrammar', SupportsInt, List[Union[Text, 'String']]]],
+        starting_index: int
+    ) -> Optional[int]:
         if starting_index >= len(arg_list):
             return 0
         arg = arg_list[starting_index]

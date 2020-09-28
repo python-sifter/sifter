@@ -19,7 +19,13 @@ class String(str):
     pass
 
 
-def compare(str1: Text, str2: Text, state: EvaluationState, comparator: Optional[Union[Text, 'Tag']] = None, match_type: Optional[Union[Text, 'Tag']] = None) -> bool:
+def compare(
+    str1: Text,
+    str2: Text,
+    state: EvaluationState,
+    comparator: Optional[Union[Text, 'Tag']] = None,
+    match_type: Optional[Union[Text, 'Tag']] = None
+) -> bool:
     cmp_fn, comparator, match_type = sifter.comparator.get_match_fn(comparator, match_type)
     state.check_required_extension('comparator-%s' % comparator, 'the comparator')
     return cmp_fn(str1, str2, state)

@@ -28,7 +28,12 @@ class Command(Rule):
 
     RULE_TYPE: Text = 'command'
 
-    def __init__(self, arguments: Optional[List[Union['TagGrammar', SupportsInt, List[Union[Text, 'String']]]]] = None, tests: Optional[List['Test']] = None, block: Optional[CommandList] = None) -> None:
+    def __init__(
+        self,
+        arguments: Optional[List[Union['TagGrammar', SupportsInt, List[Union[Text, 'String']]]]] = None,
+        tests: Optional[List['Test']] = None,
+        block: Optional[CommandList] = None
+    ) -> None:
         super(Command, self).__init__(arguments, tests)
         if block is None:
             self.block = CommandList()

@@ -29,7 +29,12 @@ class CommandRequire(Command):
 
     RULE_IDENTIFIER: Text = 'REQUIRE'
 
-    def __init__(self, arguments: Optional[List[Union['TagGrammar', SupportsInt, List[Union[Text, 'String']]]]] = None, tests: Optional[List['Test']] = None, block: Optional[CommandList] = None) -> None:
+    def __init__(
+        self,
+        arguments: Optional[List[Union['TagGrammar', SupportsInt, List[Union[Text, 'String']]]]] = None,
+        tests: Optional[List['Test']] = None,
+        block: Optional[CommandList] = None
+    ) -> None:
         super(CommandRequire, self).__init__(arguments, tests, block)
         _, positional_args = self.validate_arguments(
             {},

@@ -23,7 +23,11 @@ class TestFalse(Test):
 
     RULE_IDENTIFIER = 'FALSE'
 
-    def __init__(self, arguments: Optional[List[Union['TagGrammar', SupportsInt, List[Union[Text, 'String']]]]] = None, tests: Optional[List['Test']] = None) -> None:
+    def __init__(
+        self,
+        arguments: Optional[List[Union['TagGrammar', SupportsInt, List[Union[Text, 'String']]]]] = None,
+        tests: Optional[List['Test']] = None
+    ) -> None:
         super(TestFalse, self).__init__(arguments, tests)
         self.validate_arguments()
         self.validate_tests_size(0)

@@ -26,7 +26,12 @@ class CommandStop(Command):
 
     RULE_IDENTIFIER = 'STOP'
 
-    def __init__(self, arguments: Optional[List[Union['TagGrammar', SupportsInt, List[Union[Text, 'String']]]]] = None, tests: Optional[List['Test']] = None, block: Optional[CommandList] = None) -> None:
+    def __init__(
+        self,
+        arguments: Optional[List[Union['TagGrammar', SupportsInt, List[Union[Text, 'String']]]]] = None,
+        tests: Optional[List['Test']] = None,
+        block: Optional[CommandList] = None
+    ) -> None:
         super(CommandStop, self).__init__(arguments, tests, block)
         self.validate_arguments()
         self.validate_tests_size(0)
