@@ -1,7 +1,11 @@
+from typing import (
+    Text
+)
+
 __all__ = ('indent_string',)
 
 
-def indent_string(s, num_spaces):
+def indent_string(s: Text, num_spaces: int) -> Text:
     add_newline = False
     if s[-1] == '\n':
         add_newline = True

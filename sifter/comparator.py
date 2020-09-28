@@ -1,13 +1,31 @@
+from typing import (
+    TYPE_CHECKING,
+    Callable,
+    Text,
+    Optional,
+    Tuple,
+    Type,
+    Union
+)
+
 import sifter.handler
+
+if TYPE_CHECKING:
+    from sifter.grammar.comparator import Comparator
+    from sifter.grammar.tag import Tag
+    from sifter.grammar.state import EvaluationState
 
 __all__ = ('register', 'get_match_fn',)
 
 
-def register(comparator_name, comparator_cls):
+def register(comparator_name: Optional[Text], comparator_cls: Type['Comparator']) -> None:
     sifter.handler.register('comparator', comparator_name, comparator_cls)
 
 
-def get_match_fn(comparator, match_type):
+def get_match_fn(
+    comparator: Optional[Union[Text, 'Tag']],
+    match_type: Optional[Union[Text, 'Tag']]
+) -> Tuple[Callable[[Text, Text, 'EvaluationState'], bool], Union[Text, 'Tag'], Union[Text, 'Tag']]:
     # section 2.7.3: default comparator is 'i;ascii-casemap'
     if comparator is None:
         comparator = 'i;ascii-casemap'

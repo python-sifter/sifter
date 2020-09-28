@@ -1,6 +1,23 @@
+from typing import (
+    Dict,
+    Text,
+    Optional,
+    List,
+    Tuple,
+    Union,
+    TYPE_CHECKING,
+    SupportsInt
+)
+
+from sifter.grammar.tag import Tag
+from sifter.grammar.validator import Validator
 import sifter.grammar
 import sifter.handler
 import sifter.utils
+
+if TYPE_CHECKING:
+    from sifter.grammar.test import Test
+    from sifter.grammar.string import String
 
 __all__ = ('Rule', 'RuleSyntaxError',)
 
@@ -11,8 +28,11 @@ class RuleSyntaxError(Exception):
 
 class Rule(object):
 
+    RULE_TYPE: Optional[Text] = None
+    RULE_IDENTIFIER: Optional[Text] = None
+
     @classmethod
-    def register(cls):
+    def register(cls) -> None:
         try:
             sifter.handler.register(cls.RULE_TYPE, cls.RULE_IDENTIFIER, cls)
         except AttributeError:
@@ -20,7 +40,11 @@ class Rule(object):
             # only on subclasses that implement specific rules
             raise NotImplementedError
 
-    def __init__(self, arguments=None, tests=None):
+    def __init__(
+        self,
+        arguments: Optional[List[Union['Tag', SupportsInt, List[Union[Text, 'String']]]]] = None,
+        tests: Optional[List['Test']] = None
+    ) -> None:
         if arguments is None:
             self.arguments = []
         else:
@@ -30,7 +54,7 @@ class Rule(object):
         else:
             self.tests = tests
 
-    def __str__(self):
+    def __str__(self) -> Text:
         s = ["%s" % self.RULE_IDENTIFIER, ]
         for arg in self.arguments:
             s.append(" %s" % arg)
@@ -39,24 +63,32 @@ class Rule(object):
             s.append("(\n%s)\n" % sifter.utils.indent_string(str(test), 2))
         return ''.join(s)
 
-    def validate_arguments(self, tagged_args=None, positional_args=None):
+    def validate_arguments(
+        self,
+        tagged_args: Optional[Union[List[Validator], Dict[Text, Validator]]] = None,
+        positional_args: Optional[List[Validator]] = None
+    ) -> Tuple[
+        Dict[Text, List[Union[Tag, SupportsInt, List[Union[Text, 'String']]]]],
+        List[Union[Tag, SupportsInt, List[Union[Text, 'String']]]]
+    ]:
         if tagged_args is None:
             tagged_args = {}
         if positional_args is None:
             positional_args = []
 
-        seen_args = {}
+        seen_args: Dict[Text, List[Union['Tag', SupportsInt, List[Union[Text, 'String']]]]] = {}
         i, n = 0, len(self.arguments)
         while i < n:
-            if not isinstance(self.arguments[i], sifter.grammar.Tag):
+            if not isinstance(tagged_args, dict) or not isinstance(self.arguments[i], Tag):
                 break
-            num_valid_args = 0
+            num_valid_args: Optional[int] = 0
             for arg_name, arg_validator in tagged_args.items():
                 num_valid_args = arg_validator.validate(self.arguments, i)
                 if num_valid_args is not None and num_valid_args > 0:
                     if arg_name in seen_args:
                         raise RuleSyntaxError(
-                            "%s argument to %s was already seen earlier: %s" % (arg_name, self.RULE_IDENTIFIER, self.arguments[i])
+                            "%s argument to %s was already seen earlier: %s" %
+                            (arg_name, self.RULE_IDENTIFIER, self.arguments[i])
                         )
                     seen_args[arg_name] = self.arguments[i:i + num_valid_args]
                     i += num_valid_args
@@ -82,7 +114,7 @@ class Rule(object):
 
         return (seen_args, self.arguments[i:])
 
-    def validate_tests_size(self, min_tests, max_tests=None):
+    def validate_tests_size(self, min_tests: int, max_tests: Optional[int] = None) -> None:
         if max_tests is None:
             max_tests = min_tests
         if len(self.tests) < min_tests or len(self.tests) > max_tests:
@@ -92,6 +124,3 @@ class Rule(object):
                 msg = "between %d and %d" % (min_tests, max_tests)
             raise RuleSyntaxError("%s takes %s tests" % (
                 self.RULE_IDENTIFIER, msg))
-
-    def evaluate(self, message, state):
-        raise NotImplementedError
