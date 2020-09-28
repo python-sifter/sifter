@@ -1,20 +1,23 @@
-from email.message import Message
 from typing import (
-    Any,
     Dict,
     Text,
     Optional,
     List,
-    Tuple
+    Tuple,
+    Union,
+    TYPE_CHECKING,
+    SupportsInt
 )
 
 from sifter.grammar.tag import Tag
-from sifter.grammar.string import String
-from sifter.grammar.state import EvaluationState
 from sifter.grammar.validator import Validator
 import sifter.grammar
 import sifter.handler
 import sifter.utils
+
+if TYPE_CHECKING:
+    from sifter.grammar.test import Test
+    from sifter.grammar.string import String
 
 __all__ = ('Rule', 'RuleSyntaxError',)
 
@@ -37,10 +40,7 @@ class Rule(object):
             # only on subclasses that implement specific rules
             raise NotImplementedError
 
-    def __init__(self, arguments: Optional[List[Tag]] = None, tests: Optional[List[Any]] = None) -> None:
-        if arguments:
-            print(arguments)
-            print([type(x) for x in arguments])
+    def __init__(self, arguments: Optional[List[Union['Tag', SupportsInt, List[Union[Text, 'String']]]]] = None, tests: Optional[List['Test']] = None) -> None:
         if arguments is None:
             self.arguments = []
         else:
@@ -61,20 +61,20 @@ class Rule(object):
 
     def validate_arguments(
         self,
-        tagged_args: Optional[Dict[Any, Any]] = None,
+        tagged_args: Optional[Union[List[Validator], Dict[Text, Validator]]] = None,
         positional_args: Optional[List[Validator]] = None
-    ) -> Tuple[Dict[Any, Any], List[Any]]:
+    ) -> Tuple[Dict[Text, List[Union[Tag, SupportsInt, List[Union[Text, 'String']]]]], List[Union[Tag, SupportsInt, List[Union[Text, 'String']]]]]:
         if tagged_args is None:
             tagged_args = {}
         if positional_args is None:
             positional_args = []
 
-        seen_args = {}
+        seen_args: Dict[Text, List[Union['Tag', SupportsInt, List[Union[Text, 'String']]]]] = {}
         i, n = 0, len(self.arguments)
         while i < n:
-            if not isinstance(self.arguments[i], Tag):
+            if not isinstance(tagged_args, dict) or not isinstance(self.arguments[i], Tag):
                 break
-            num_valid_args = 0
+            num_valid_args: Optional[int] = 0
             for arg_name, arg_validator in tagged_args.items():
                 num_valid_args = arg_validator.validate(self.arguments, i)
                 if num_valid_args is not None and num_valid_args > 0:
@@ -116,6 +116,3 @@ class Rule(object):
                 msg = "between %d and %d" % (min_tests, max_tests)
             raise RuleSyntaxError("%s takes %s tests" % (
                 self.RULE_IDENTIFIER, msg))
-
-    def evaluate(self, message: Message, state: EvaluationState) -> Optional[bool]:
-        raise NotImplementedError

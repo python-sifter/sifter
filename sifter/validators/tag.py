@@ -1,9 +1,12 @@
+import collections
 from typing import (
+    TYPE_CHECKING,
     Union,
     Optional,
     Text,
     List,
-    Tuple
+    Tuple,
+    SupportsInt
 )
 
 from sifter.grammar.validator import Validator
@@ -13,16 +16,21 @@ from sifter.validators.stringlist import StringList
 import sifter.handler
 import sifter.validators
 
+if TYPE_CHECKING:
+    from sifter.grammar.tag import Tag as TagGrammar
+    from sifter.grammar.string import String
+
+
 __all__ = ('Tag', 'MatchType', 'Comparator',)
 
 
 class Tag(Validator):
 
-    def __init__(self, allowed_tags: Optional[Union[Text, bytes, Tuple[Union[Text, bytes], ...]]] = None, tag_arg_validators: Optional[Tuple[Validator, ...]] = None) -> None:
+    def __init__(self, allowed_tags: Optional[Union[Text, Tuple[Text, ...]]] = None, tag_arg_validators: Optional[Tuple[Validator, ...]] = None) -> None:
         self.tag_arg_validators: Tuple[Validator, ...]
         super(Tag, self).__init__()
-        self.allowed_tags: Optional[Union[Text, bytes, Tuple[Union[Text, bytes], ...]]] = None
-        if isinstance(allowed_tags, (str, bytes)):
+        self.allowed_tags: Optional[Tuple[Text, ...]] = None
+        if isinstance(allowed_tags, str):
             self.allowed_tags = (allowed_tags, )
         else:
             self.allowed_tags = allowed_tags
@@ -31,7 +39,7 @@ class Tag(Validator):
         else:
             self.tag_arg_validators = tag_arg_validators
 
-    def validate(self, arg_list: List[tag.Tag], starting_index: int) -> Optional[int]:
+    def validate(self, arg_list: List[Union['TagGrammar', SupportsInt, List[Union[Text, 'String']]]], starting_index: int) -> Optional[int]:
         if starting_index >= len(arg_list):
             return 0
         if not isinstance(arg_list[starting_index], tag.Tag):
@@ -47,7 +55,7 @@ class Tag(Validator):
                 arg_list,
                 starting_index + validated_args
             )
-            if num_valid_args > 0:
+            if num_valid_args and num_valid_args > 0:
                 validated_args += num_valid_args
             else:
                 return 0
@@ -69,18 +77,25 @@ class Comparator(Tag):
             (StringList(1),),
         )
 
-    def validate(self, arg_list: List[tag.Tag], starting_index: int) -> Optional[int]:
+    def validate(self, arg_list: List[Union['TagGrammar', SupportsInt, List[Union[Text, 'String']]]], starting_index: int) -> Optional[int]:
         validated_args = super(Comparator, self).validate(
             arg_list,
             starting_index
         )
-        if validated_args and validated_args > 0:
-            if not sifter.handler.get(
-                'comparator',
-                arg_list[starting_index + 1][0],
-            ):
-                raise RuleSyntaxError(
-                    "'%s' comparator is unknown/unsupported"
-                    % arg_list[starting_index + 1][0]
-                )
+        if isinstance(arg_list, list):
+            if validated_args and validated_args > 0:
+                val = arg_list[starting_index + 1]
+                if not isinstance(val, list):
+                    raise RuleSyntaxError(
+                        "'%s' comparator is unknown/unsupported"
+                        % arg_list[starting_index + 1]
+                    )
+                if not sifter.handler.get(
+                    'comparator',
+                    val[0],
+                ):
+                    raise RuleSyntaxError(
+                        "'%s' comparator is unknown/unsupported"
+                        % val[0]
+                    )
         return None

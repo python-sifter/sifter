@@ -1,17 +1,23 @@
 from email.message import Message
 from typing import (
-    Text
+    TYPE_CHECKING,
+    List,
+    Text,
+    Optional
 )
 
 from sifter.grammar.state import EvaluationState
 from sifter.grammar.actions import Actions
+
+if TYPE_CHECKING:
+    from sifter.grammar.command import Command
 
 __all__ = ('CommandList',)
 
 
 class CommandList(object):
 
-    def __init__(self, command_list=None) -> None:
+    def __init__(self, command_list: Optional[List['Command']] = None) -> None:
         if command_list is None:
             self.commands = []
         else:
@@ -20,7 +26,7 @@ class CommandList(object):
     def __str__(self) -> Text:
         return ''.join(cmd.__str__() for cmd in self.commands)
 
-    def evaluate(self, message: Message, state: EvaluationState = None) -> Actions:
+    def evaluate(self, message: Message, state: Optional[EvaluationState] = None) -> Optional[Actions]:
         if state is None:
             state = EvaluationState()
         for command in self.commands:

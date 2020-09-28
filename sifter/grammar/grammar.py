@@ -1,6 +1,8 @@
 # Parser based on RFC 5228, especially the grammar as defined in section 8. All
 # references are to sections in RFC 5228 unless stated otherwise.
 
+from sifter.grammar.test import Test
+from sifter.grammar.command import Command
 from typing import (
     TYPE_CHECKING,
     Any
@@ -64,6 +66,8 @@ def p_command(p: 'YaccProduction') -> None:
     if handler is None:
         print("No handler registered for command '%s' on line %d" % (p[1], p.lineno(1)))
         raise SyntaxError
+    if not isinstance(handler, type) or not issubclass(handler, Command):
+        raise ValueError("handler must be subclass of Command")
     p[0] = handler(arguments=p[2]['args'], tests=tests, block=block)
 
 
@@ -128,6 +132,8 @@ def p_test(p: 'YaccProduction') -> None:
     if handler is None:
         print("No handler registered for test '%s' on line %d" % (p[1], p.lineno(1)))
         raise SyntaxError
+    if not isinstance(handler, type) or not issubclass(handler, Test):
+        raise ValueError("handler must be subclass of Test")
     p[0] = handler(arguments=p[2]['args'], tests=tests)
 
 

@@ -1,5 +1,7 @@
 from typing import (
-    Text
+    Text,
+    Dict,
+    Optional
 )
 from sifter.grammar.actions import Actions
 
@@ -10,14 +12,15 @@ class EvaluationState(object):
 
     def __init__(self) -> None:
         self.actions = Actions(implicit_keep=True)
-        self.required_extensions = {}
+        self.required_extensions: Dict[Text, bool] = {}
+        self.last_if: Optional[bool] = None
         # section 6.1: the built-in comparators have defined capability
         # strings, but they do not need to be explicitly REQUIRE'd before being
         # used.
         for ext in ('comparator-i;octet', 'comparator-i;ascii-casemap'):
             self.require_extension(ext)
 
-    def require_extension(self, extension):
+    def require_extension(self, extension: Text) -> None:
         self.required_extensions[extension] = True
 
     def check_required_extension(self, extension: Text, feature_string: Text) -> bool:
