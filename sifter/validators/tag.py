@@ -1,4 +1,3 @@
-import collections
 from typing import (
     TYPE_CHECKING,
     Union,
