@@ -1,12 +1,17 @@
-from . import rule
+from email.message import Message
+from typing import (
+    Optional
+)
+
+from sifter.grammar.rule import Rule
+from sifter.grammar.state import EvaluationState
 
 __all__ = ('Test',)
 
 
-class Test(rule.Rule):
+class Test(Rule):
 
     RULE_TYPE = 'test'
 
-    def __init__(self, arguments=None, tests=None):
-        super(Test, self).__init__(arguments, tests)
-
+    def evaluate(self, message: Message, state: EvaluationState) -> Optional[bool]:
+        raise NotImplementedError

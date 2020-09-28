@@ -1,40 +1,53 @@
 # Parser based on RFC 5228, especially the grammar as defined in section 8. All
 # references are to sections in RFC 5228 unless stated otherwise.
 
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Optional
+)
+
 import math
-import ply.lex
+import ply.lex  # type: ignore
+
+if TYPE_CHECKING:
+    from ply.lex import Lexer, LexToken
 
 __all__ = ('lexer', 'tokens',)
 
 
-def lexer(**kwargs):
+def lexer(**kwargs: Any) -> 'Lexer':
     return ply.lex.lex(**kwargs)
 
 
 tokens = (
     'IDENTIFIER', 'NUMBER', 'TAG', 'HASH_COMMENT', 'BRACKET_COMMENT',
     'QUOTED_STRING', 'MULTILINE_STRING',
-    )
-literals = [ c for c in ';,()[]{}' ]
+)
+literals = [c for c in ';,()[]{}']
 
 # section 2.2
 t_ignore = ' \t'
 
-# section 2.3
-def t_HASH_COMMENT(t):
-    r'\#.*\r\n'
-    t.lexer.lineno += 1
 
 # section 2.3
-def t_BRACKET_COMMENT(t):
+def t_HASH_COMMENT(t: 'LexToken') -> Optional['LexToken']:
+    r'\#.*\r\n'
+    t.lexer.lineno += 1
+    return None
+
+
+# section 2.3
+def t_BRACKET_COMMENT(t: 'LexToken') -> Optional['LexToken']:
     r'/\*.*\*/'
     # TODO: Bracketed comments begin with the token "/*" and end with "*/"
     # outside of a string.  Bracketed comments may span multiple lines.
     # Bracketed comments do not nest.
-    pass
+    return None
+
 
 # section 2.4.2
-def t_MULTILINE_STRING(t):
+def t_MULTILINE_STRING(t: 'LexToken') -> Optional['LexToken']:
     r'"@@@@@@@@@@@@@@@"'
     # TODO: For entering larger amounts of text, such as an email message,
     # a multi-line form is allowed.  It starts with the keyword "text:",
@@ -49,10 +62,11 @@ def t_MULTILINE_STRING(t):
     # that is, ".foo" is interpreted as ".foo".  However, because this is
     # potentially ambiguous, scripts SHOULD be properly dot-stuffed so such
     # lines do not appear.
-    pass
+    return None
+
 
 # section 2.4.2
-def t_QUOTED_STRING(t):
+def t_QUOTED_STRING(t: 'LexToken') -> Optional['LexToken']:
     r'"([^"\\]|\\["\\])*"'
     # TODO: Add support for:
     # - An undefined escape sequence (such as "\a" in a context where "a"
@@ -65,40 +79,46 @@ def t_QUOTED_STRING(t):
     t.value = t.value.strip('"').replace(r'\"', '"').replace(r'\\', '\\')
     return t
 
-def t_TAG(t):
+
+def t_TAG(t: 'LexToken') -> Optional['LexToken']:
     r':[a-zA-Z_][a-zA-Z0-9_]*'
     t.value = t.value[1:].upper()
     return t
 
-def t_IDENTIFIER(t):
+
+def t_IDENTIFIER(t: 'LexToken') -> Optional['LexToken']:
     r'[a-zA-Z_][a-zA-Z0-9_]*'
     t.value = t.value.upper()
     return t
 
+
 # section 2.4.1
-def t_NUMBER(t):
+def t_NUMBER(t: 'LexToken') -> Optional['LexToken']:
     r'[0-9]+[KkMmGg]?'
     exponents = {
-            'G' : 30, 'g' : 30,
-            'M' : 20, 'm' : 20,
-            'K' : 10, 'k' : 10,
-            }
+        'G': 30, 'g': 30,
+        'M': 20, 'm': 20,
+        'K': 10, 'k': 10,
+    }
     if t.value[-1] in exponents:
         t.value = math.ldexp(int(t.value[:-1]), exponents[t.value[-1]])
     else:
         t.value = int(t.value)
     return t
 
-def t_newline(t):
+
+def t_newline(t: 'LexToken') -> Optional['LexToken']:
     r'(\r\n)+'
     t.lexer.lineno += t.value.count('\n')
+    return None
 
-def t_error(t):
+
+def t_error(t: 'LexToken') -> Optional['LexToken']:
     t.lexer.skip(1)
+    return None
 
 
 if __name__ == '__main__':
     # PLY has a simple debugging mode that'll print out tokens for input coming
     # from stdin or a file on the command-line
     ply.lex.runmain(lexer=lexer())
-

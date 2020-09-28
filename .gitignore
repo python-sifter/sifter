@@ -6,3 +6,4 @@ parser.out
 parsetab.py
 *.pyc
 *.egg-info/
+.mypy_cache

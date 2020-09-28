@@ -1,21 +1,18 @@
-import string
-try:
-    # Python 3
-    maketrans = str.maketrans
-except AttributeError:
-    # Python 2
-    maketrans = string.maketrans
-
+from typing import Text
 from sifter.comparators.octet import ComparatorOctet
 
+maketrans = str.maketrans
+
 __all__ = ('ComparatorASCIICasemap',)
+
 
 class ComparatorASCIICasemap(ComparatorOctet):
 
     COMPARATOR_ID = 'i;ascii-casemap'
 
     @classmethod
-    def sort_key(cls, s):
+    def sort_key(cls, s: Text) -> Text:
         return s.upper()
+
 
 ComparatorASCIICasemap.register()
