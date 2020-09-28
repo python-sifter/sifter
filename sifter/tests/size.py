@@ -49,7 +49,7 @@ class TestSize(Test):
             }
         )
         self.validate_tests_size(0)
-        self.comparison_fn = TestSize.COMPARISON_FNS[tagged_args['size'][0]]  # type: ignore
+        self.comparison_fn = self.COMPARISON_FNS[tagged_args['size'][0]]  # type: ignore
         self.comparison_size = tagged_args['size'][1]
 
     def evaluate(self, message: Message, state: EvaluationState) -> Optional[bool]:
