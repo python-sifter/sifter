@@ -1,5 +1,6 @@
 from typing import (
     cast,
+    Text,
     TextIO
 )
 
@@ -13,4 +14,9 @@ __all__ = ('parse_file',)
 
 
 def parse_file(filehandle: TextIO) -> CommandList:
-    return cast(CommandList, grammar.parser().parse(filehandle.read(), lexer=lexer.lexer()))
+    return parse_string(filehandle.read())
+
+
+def parse_string(rules: Text) -> CommandList:
+    r_value = grammar.parser().parse(rules, lexer=lexer.lexer())
+    return cast(CommandList, r_value)
