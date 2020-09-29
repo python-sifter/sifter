@@ -2,13 +2,19 @@
 
 import email
 import os.path
-import unittest
-import codecs
 
 import sifter.parser
 
 
-class TestEvaluateRules(unittest.TestCase):
+def eval_rules(filename_message, filename_rules):
+    with open(os.path.join(os.path.dirname(__file__), filename_message), encoding='utf-8') as msg_fh:
+        message = email.message_from_file(msg_fh)
+    with open(os.path.join(os.path.dirname(__file__), filename_rules), encoding='utf-8') as rule_fh:
+        rules = sifter.parser.parse_file(rule_fh)
+    return rules.evaluate(message)
+
+
+def test_evaulation():
 
     EVAL_RESULTS = (
         ("evaluation_1.msg", "evaluation_1.rules", [('redirect', 'acm@example.com')]),
@@ -20,24 +26,5 @@ class TestEvaluateRules(unittest.TestCase):
         ("evaluation_3.msg", "evaluation_3.rules", [('keep', None)]),
     )
 
-    def setUp(self) -> None:
-        self.messages = {}
-        self.rules = {}
-        for result in self.EVAL_RESULTS:
-            with codecs.open(os.path.join(os.path.dirname(__file__), result[0]),
-                             encoding='utf-8') as msg_fh:
-                self.messages.setdefault(result[0], email.message_from_file(msg_fh))
-            with codecs.open(os.path.join(os.path.dirname(__file__), result[1]),
-                             encoding='utf-8') as rule_fh:
-                self.rules.setdefault(result[1], sifter.parser.parse_file(rule_fh))
-
-    def test_msg_rule_cross_product(self) -> None:
-        for result in self.EVAL_RESULTS:
-            self.assertEqual(
-                self.rules[result[1]].evaluate(self.messages[result[0]]),
-                result[2]
-            )
-
-
-if __name__ == '__main__':
-    unittest.main()
+    for messagefile, rulefile, evaluated_rules in EVAL_RESULTS:
+        assert evaluated_rules == eval_rules(messagefile, rulefile)

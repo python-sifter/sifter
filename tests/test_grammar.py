@@ -1,28 +1,19 @@
 # type: ignore
 
-import unittest
+import pytest
 
 import sifter.extension
 from sifter.grammar.state import EvaluationState
 
 
-class TestEvaluationState(unittest.TestCase):
+def test_grammar():
+    sifter.extension.register('ext1')
+    sifter.extension.register('ext2')
+    state = EvaluationState()
 
-    def setUp(self) -> None:
-        sifter.extension.register('ext1')
-        sifter.extension.register('ext2')
-        self.state = EvaluationState()
+    state.require_extension('ext1')
 
-    def test_require_extension(self) -> None:
-        self.state.require_extension('ext1')
-        self.assertTrue(self.state.check_required_extension('ext1', 'ext1'))
-        self.assertRaises(
-            RuntimeError,
-            self.state.check_required_extension,
-            'ext2',
-            'ext2',
-        )
+    assert state.check_required_extension('ext1', 'ext1') is True
 
-
-if __name__ == '__main__':
-    unittest.main()
+    with pytest.raises(RuntimeError):
+        state.check_required_extension('ext2', 'ext2')

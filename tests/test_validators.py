@@ -1,6 +1,7 @@
 # type: ignore
 
-import unittest
+
+import pytest
 
 from sifter.grammar.tag import Tag as GrammarTag
 from sifter.grammar.rule import Rule, RuleSyntaxError
@@ -18,60 +19,39 @@ class MockRule(Rule):
         super(MockRule, self).__init__(arguments, tests)
 
 
-class TestValidationFn(unittest.TestCase):
-
-    def test_too_many_args(self) -> None:
-        mock_rule = MockRule([GrammarTag('IS'), 13, ])
-        self.assertRaises(
-            RuleSyntaxError,
-            mock_rule.validate_arguments,
-        )
-
-    def test_not_enough_args(self) -> None:
-        mock_rule = MockRule([13, ])
-        self.assertRaises(
-            RuleSyntaxError,
-            mock_rule.validate_arguments,
-            [
-                Number(),
-                StringList(),
-            ],
-        )
+def test_too_many_args() -> None:
+    mock_rule = MockRule([GrammarTag('IS'), 13, ])
+    with pytest.raises(RuleSyntaxError):
+        mock_rule.validate_arguments()
 
 
-class TestTagValidator(unittest.TestCase):
-
-    def test_allowed_tag(self) -> None:
-        mock_validator = TagValidator(['MOCK', 'IS', ])
-        self.assertEqual(
-            mock_validator.validate([GrammarTag('IS')], 0),
-            1
-        )
-
-    def test_allowed_single_tag(self) -> None:
-        # test the case for a non-list single tag name
-        mock_validator = TagValidator('IS')
-        self.assertEqual(
-            mock_validator.validate([GrammarTag('IS')], 0),
-            1
-        )
-
-    def test_not_allowed_tag(self) -> None:
-        mock_validator = TagValidator(['MOCK', 'FOO', ])
-        self.assertEqual(
-            mock_validator.validate([GrammarTag('IS')], 0),
-            0
-        )
-
-    def test_not_allowed_single_tag(self) -> None:
-        # test the case for a non-list single tag name. test when the tag is a
-        # substring of the allowed tag.
-        mock_validator = TagValidator('ISFOO')
-        self.assertEqual(
-            mock_validator.validate([GrammarTag('IS')], 0),
-            0
-        )
+def test_not_enough_args() -> None:
+    mock_rule = MockRule([13, ])
+    with pytest.raises(RuleSyntaxError):
+        mock_rule.validate_arguments([
+            Number(),
+            StringList(),
+        ])
 
 
-if __name__ == '__main__':
-    unittest.main()
+def test_allowed_tag() -> None:
+    mock_validator = TagValidator(['MOCK', 'IS', ])
+    assert mock_validator.validate([GrammarTag('IS')], 0) == 1
+
+
+def test_allowed_single_tag() -> None:
+    # test the case for a non-list single tag name
+    mock_validator = TagValidator('IS')
+    assert mock_validator.validate([GrammarTag('IS')], 0) == 1
+
+
+def test_not_allowed_tag() -> None:
+    mock_validator = TagValidator(['MOCK', 'FOO', ])
+    assert mock_validator.validate([GrammarTag('IS')], 0) == 0
+
+
+def test_not_allowed_single_tag() -> None:
+    # test the case for a non-list single tag name. test when the tag is a
+    # substring of the allowed tag.
+    mock_validator = TagValidator('ISFOO')
+    assert mock_validator.validate([GrammarTag('IS')], 0) == 0
